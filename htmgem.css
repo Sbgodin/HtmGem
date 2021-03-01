@@ -6,14 +6,13 @@ html {
 }
 
 body {
-	max-width: 920px;
-	margin: 0 auto;
-	padding: 1rem 2rem;
+	max-width: 1024px;
+	margin: auto;
 }
 
 p {
-    margin-bottom: 0;
-    padding-bottom: 0;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 h1,h2,h3{
@@ -48,12 +47,12 @@ li:not(:last-child) {
 }
 
 a {
-	color:#66f;
+	color:#820;
 	text-decoration: none;
 }
 
 a:visited {
-	color: #802200;
+	color: #868;
 }
 
 pre {
@@ -61,6 +60,24 @@ pre {
 	margin: 0 -1rem;
 	padding: 1rem;
 	overflow-x: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+	body {
+		margin: 2em;
+	}
+	h1 {
+		font-size: 4em;
+	}
+	h2 {
+		font-size: 3.5em;
+	}
+	h3 {
+		font-size: 3em;
+	}
+	p, pre {
+		font-size: 2.6em;
+	}
 }
 
 @media(prefers-color-scheme:dark) {
