@@ -8,5 +8,6 @@
 * configuration: Fetch configuration in current dir, tries parents.
 * css: file location or in-place or in config?
 * Use first h1 as the HTML page title on get in config?
-* On links indicate whether it's on Gemini or Www.
+* On links indicate whether it's on Gemini or Www or image.
 * Command line API for script and testing.
+* Manage bold, italic, underline on one physical line.
