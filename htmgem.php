@@ -13,7 +13,7 @@ $filePath = $GMI_DIR.$url;
 $fileContent = @file_get_contents($filePath);
 if (!$fileContent) {
     http_response_code(404);
-    die("404: $filePath $GMI_DIR $url");
+    die("404: $url");
 }
 
 $fileLines = preg_split("/\n/", $fileContent);
