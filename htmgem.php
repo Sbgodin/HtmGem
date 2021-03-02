@@ -115,6 +115,7 @@ foreach ($fileLines as $line) {
             } else {
                 $mode = null;
                 print("</ul>\n");
+                $reDo = true;
             }
         }
     }
