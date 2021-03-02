@@ -4,6 +4,15 @@
 ### h3
 #### h4 (Should be read as h3)
 
+**Text using <b>.
+
+//Text using <i>.
+~~Text using <del>.
+__Text using <u>.
+
+Text having words in **bold**, //italic//, ~~deleted~~, __underlined__. And some other mixed **bold AND //bold italic// and ~~bold deleted~~**.
+
+Text attributes __underlined, plus ~~deleted having underlined stop now__ then deleted after~~.
 
 Below, headers with spaces at the beginning of the line:
  # Missed h1, there's a space as a first character.
@@ -62,9 +71,11 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
 >
 
 # Unordered list
-
+Below, four lines. The first and last won't have a star at the beginning.
+Line without * at the beginning
 * line one
 *line two
+Line without * at the beginning
 
 * another first line
 *another second line

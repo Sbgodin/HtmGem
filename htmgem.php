@@ -39,12 +39,22 @@ echo(<<<EOL
 <body>
 EOL);
 
+function addTextAttributes($line) {
+    $output = $line;
+    $output = preg_replace("#__([^_]+)(?:__)?#", "<u>\$1</u>", $output);
+    $output = preg_replace("#//([^/]+)(?://)?#", "<i>\$1</i>", $output);
+    $output = preg_replace("#~~([^~]+)(?:~~)?#", "<del>\$1</del>", $output);
+    $output = preg_replace("#\*\*([^\*]+)(?:\*\*)?#", "<b>\$1</b>", $output);
+    return $output;
+}
+
 $mode = null;
 foreach ($fileLines as $line) {
     $reDo = true;
     $line1 = substr($line, 0, 1);
     $line2 = substr($line, 0, 2);
     $line3 = substr($line, 0, 3);
+    $line = htmlspecialchars($line, ENT_HTML5, "UTF-8", false);
     while ($reDo) {
         $reDo = false; # Change in modes need to redo one loop as they can’t handle the case
         if (is_null($mode)) {
@@ -77,12 +87,12 @@ foreach ($fileLines as $line) {
                     print("<p>&nbsp;</p>\n");
                 else
                     print("<p>".$quoteParts[1]."</p>\n");
-            } elseif ("*" == $line1) {
+            } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
                 $reDo = true;
                 print("<ul>\n");
             } else {
-                print("<p>".$line."</p>\n");
+                print("<p>".addTextAttributes($line)."</p>\n");
             }
         } elseif ("pre"==$mode) {
             if ("```" == $line3) {
@@ -105,7 +115,7 @@ foreach ($fileLines as $line) {
                 $reDo=true;
             }
         } elseif ("ul"==$mode) {
-            if ("*" == $line1) {
+            if ("*" == $line1 && "**" != $line2) {
                 preg_match("/^\*\s*(.*)$/", $line, $ulParts);
                 $li = $ulParts[1];
                 if (empty($li))

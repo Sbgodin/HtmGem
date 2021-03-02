@@ -11,3 +11,4 @@
 * On links indicate whether it's on Gemini or Www or image.
 * Command line API for script and testing.
 * Manage bold, italic, underline on one physical line.
+* Prevent infinite loop if errors occurs with reDo
