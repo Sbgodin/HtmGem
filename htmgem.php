@@ -75,12 +75,13 @@ function addTextAttributes(&$line) {
  * Escapes the HTML entities yet contained in the Gemtext, keeps multiple spaces.
  * @param $text1, $text2 texts to process
  */
-function htmlEscape(&$text1, &$text2=null) {
-    $text1 = htmlspecialchars($text1, ENT_HTML5, "UTF-8", false);
+function htmlEscape(&$text) {
+    $text = htmlspecialchars($text, ENT_HTML5, "UTF-8", false);
+}
 
+function keepSpaces(&$text) {
     # https://en.wikipedia.org/wiki/Whitespace_character#Unicode
-    $text1 = preg_replace("#  #", "&puncsp;&puncsp;", $text1); #TODO: a way to not touch single spaces as "&ensp;" > " "
-    if (!is_null($text2)) return htmlEscape($text2);
+    $text = preg_replace("#  #", "&puncsp;&puncsp;", $text);
 }
 
 $mode = null;
@@ -100,6 +101,7 @@ foreach ($fileLines as $line) {
                 $h_level = strlen($sharps[1]);
                 $text = $sharps[2];
                 htmlEscape($text);
+                keepSpaces($text);
                 switch ($h_level) {
                     case 1: print("<h1>".$text."</h1>\n"); break;
                     case 2: print("<h2>".$text."</h2>\n"); break;
@@ -110,12 +112,14 @@ foreach ($fileLines as $line) {
                 $url_link = $linkParts[1];
                 $url_label = $linkParts[2];
                 if (empty($url_label)) $url_label = $url_link;
-                htmlEscape($url_link, $url_label);
+                htmlEscape($url_link);
+                keepSpaces($url_link);
+                htmlEscape($url_label);
+                keepSpaces($url_label);
                 if ($mode_textAttributes) addTextAttributes($url_label);
                 print("<p><a href='".$url_link."'>".$url_label."</a></p>\n");
             } elseif ('"""' == $line3) {
                 $mode_textAttributes = !$mode_textAttributes;
-                $reDo = true;
             } elseif ("```" == $line3) {
                 $mode="pre";
                 print("<pre>\n");
@@ -128,6 +132,7 @@ foreach ($fileLines as $line) {
                     print("<p>&nbsp;</p>\n");
                 else
                     htmlEscape($quote);
+                    keepSpaces($quote);
                     print("<p>".$quote."</p>\n");
             } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
@@ -135,6 +140,7 @@ foreach ($fileLines as $line) {
                 print("<ul>\n");
             } else {
                 htmlEscape($line);
+                keepSpaces($line);
                 if ($mode_textAttributes) addTextAttributes($line);
                 print("<p>$line</p>\n");
             }
@@ -155,6 +161,7 @@ foreach ($fileLines as $line) {
                     print("<p>&nbsp;</p>\n");
                 else
                     htmlEscape($quote);
+                    keepSpaces($quote);
                     print("<p>".$quote."</p>\n");
             } else {
                 print("</blockquote>\n");
@@ -169,6 +176,7 @@ foreach ($fileLines as $line) {
                     print("<li>&nbsp;\n");
                 else
                     htmlEscape($li);
+                    keepSpaces($li);
                     print("<li>".$li."\n");
             } else {
                 $mode = null;
@@ -176,7 +184,6 @@ foreach ($fileLines as $line) {
                 $reDo = true;
             }
         }
-        $line = "";
     }
 }
 
