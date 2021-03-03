@@ -11,13 +11,19 @@ body {
 }
 
 p {
-	margin-bottom: 0;
-	padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 h1,h2,h3{
 	line-height:1.2;
 	color: #66f;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 h1 {
@@ -33,9 +39,9 @@ blockquote {
 }
 
 ul {
-	margin-left: 0;
-	padding-left: 0;
-	padding-bottom: 1em;
+	margin: 0;
+    margin-bottom: 1em;
+	padding: 0;
 }
 
 li {

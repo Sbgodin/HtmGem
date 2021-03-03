@@ -87,15 +87,20 @@ function keepSpaces(&$text) {
 $mode = null;
 $mode_textAttributes = true;
 foreach ($fileLines as $line) {
-    $reDo = true;
-    $line1 = substr($line, 0, 1);
-    $line2 = substr($line, 0, 2);
-    $line3 = substr($line, 0, 3);
-    while ($reDo) {
-        $reDo = false; # Change in modes need to redo one loop as they can’t handle the case
+    $reDoCount = 0;
+    while (true) {
+        if ($reDoCount>1) die("Too many loops");
+        $reDoCount += 1;
+        $line1 = substr($line, 0, 1); // $line can be modified
+        $line2 = substr($line, 0, 2); // in the meantime.
+        $line3 = substr($line, 0, 3);
         if (is_null($mode)) {
             if (empty($line)) {
                 print("<p>&nbsp;</p>\n");
+            } elseif (b"\xEF\xBB\xBF" == $line3) {
+                # Removes the BOM
+                $line = substr($line, 3);
+                continue;
             } elseif ("#" == $line1) {
                 preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
                 $h_level = strlen($sharps[1]);
@@ -136,8 +141,8 @@ foreach ($fileLines as $line) {
                     print("<p>".$quote."</p>\n");
             } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
-                $reDo = true;
                 print("<ul>\n");
+                continue;
             } else {
                 htmlEscape($line);
                 keepSpaces($line);
@@ -164,9 +169,9 @@ foreach ($fileLines as $line) {
                     keepSpaces($quote);
                     print("<p>".$quote."</p>\n");
             } else {
-                print("</blockquote>\n");
                 $mode=null;
-                $reDo=true;
+                print("</blockquote>\n");
+                continue;
             }
         } elseif ("ul"==$mode) {
             if ("*" == $line1 && "**" != $line2) {
@@ -181,9 +186,10 @@ foreach ($fileLines as $line) {
             } else {
                 $mode = null;
                 print("</ul>\n");
-                $reDo = true;
+                continue;
             }
         }
+        break; // Do one loop, except if required
     }
 }
 
