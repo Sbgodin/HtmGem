@@ -37,24 +37,59 @@ echo(<<<EOL
 </style>
 </head>
 <body>
+
 EOL);
 
-function addTextAttributes($line) {
-    $output = $line;
-    $output = preg_replace("#__([^_]+)(?:__)?#", "<u>\$1</u>", $output);
-    $output = preg_replace("#//([^/]+)(?://)?#", "<i>\$1</i>", $output);
-    $output = preg_replace("#~~([^~]+)(?:~~)?#", "<del>\$1</del>", $output);
-    $output = preg_replace("#\*\*([^\*]+)(?:\*\*)?#", "<b>\$1</b>", $output);
-    return $output;
+/**
+ * Replaces markups things like __underlined__ to <u>underlined</u>.
+ * @param $instruction the characters to replace, ex. _
+ * @param $markup the markup to replace to, ex. "u" to get <u>…</u>
+ * @param &$text where to replace.
+ */
+function markupPreg($instruction, $markup, &$text) {
+    #return preg_replace("#{$instruction}((?!{$instruction}.)+)(?:{$instruction})?#", "<{$markup}>$1</{$markup}>", $text);
+    $output = $text;
+
+    # Replaces couples "__word__" into "<i>word</i>".
+    $output = preg_replace("#${instruction}(.+?)${instruction}#", "<{$markup}>$1</{$markup}>", $output);
+
+    # Replaces a remaining __ into "<i>…</i>" to the end of the line.
+    $output = preg_replace("#${instruction}(.+)#", "<{$markup}>$1</{$markup}>", $output);
+
+    $text = $output;
+}
+
+
+/**
+ * Adds text attributes sucj as underline, bold, … to $line
+ * @param $line the line to process
+ */
+function addTextAttributes(&$line) {
+    markupPreg("__",   "u",   $line);
+    markupPreg("\*\*", "b",   $line);
+    markupPreg("//",   "i",   $line);
+    markupPreg("~~",   "del", $line);
+}
+
+/**
+ * Escapes the HTML entities yet contained in the Gemtext, keeps multiple spaces.
+ * @param $text1, $text2 texts to process
+ */
+function htmlEscape(&$text1, &$text2=null) {
+    $text1 = htmlspecialchars($text1, ENT_HTML5, "UTF-8", false);
+
+    # https://en.wikipedia.org/wiki/Whitespace_character#Unicode
+    $text1 = preg_replace("#  #", "&puncsp;&puncsp;", $text1); #TODO: a way to not touch single spaces as "&ensp;" > " "
+    if (!is_null($text2)) return htmlEscape($text2);
 }
 
 $mode = null;
+$mode_textAttributes = true;
 foreach ($fileLines as $line) {
     $reDo = true;
     $line1 = substr($line, 0, 1);
     $line2 = substr($line, 0, 2);
     $line3 = substr($line, 0, 3);
-    $line = htmlspecialchars($line, ENT_HTML5, "UTF-8", false);
     while ($reDo) {
         $reDo = false; # Change in modes need to redo one loop as they can’t handle the case
         if (is_null($mode)) {
@@ -64,6 +99,7 @@ foreach ($fileLines as $line) {
                 preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
                 $h_level = strlen($sharps[1]);
                 $text = $sharps[2];
+                htmlEscape($text);
                 switch ($h_level) {
                     case 1: print("<h1>".$text."</h1>\n"); break;
                     case 2: print("<h2>".$text."</h2>\n"); break;
@@ -74,7 +110,12 @@ foreach ($fileLines as $line) {
                 $url_link = $linkParts[1];
                 $url_label = $linkParts[2];
                 if (empty($url_label)) $url_label = $url_link;
+                htmlEscape($url_link, $url_label);
+                if ($mode_textAttributes) addTextAttributes($url_label);
                 print("<p><a href='".$url_link."'>".$url_label."</a></p>\n");
+            } elseif ('"""' == $line3) {
+                $mode_textAttributes = !$mode_textAttributes;
+                $reDo = true;
             } elseif ("```" == $line3) {
                 $mode="pre";
                 print("<pre>\n");
@@ -86,19 +127,24 @@ foreach ($fileLines as $line) {
                 if (empty($quote))
                     print("<p>&nbsp;</p>\n");
                 else
-                    print("<p>".$quoteParts[1]."</p>\n");
+                    htmlEscape($quote);
+                    print("<p>".$quote."</p>\n");
             } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
                 $reDo = true;
                 print("<ul>\n");
             } else {
-                print("<p>".addTextAttributes($line)."</p>\n");
+                htmlEscape($line);
+                if ($mode_textAttributes) addTextAttributes($line);
+                print("<p>$line</p>\n");
             }
         } elseif ("pre"==$mode) {
             if ("```" == $line3) {
                 $mode=null;
                 print("</pre>\n");
             } else {
+                htmlEscape($line);
+                if ($mode_textAttributes) addTextAttributes($line);
                 print($line."\n");
             }
         } elseif ("quote"==$mode) {
@@ -108,6 +154,7 @@ foreach ($fileLines as $line) {
                 if (empty($quote))
                     print("<p>&nbsp;</p>\n");
                 else
+                    htmlEscape($quote);
                     print("<p>".$quote."</p>\n");
             } else {
                 print("</blockquote>\n");
@@ -121,16 +168,18 @@ foreach ($fileLines as $line) {
                 if (empty($li))
                     print("<li>&nbsp;\n");
                 else
-                    print("<li>".$ulParts[1]."\n");
+                    htmlEscape($li);
+                    print("<li>".$li."\n");
             } else {
                 $mode = null;
                 print("</ul>\n");
                 $reDo = true;
             }
         }
+        $line = "";
     }
 }
 
+echo "</body>\n</html>\n";
 ob_end_flush();
-
 ?>

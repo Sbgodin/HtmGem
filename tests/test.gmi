@@ -4,15 +4,19 @@
 ### h3
 #### h4 (Should be read as h3)
 
-**Text using <b>.
+Four spaces between the quotes "    "
+
+** Text using <b>.
 
 //Text using <i>.
 ~~Text using <del>.
 __Text using <u>.
 
-Text having words in **bold**, //italic//, ~~deleted~~, __underlined__. And some other mixed **bold AND //bold italic// and ~~bold deleted~~**.
+Text having words in **bold**, //italic//, ~~deleted~~, __underlined__.
+And some other mixed: **//bold italic// ~~bold deleted~~** //~~**italic deleted bold.
 
-Text attributes __underlined, plus ~~deleted having underlined stop now__ then deleted after~~.
+__This line starts with two _ and none at the end.
+The formatting stays in the physical line.
 
 Below, headers with spaces at the beginning of the line:
  # Missed h1, there's a space as a first character.
@@ -39,6 +43,7 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
 => ...   
 
 # Preformatted text
+"""
 ``` Preformatted text
 At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
 
@@ -50,8 +55,15 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
                 ||----w |
                 ||     ||
 
+  <b>Not in HTML bold</b> and not in **markup bold**
 
 ```
+"""
+
+```
+Preformatted text with **bold**, //italic//, and so on…
+```
+
 # Quotations
 
 ## Two consecutives lines of quotations
