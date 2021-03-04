@@ -10,3 +10,5 @@
 * Use first h1 as the HTML page title on get in config?
 * On links indicate whether it's on Gemini or Www or image.
 * Command line API for script and testing.
+* Manage anchors
+* Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
