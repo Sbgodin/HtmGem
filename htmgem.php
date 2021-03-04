@@ -116,12 +116,14 @@ foreach ($fileLines as $line) {
                 preg_match("/^=>\s*([^\s]+)\s*(.*)$/", $line, $linkParts);
                 $url_link = $linkParts[1];
                 $url_label = $linkParts[2];
-                if (empty($url_label)) $url_label = $url_link;
-                htmlEscape($url_link);
-                keepSpaces($url_link);
-                htmlEscape($url_label);
-                keepSpaces($url_label);
-                if ($mode_textAttributes) addTextAttributes($url_label);
+                if (empty($url_label)) {
+                    $url_label = $url_link;
+                } else {
+                    // the label is humain-made, apply formatting
+                    htmlEscape($url_label);
+                    keepSpaces($url_label);
+                    if ($mode_textAttributes) addTextAttributes($url_label);
+                }
                 print("<p><a href='".$url_link."'>".$url_label."</a></p>\n");
             } elseif ('"""' == $line3) {
                 $mode_textAttributes = !$mode_textAttributes;
