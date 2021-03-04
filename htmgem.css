@@ -48,6 +48,7 @@ a {
     margin: -1.35rem;
     color:#820;
     text-decoration: none;
+    text-justify: none;
 }
 
 a:before {
