@@ -12,3 +12,4 @@
 * Command line API for script and testing.
 * Manage anchors
 * Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
+* Check unicode capability

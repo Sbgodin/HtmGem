@@ -20,6 +20,11 @@ p, pre {
     padding: 0;
 }
 
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 li {
     margin: 0;
     padding: 0;

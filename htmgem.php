@@ -75,7 +75,7 @@ function addTextAttributes(&$line) {
  * @param $text1, $text2 texts to process
  */
 function htmlEscape(&$text) {
-    $text = htmlspecialchars($text, ENT_HTML5, "UTF-8", false);
+    $text = htmlspecialchars($text, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
     $text = mb_ereg_replace("\ ([?!:;»€$])", "&#8239;\\1", $text); # Espace fine insécable
     $text = mb_ereg_replace("([«])\ ", "\\1&#8239;", $text); # Espace fine insécable
 }
@@ -94,7 +94,7 @@ foreach ($fileLines as $line) {
             if (empty($line)) {
                 print("<p>&nbsp;</p>\n");
             } elseif (b"\xEF\xBB\xBF" == $line3) {
-                # Removes the BOM
+                # Removes the Byte Order Mark
                 $line = substr($line, 3);
                 continue;
             } elseif ("#" == $line1) {
