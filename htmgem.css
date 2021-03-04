@@ -10,9 +10,9 @@ body {
 	margin: auto;
 }
 
-p {
+p, ul {
     margin-top: 0;
-    margin-bottom: 1em;
+    margin-bottom: 0.3em;
     padding-top: 0;
     padding-bottom: 0;
 }
@@ -38,18 +38,8 @@ blockquote {
 	padding: 1rem;
 }
 
-ul {
-	margin: 0;
-    margin-bottom: 1em;
+ul, li {
 	padding: 0;
-}
-
-li {
-	padding: 0;
-}
-
-li:not(:last-child) {
-	margin-bottom: 0.5rem;
 }
 
 a {
