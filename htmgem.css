@@ -1,101 +1,106 @@
 html {
-	font-family: sans-serif;
-	font-size:1em;
-	color:#1E4147;
-	background-color:#fafafa;
+    font-family: sans-serif;
+    font-size:1rem;
+    color:#1E4147;
+    background-color:#fafafa;
 }
 
 body {
-	max-width: 1024px;
-	margin: auto;
+    max-width: 1024px;
+    margin: auto;
 }
 
-p, ul {
-    margin-top: 0;
-    margin-bottom: 0.3em;
-    padding-top: 0;
-    padding-bottom: 0;
+ul {
+    margin: 0.4rem 0;
+    padding: 0;
 }
 
-h1,h2,h3{
-	line-height:1.2;
-	color: #66f;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+p, pre {
+    margin: 0 0 0.3rem;
+    padding: 0;
 }
 
-h1 {
-	margin-top: 1em;
-	margin-bottom: 1em;
+li {
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2,h3 {
+    line-height:1.2;
+    color: #66f;
+    margin: 0;
+    padding: 0;
 }
 
 blockquote {
-	background-color: #eee;
-	border-left: 3px solid #444;
-	margin: 1rem -1rem 1rem calc(-1rem - 3px);
-	padding: 1rem;
-}
-
-ul, li {
-	padding: 0;
+    background-color: #eee;
+    border-left: 3px solid #444;
+    margin: 1rem -1rem 1rem calc(-1rem - 3px);
+    padding: 1rem;
 }
 
 a {
-	color:#820;
-	text-decoration: none;
+    margin: -1.35rem;
+    color:#820;
+    text-decoration: none;
+}
+
+a:before {
+    content: "🔗 ";
 }
 
 a:visited {
-	color: #868;
+    color: #868;
 }
 
 pre {
-	background-color: #eee;
-	margin: 0 -1rem;
-	padding: 1rem;
-	overflow-x: auto;
+    background-color: #eee;
+    margin: 0 -1rem;
+    padding: 1rem;
+    overflow-x: auto;
 }
 
 @media only screen and (max-width: 1024px) {
-	body {
-		margin: 3em;
-	}
-	h1 {
-		font-size: 4em;
-	}
-	h2 {
-		font-size: 3.5em;
-	}
-	h3 {
-		font-size: 3em;
-	}
-	p, pre, ul {
-		font-size: 2.6em;
-	}
+    a {
+        margin: -4rem;
+    }
+    body {
+        margin: 3rem;
+    }
+    h1 {
+        font-size: 4rem;
+    }
+    h2 {
+        font-size: 3.5rem;
+    }
+    h3 {
+        font-size: 3rem;
+    }
+    p, pre, ul {
+        font-size: 2.6rem;
+    }
 }
 
 @media(prefers-color-scheme:dark) {
-	html {
-		background-color: #111;
-		color: #eee;
-	}
+    html {
+        background-color: #111;
+        color: #eee;
+    }
 
-	blockquote {
-		background-color: #000;
-	}
+    blockquote {
+        background-color: #000;
+    }
 
-	pre {
-		background-color: #222;
-	}
-	
-	a {
-		color: #0087BD;
-	}
+    pre {
+        background-color: #222;
+    }
+    
+    a {
+        color: #0087BD;
+    }
 
-	a:visited {
-		color: #802200;
-	}
+    a:visited {
+        color: #802200;
+    }
 }
 

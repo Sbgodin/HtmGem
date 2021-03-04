@@ -54,7 +54,7 @@ function markupPreg($instruction, $markup, &$text) {
     $output = preg_replace("#${instruction}(.+?)${instruction}#", "<{$markup}>$1</{$markup}>", $output);
 
     # Replaces a remaining __ into "<i>…</i>" to the end of the line.
-    $output = preg_replace("#${instruction}(.+)#", "<{$markup}>$1</{$markup}>", $output);
+    $output = preg_replace("#${instruction}(.+)?#", "<{$markup}>$1</{$markup}>", $output);
 
     $text = $output;
 }
@@ -66,8 +66,8 @@ function markupPreg($instruction, $markup, &$text) {
  */
 function addTextAttributes(&$line) {
     markupPreg("__",   "u",   $line);
-    markupPreg("\*\*", "b",   $line);
-    markupPreg("//",   "i",   $line);
+    markupPreg("\*\*", "strong",   $line);
+    markupPreg("//",   "em",   $line);
     markupPreg("~~",   "del", $line);
 }
 
@@ -77,11 +77,7 @@ function addTextAttributes(&$line) {
  */
 function htmlEscape(&$text) {
     $text = htmlspecialchars($text, ENT_HTML5, "UTF-8", false);
-}
-
-function keepSpaces(&$text) {
-    # https://en.wikipedia.org/wiki/Whitespace_character#Unicode
-    $text = preg_replace("#  #", "&puncsp;&puncsp;", $text);
+    $text = preg_replace("#\ ([?!;])#", "&#8239;\$1", $text); # Espace fine insécable
 }
 
 $mode = null;
@@ -106,23 +102,20 @@ foreach ($fileLines as $line) {
                 $h_level = strlen($sharps[1]);
                 $text = $sharps[2];
                 htmlEscape($text);
-                keepSpaces($text);
                 switch ($h_level) {
                     case 1: print("<h1>".$text."</h1>\n"); break;
                     case 2: print("<h2>".$text."</h2>\n"); break;
                     case 3: print("<h3>".$text."</h3>\n"); break;
                 }
             } elseif ("=>" == $line2) {
-                preg_match("/^=>\s*([^\s]+)\s*(.*)$/", $line, $linkParts);
+                preg_match("/^=>\s*([^\s]+)(\s+(.*))?$/", $line, $linkParts);
                 $url_link = $linkParts[1];
                 $url_label = $linkParts[2];
-                if (empty($url_label)) {
+                if (empty(trim($url_label))) {
                     $url_label = $url_link;
                 } else {
                     // the label is humain-made, apply formatting
                     htmlEscape($url_label);
-                    keepSpaces($url_label);
-                    if ($mode_textAttributes) addTextAttributes($url_label);
                 }
                 print("<p><a href='".$url_link."'>".$url_label."</a></p>\n");
             } elseif ('"""' == $line3) {
@@ -139,7 +132,7 @@ foreach ($fileLines as $line) {
                     print("<p>&nbsp;</p>\n");
                 else
                     htmlEscape($quote);
-                    keepSpaces($quote);
+                    if ($mode_textAttributes) addTextAttributes($line);
                     print("<p>".$quote."</p>\n");
             } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
@@ -147,7 +140,6 @@ foreach ($fileLines as $line) {
                 continue;
             } else {
                 htmlEscape($line);
-                keepSpaces($line);
                 if ($mode_textAttributes) addTextAttributes($line);
                 print("<p>$line</p>\n");
             }
@@ -157,7 +149,6 @@ foreach ($fileLines as $line) {
                 print("</pre>\n");
             } else {
                 htmlEscape($line);
-                if ($mode_textAttributes) addTextAttributes($line);
                 print($line."\n");
             }
         } elseif ("quote"==$mode) {
@@ -168,7 +159,6 @@ foreach ($fileLines as $line) {
                     print("<p>&nbsp;</p>\n");
                 else
                     htmlEscape($quote);
-                    keepSpaces($quote);
                     print("<p>".$quote."</p>\n");
             } else {
                 $mode=null;
@@ -183,7 +173,7 @@ foreach ($fileLines as $line) {
                     print("<li>&nbsp;\n");
                 else
                     htmlEscape($li);
-                    keepSpaces($li);
+                    addTextAttributes($li);
                     print("<li>".$li."\n");
             } else {
                 $mode = null;

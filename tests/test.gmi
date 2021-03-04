@@ -35,7 +35,7 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
 => Link link with label
 =>Link_without_label
 =>Link link with label
-
+=>gemini://site.com gemini://site.com
 
 ### Links made of only dots, and spaces after
 => . 
@@ -61,7 +61,7 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
 """
 
 ```
-Preformatted text with **bold**, //italic//, and so on… But still not <b>HTML stuff.
+Preformatted text with **bold**, //italic//, and so on… But still not <b>HTML</b> stuff.
 ```
 
 # Quotations
