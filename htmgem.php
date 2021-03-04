@@ -47,14 +47,13 @@ EOL);
  * @param &$text where to replace.
  */
 function markupPreg($instruction, $markup, &$text) {
-    #return preg_replace("#{$instruction}((?!{$instruction}.)+)(?:{$instruction})?#", "<{$markup}>$1</{$markup}>", $text);
     $output = $text;
 
     # Replaces couples "__word__" into "<i>word</i>".
-    $output = preg_replace("#${instruction}(.+?)${instruction}#", "<{$markup}>$1</{$markup}>", $output);
+    $output = mb_ereg_replace("${instruction}(.+?)${instruction}", "<{$markup}>\\1</{$markup}>", $output);
 
     # Replaces a remaining __ into "<i>…</i>" to the end of the line.
-    $output = preg_replace("#${instruction}(.+)?#", "<{$markup}>$1</{$markup}>", $output);
+    $output = mb_ereg_replace("${instruction}(.+)?", "<{$markup}>\\1</{$markup}>", $output);
 
     $text = $output;
 }
@@ -77,7 +76,8 @@ function addTextAttributes(&$line) {
  */
 function htmlEscape(&$text) {
     $text = htmlspecialchars($text, ENT_HTML5, "UTF-8", false);
-    $text = preg_replace("#\ ([?!;])#", "&#8239;\$1", $text); # Espace fine insécable
+    $text = mb_ereg_replace("\ ([?!:;»€$])", "&#8239;\\1", $text); # Espace fine insécable
+    $text = mb_ereg_replace("([«])\ ", "\\1&#8239;", $text); # Espace fine insécable
 }
 
 $mode = null;

@@ -18,4 +18,8 @@ With Nginx, you can use:
 rewrite ^(.+\.gmi)$ /htmgem.php?url=$1 last;
 ```
 
+## Install
+
+php-mbstring is required
+
 So the page is available at [http://thesite/htmgem.php/directory/page.gmi].
