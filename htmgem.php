@@ -177,7 +177,7 @@ foreach ($fileLines as $line) {
                         echo "<li>&nbsp;\n";
                     } else {
                         htmlPrepare($li);
-                        if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
+                        if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($li);
                         echo "<li>".$li."\n";
                     }
                 } else {
