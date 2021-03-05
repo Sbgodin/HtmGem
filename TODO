@@ -22,3 +22,4 @@
 * Search all cases where a narrow no-break space would apply
 * Manage logging (cache refresh, debug)
 * Split the main loop in two: one part to decode the text to internal language, the other to make the HTML
+* Something to build gmi files and connect it afterwards to generate HTML : Abstract --> gemtext --> HTML. This would allow to make services output on both Gemini and HTML.
