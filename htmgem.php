@@ -13,35 +13,16 @@ else
 $GMI_DIR = $_SERVER['DOCUMENT_ROOT'];
 
 $filePath = $GMI_DIR.$url;
-$fileContent = @file_get_contents($filePath);
-if (!$fileContent) {
+$fileContents = @file_get_contents($filePath);
+if (!$fileContents) {
     http_response_code(404);
     die("404: $url");
 }
 
-$fileLines = preg_split("/\n/", $fileContent);
+# Removes the Byte Order Mark
+$fileContents = preg_replace("/\xEF\xBB\xBF/", "", $fileContents);
 
-ob_start();
-
-
-echo(<<<EOL
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <title>HTM Gem</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- link type="text/css" rel="StyleSheet" href="/htmgem.css" -->
-    <style>
-
-EOL
-);
-include("htmgem.css");
-echo(<<<EOL
-</style>
-</head>
-<body>
-
-EOL);
+$fileLines = preg_split("/\n/", $fileContents);
 
 /**
  * Replaces markups things like __underlined__ to <u>underlined</u>.
@@ -73,16 +54,21 @@ function addTextAttributes(&$line) {
     markupPreg("~~",   "del", $line);
 }
 
+define("NARROW_NO_BREAK_SPACE", "&#8239;");
+
 /**
- * Escapes the HTML entities yet contained in the Gemtext, keeps multiple spaces.
+ * Prepares the raw text to be displayed in HTML environment:
+ * * Escapes the HTML entities yet contained in the Gemtext.
+ * * Puts thin unbrakable spaces before some characters.
  * @param $text1, $text2 texts to process
  */
-function htmlEscape(&$text) {
+function htmlPrepare(&$text) {
     $text = htmlspecialchars($text, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
-    $text = mb_ereg_replace("\ ([?!:;»€$])", "&#8239;\\1", $text); # Espace fine insécable
-    $text = mb_ereg_replace("([«])\ ", "\\1&#8239;", $text); # Espace fine insécable
+    $text = mb_ereg_replace("\ ([?!:;»€$])", NARROW_NO_BREAK_SPACE."\\1", $text);
+    $text = mb_ereg_replace("([«])\ ", "\\1".NARROW_NO_BREAK_SPACE, $text); # Espace fine insécable
 }
 
+ob_start();
 $mode = null;
 $mode_textAttributes = true;
 foreach ($fileLines as $line) {
@@ -95,77 +81,73 @@ foreach ($fileLines as $line) {
         $line3 = substr($line, 0, 3);
         if (is_null($mode)) {
             if (empty($line)) {
-                print("<p>&nbsp;</p>\n");
-            } elseif (b"\xEF\xBB\xBF" == $line3) {
-                # Removes the Byte Order Mark
-                $line = substr($line, 3);
-                continue;
+                echo "<p>&nbsp;</p>\n";
             } elseif ("#" == $line1) {
                 preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
                 $h_level = strlen($sharps[1]);
                 $text = $sharps[2];
-                htmlEscape($text);
+                htmlPrepare($text);
                 switch ($h_level) {
-                    case 1: print("<h1>".$text."</h1>\n"); break;
-                    case 2: print("<h2>".$text."</h2>\n"); break;
-                    case 3: print("<h3>".$text."</h3>\n"); break;
+                    case 1: echo "<h1>".$text."</h1>\n"; break;
+                    case 2: echo "<h2>".$text."</h2>\n"; break;
+                    case 3: echo "<h3>".$text."</h3>\n"; break;
                 }
             } elseif ("=>" == $line2) {
                 preg_match("/^=>\s*([^\s]+)(\s+(.*))?$/", $line, $linkParts);
                 $url_link = $linkParts[1];
-                $url_label = $linkParts[2];
+                $url_label = @$linkParts[2];
                 if (empty(trim($url_label))) {
                     $url_label = $url_link;
                 } else {
                     // the label is humain-made, apply formatting
-                    htmlEscape($url_label);
+                    htmlPrepare($url_label);
                 }
-                print("<p><a href='".$url_link."'>".$url_label."</a></p>\n");
+                echo "<p><a href='".$url_link."'>".$url_label."</a></p>\n";
             } elseif ('"""' == $line3) {
                 $mode_textAttributes = !$mode_textAttributes;
             } elseif ("```" == $line3) {
                 $mode="pre";
-                print("<pre>\n");
+                echo "<pre>\n";
             } elseif (">" == $line1) {
                 $mode = "quote";
                 preg_match("/^>\s*(.*)$/", $line, $quoteParts);
                 $quote = $quoteParts[1];
-                print("<blockquote>\n");
+                echo "<blockquote>\n";
                 if (empty($quote))
-                    print("<p>&nbsp;</p>\n");
+                    echo "<p>&nbsp;</p>\n";
                 else
-                    htmlEscape($quote);
+                    htmlPrepare($quote);
                     if ($mode_textAttributes) addTextAttributes($line);
-                    print("<p>".$quote."</p>\n");
+                    echo "<p>".$quote."</p>\n";
             } elseif ("*" == $line1 && "**" != $line2) {
                 $mode = "ul";
-                print("<ul>\n");
+                echo "<ul>\n";
                 continue;
             } else {
-                htmlEscape($line);
+                htmlPrepare($line);
                 if ($mode_textAttributes) addTextAttributes($line);
-                print("<p>$line</p>\n");
+                echo "<p>$line</p>\n";
             }
         } elseif ("pre"==$mode) {
             if ("```" == $line3) {
                 $mode=null;
-                print("</pre>\n");
+                echo "</pre>\n";
             } else {
-                htmlEscape($line);
-                print($line."\n");
+                htmlPrepare($line);
+                echo $line."\n";
             }
         } elseif ("quote"==$mode) {
             if (">" == $line1) {
                 preg_match("/^>\s*(.*)$/", $line, $quoteParts);
                 $quote = $quoteParts[1];
                 if (empty($quote))
-                    print("<p>&nbsp;</p>\n");
+                    echo "<p>&nbsp;</p>\n";
                 else
-                    htmlEscape($quote);
-                    print("<p>".$quote."</p>\n");
+                    htmlPrepare($quote);
+                    echo "<p>".$quote."</p>\n";
             } else {
                 $mode=null;
-                print("</blockquote>\n");
+                echo "</blockquote>\n";
                 continue;
             }
         } elseif ("ul"==$mode) {
@@ -173,21 +155,45 @@ foreach ($fileLines as $line) {
                 preg_match("/^\*\s*(.*)$/", $line, $ulParts);
                 $li = $ulParts[1];
                 if (empty($li))
-                    print("<li>&nbsp;\n");
+                    echo "<li>&nbsp;\n";
                 else
-                    htmlEscape($li);
+                    htmlPrepare($li);
                     addTextAttributes($li);
-                    print("<li>".$li."\n");
+                    echo "<li>".$li."\n";
             } else {
                 $mode = null;
-                print("</ul>\n");
+                echo "</ul>\n";
                 continue;
             }
         }
-        break; // Do one loop, except if required
+        break;
     }
 }
+$body = ob_get_contents();
+ob_clean();
 
+# Gets the page title: the first occurrence with # at the line start
+mb_ereg("#\s*([^\n]+)\n", $fileContents, $matches);
+$page_title = @$matches[1];
+
+# <!-- link type="text/css" rel="StyleSheet" href="/htmgem.css" -->
+echo <<<EOL
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>$page_title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+EOL;
+include("htmgem.css");
+echo <<<EOL
+</style>
+</head>
+<body>
+EOL;
+
+echo "\n".$body;
 echo "</body>\n</html>\n";
 ob_end_flush();
+
 ?>

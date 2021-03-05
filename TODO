@@ -13,3 +13,9 @@
 * Manage anchors
 * Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
 * Check unicode capability
+* Manage different type of carriage return: CR CR/LF LF
+* Do not output an empty line for the last carriage return of the document
+* Test on a shared hosting
+* Be able to navigate (custom the links) when using htmgen.php?url=…
+* Text localisation
+* Search all cases where a narrow no-break space would apply
