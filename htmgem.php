@@ -73,8 +73,9 @@ $mode = null;
 $mode_textAttributes = true;
 foreach ($fileLines as $line) {
     $reDoCount = 0;
+    $mode_textAttributes_temp = false;
     while (true) {
-        if ($reDoCount>1) die("Too many loops");
+        if ($reDoCount>2) die("Too many loops: ".$mode);
         $reDoCount += 1;
         $line1 = substr($line, 0, 1); // $line can be modified
         $line2 = substr($line, 0, 2); // in the meantime.
@@ -82,6 +83,16 @@ foreach ($fileLines as $line) {
         if (is_null($mode)) {
             if (empty($line)) {
                 echo "<p>&nbsp;</p>\n";
+            } elseif ('^^^' == $line3) {
+                $mode_textAttributes = !$mode_textAttributes;
+            } elseif ('^' == $line1) {
+                if (preg_match("/^\^\s*(.*)$/", $line, $parts)) {
+                    $line = $parts[1];
+                    $mode_textAttributes_temp = true;
+                } else {
+                    $mode = "raw";
+                }
+                continue;
             } elseif ("#" == $line1) {
                 preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
                 $h_level = strlen($sharps[1]);
@@ -93,18 +104,20 @@ foreach ($fileLines as $line) {
                     case 3: echo "<h3>".$text."</h3>\n"; break;
                 }
             } elseif ("=>" == $line2) {
-                preg_match("/^=>\s*([^\s]+)(\s+(.*))?$/", $line, $linkParts);
-                $url_link = $linkParts[1];
-                $url_label = @$linkParts[2];
-                if (empty(trim($url_label))) {
-                    $url_label = $url_link;
+                if (preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $linkParts)) {
+                    $url_link = $linkParts[1];
+                    $url_label = @$linkParts[2];
+                    if (empty(trim($url_label))) {
+                        $url_label = $url_link;
+                    } else {
+                        // the label is humain-made, apply formatting
+                        htmlPrepare($url_label);
+                    }
+                    echo "<p><a href='".$url_link."'>".$url_label."</a></p>\n";
                 } else {
-                    // the label is humain-made, apply formatting
-                    htmlPrepare($url_label);
+                    $mode = "raw";
+                    continue;
                 }
-                echo "<p><a href='".$url_link."'>".$url_label."</a></p>\n";
-            } elseif ('"""' == $line3) {
-                $mode_textAttributes = !$mode_textAttributes;
             } elseif ("```" == $line3) {
                 $mode="pre";
                 echo "<pre>\n";
@@ -117,56 +130,66 @@ foreach ($fileLines as $line) {
                     echo "<p>&nbsp;</p>\n";
                 else
                     htmlPrepare($quote);
-                    if ($mode_textAttributes) addTextAttributes($line);
+                if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
                     echo "<p>".$quote."</p>\n";
-            } elseif ("*" == $line1 && "**" != $line2) {
-                $mode = "ul";
+            } elseif ("* " == $line2) {
                 echo "<ul>\n";
+                $mode = "ul";
                 continue;
             } else {
+                $mode = "raw";
+                continue;
+            }
+        } else {
+            if ("raw"==$mode) {
                 htmlPrepare($line);
-                if ($mode_textAttributes) addTextAttributes($line);
+                if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
+                if (empty($line)) $line = "&nbsp;";
                 echo "<p>$line</p>\n";
-            }
-        } elseif ("pre"==$mode) {
-            if ("```" == $line3) {
-                $mode=null;
-                echo "</pre>\n";
-            } else {
-                htmlPrepare($line);
-                echo $line."\n";
-            }
-        } elseif ("quote"==$mode) {
-            if (">" == $line1) {
-                preg_match("/^>\s*(.*)$/", $line, $quoteParts);
-                $quote = $quoteParts[1];
-                if (empty($quote))
-                    echo "<p>&nbsp;</p>\n";
-                else
-                    htmlPrepare($quote);
-                    echo "<p>".$quote."</p>\n";
-            } else {
-                $mode=null;
-                echo "</blockquote>\n";
-                continue;
-            }
-        } elseif ("ul"==$mode) {
-            if ("*" == $line1 && "**" != $line2) {
-                preg_match("/^\*\s*(.*)$/", $line, $ulParts);
-                $li = $ulParts[1];
-                if (empty($li))
-                    echo "<li>&nbsp;\n";
-                else
-                    htmlPrepare($li);
-                    addTextAttributes($li);
-                    echo "<li>".$li."\n";
-            } else {
                 $mode = null;
-                echo "</ul>\n";
-                continue;
+            } elseif ("pre"==$mode) {
+                if ("```" == $line3) {
+                    echo "</pre>\n";
+                    $mode = null;
+                } else {
+                    htmlPrepare($line);
+                    echo $line."\n";
+                }
+            } elseif ("quote"==$mode) {
+                if (">" == $line1) {
+                    preg_match("/^>\s*(.*)$/", $line, $quoteParts);
+                    $quote = $quoteParts[1];
+                    if (empty($quote))
+                        echo "<p>&nbsp;</p>\n";
+                    else
+                        htmlPrepare($quote);
+                        echo "<p>".$quote."</p>\n";
+                } else {
+                    echo "</blockquote>\n";
+                    $mode = null;
+                    continue;
+                }
+            } elseif ("ul"==$mode) {
+                if ("* " == $line2) {
+                    preg_match("/^\*\s*(.*)$/", $line, $ulParts);
+                    $li = $ulParts[1];
+                    if (empty($li)) {
+                        echo "<li>&nbsp;\n";
+                    } else {
+                        htmlPrepare($li);
+                        if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
+                        echo "<li>".$li."\n";
+                    }
+                } else {
+                    echo "</ul>\n";
+                    $mode = null;
+                    continue;
+                }
+            } else {
+                die("Unexpected mode: $mode!");
             }
         }
-        break;
+        break; // exits the while(true) as no continue occured
     }
 }
 $body = ob_get_contents();

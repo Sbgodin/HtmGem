@@ -1,19 +1,117 @@
 # Test page
 
+* puce
+=> lien1
+=> lien2
+
+```
+The text as it is in the source code, in a preformatted block.
+```
+The text as it is rendered, of course the following examples will have identical preformatted content and rendered content.
+
+```
+* single line
+```
+* single line
+
+```
+* line one
+* line two
+```
+* line one
+* line two
+
+```
+*incorrect list because there's no space right after the star.
+```
+*incorrect list because there's no space right after the star.
+
+```
+Below, a line with just one star, must be rendered as is.
+*
+```
+Below, a line with just one star, must be rendered as is.
+*
+
+```
+Below, a line with one star and one space, must be a single <li>
+* 
+```
+Below, a line with one star and one space, must be a single <li>
+* 
+
+```
+Below, a line with one star and two spaces, must be a single <li>
+* 
+```
+Below, a line with one star and two spaces, must be a single <li>
+* 
+
+```
+Below, two lines with one star, must be single <li>
+* 
+* 
+```
+Below, two lines with one star, must be single <li>
+* 
+* 
+
+```
+# h1
+## h2
+### h3
+#### h4 (Should be read as h3)
+```
+# h1
 ## h2
 ### h3
 #### h4 (Should be read as h3)
 
-Four spaces between the quotes "    "
+```
+Four spaces between the quotes "    ", shrinked in HTML
+```
+Four spaces between the quotes "    ", shrinked in HTML
 
-** Text using <b>.
+```
+^^^
+Plain text link: https://website.com/
+^^^
+```
+^^^
+Plain text link: https://website.com/
+^^^
 
-//Text using <i>.
-~~Text using <del>.
-__Text using <u>.
+```
+Link with double slash: http://truc
+```
+Link with double slash: http://truc
 
-Text having words in **bold**, //italic//, ~~deleted~~, __underlined__.
-And some other mixed: **//bold italic// ~~bold deleted~~** //~~**italic deleted bold.
+```
+^ Link inside a single non-decorated line: http://truc 
+```
+^ Link inside a single non-decorated line: http://truc 
+
+```
+Below this line, just "=>" will be ignored and displayed as is.
+=>
+```
+Below this line, just "=> " will be ignored and displayed as is.
+=> 
+
+```
+=> gemini://somesite
+```
+=> gemini://somesite
+
+```
+=> gemini://somesite label of the website
+```
+=> gemini://somesite label of the website
+
+
+
+Du **gras**…
+Encore du **gras** !
 
 __This line starts with two _ and none at the end.
 The formatting stays in the physical line.
@@ -77,16 +175,12 @@ At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praese
 >
 >
 
-# Unordered list
-Below, four lines. The first and last won't have a star at the beginning.
-Line without * at the beginning
-* line one
-*line two
-Line without * at the beginning
 
-* another first line
-*another second line
+** Text using <b>.
 
-*single line
+//Text using <i>.
+~~Text using <del>.
+__Text using <u>.
 
-
+Text having words in **bold**, //italic//, ~~deleted~~, __underlined__.
+And some other mixed: **//bold italic// ~~bold deleted~~** //~~**italic deleted bold.

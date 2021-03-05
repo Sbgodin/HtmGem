@@ -3,6 +3,7 @@
 * manage 404: Display better errors.
 * alt texts on pre and quote?
 * a way to get the source of a page, using urlrewriting
+* options to activate the text decoration
 * HTML caching: Nginx tries the html, if not found use this script to build it
 * any error on one read line logs and goes to the next line, resetting modes
 * configuration: Fetch configuration in current dir, tries parents.
@@ -19,3 +20,4 @@
 * Be able to navigate (custom the links) when using htmgen.php?url=…
 * Text localisation
 * Search all cases where a narrow no-break space would apply
+* Manage logging (cache refresh, debug)
