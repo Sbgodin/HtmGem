@@ -66,6 +66,15 @@ function htmlPrepare(&$text) {
     $text = htmlspecialchars($text, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
     $text = mb_ereg_replace("\ ([?!:;»€$])", NARROW_NO_BREAK_SPACE."\\1", $text);
     $text = mb_ereg_replace("([«])\ ", "\\1".NARROW_NO_BREAK_SPACE, $text); # Espace fine insécable
+
+    # Below, "Em Dash" (U+2014, —) and "En Dash" (U+2013, –) make —–
+    #$text = mb_ereg_replace("([—–]) ([^—–.]+)( [—–]|\.)", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
+
+    # Adds no-break spaces to stick the (EM/EN dashes) to words : aaaaaa – bb – ccccc ==> aaaaaa –$bb$– ccccc
+    $text = mb_ereg_replace("([—–]) ([^—–.]+) ([—–])", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
+
+    # Adds no-break space to stick the (EM/EN dashes) to words : aaaaaa – bb. ==> aaaaaa –$bb.
+    $text = mb_ereg_replace("([—–]) ([^.]+).", "\\1".NARROW_NO_BREAK_SPACE."\\2.", $text);
 }
 
 ob_start();
