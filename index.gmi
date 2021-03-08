@@ -1,0 +1,34 @@
+# HtmGem, voir Gemini à travers HTTP
+Une fois les fichiers copiés dans votre hébergement, par exemple ///htmgem//, il ne reste qu’à ajouter une règle de ré-écriture d’URL (//URL Rewriting//). Si vous pouvez lire ce texte en ayant demandé //htmgem.php// avec le navigateur, il ne reste que cette dernière étape à franchir 😄
+
+### Nginx
+```
+# Ce texte doit être placé dans la configuration du serveur.
+DirectoryIndex index.php index.gmi index.html
+rewrite ^(.+\.gmi)$ htmgem/?url=$1;
+```
+
+### Apache
+```
+# Ce texte peut se placer à la racine du site dans un fichier ".htaccess".
+Index index.php index.gmi index.html
+RewriteEngine on
+RewriteRule ^(.+\.gmi)$ htmgem/?url=$1
+```
+
+Par la suite,
+* Quand un fichier se terminant par //.gmi// sera demandé, HtmGem le traduira à la volée en HTML.
+* Quand seul le répertoire sera demandé (http:/​/site.tld/path) le fichier //index.gmi// sera automatiquement choisi.
+
+## Tester HtmGem
+Il est supposé que HtmGem est installé à la racine du site dans un répertoire //HtmGem//. Sinon, il faudra simplement adapter les liens.
+
+🢂 Appeler cette présente page directement, en cliquant ci-après :
+=> index.gmi
+
+🢂 Enfin, pour vérifier que le fichier //index.gmi// est automatiquement appelé quand le fichier //**.gmi**// n’est pas indiqué :
+=> / Lien vers la racine du site
+
+# Quand tout marche…
+Parmi les fichiers distribués, seuls sont requis :
+* htmgem/index.php
