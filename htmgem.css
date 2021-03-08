@@ -63,6 +63,37 @@ a:visited {
     color: #868;
 }
 
+a.local:before {
+    content: "🛩️ ";
+    font-weight: bold;
+}
+
+a.gemini:before {
+    content: "🚀 ";
+}
+
+a.gopher:before {
+    content: "📜 ";
+}
+
+a.https:before {
+    content: "🕸️ ";
+    font-weight: bolder;
+}
+
+a.http:before {
+    content: "🕸️ ";
+    font-weight: lighter;
+}
+
+a.mumble:before {
+    content: "🎤 ";
+}
+
+a.mailto:before {
+    content: "✉️ ";
+}
+
 pre {
     background-color: #eee;
     margin: 0 -1rem;

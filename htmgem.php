@@ -128,13 +128,16 @@ foreach ($fileLines as $line) {
                 if (preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $linkParts)) {
                     $url_link = $linkParts[1];
                     $url_label = @$linkParts[2];
+                    preg_match("/^([^:]+):/", $url_link, $matches);
+                    $url_protocol = @$matches[1];
+                    if (empty($url_protocol)) $url_protocol = "local";
                     if (empty(trim($url_label))) {
                         $url_label = $url_link;
                     } else {
                         // the label is humain-made, apply formatting
                         htmlPrepare($url_label);
                     }
-                    echo "<p><a href='".$url_link."'>".$url_label."</a></p>\n";
+                    echo "<p><a class='$url_protocol' href='$url_link'>$url_label</a></p>\n";
                 } else {
                     $mode = "raw";
                     continue;
