@@ -103,14 +103,16 @@ foreach ($fileLines as $line) {
             if (empty($line)) {
                 echo "<p>&nbsp;</p>\n";
             } elseif ('^^^' == $line3) {
-                $mode_textAttributes = !$mode_textAttributes;
-            } elseif ('^' == $line1) {
-                if (preg_match("/^\^\s*(.*)$/", $line, $parts)) {
-                    $line = $parts[1];
-                    $mode_textAttributes_temp = true;
+                if (preg_match("/^\^\^\^\s+(.*)$/", $line)) {
+                    $mode_textAttributes = !$mode_textAttributes;
                 } else {
                     $mode = "raw";
+                    continue;
                 }
+            } elseif ('^' == $line1 and !$mode_textAttributes_temp) {
+                preg_match("/^\^\s*(.*)$/", $line, $parts);
+                $line = $parts[1];
+                $mode_textAttributes_temp = true;
                 continue;
             } elseif ("#" == $line1) {
                 preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
