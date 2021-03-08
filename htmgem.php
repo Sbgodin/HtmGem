@@ -90,7 +90,7 @@ foreach ($fileLines as $line) {
     $mode_textAttributes_temp = false;
     while (true) {
         if ($reDoCount>2) {
-            error_log("Too many loops, mode == '$mode'");
+            error_log("HtmGem: Too many loops, mode == '$mode'");
             $mode = null;
             $reDoCount = 0;
             break;
