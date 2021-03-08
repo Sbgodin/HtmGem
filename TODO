@@ -1,7 +1,6 @@
 * manage url encoding: The filename fetched on disk may differ from that was asked by URL.
 * check /etc/passwd not accessible: Perform sanity checks against unauthorized access.
 * manage 404: Display better errors.
-* HTML: alt texts on pre and quote
 * HTML: On links indicate whether it's on Gemini or Www or image.
 * a way to get the source of a page, using urlrewriting
 * options to activate the text decoration

@@ -140,8 +140,15 @@ foreach ($fileLines as $line) {
                     continue;
                 }
             } elseif ("```" == $line3) {
+                if (preg_match("/^```\s*(.*)$/", $line, $matches)) {
+                    $alt_text = trim(@$matches[1]);
+                    if (!(empty($alt_text))) {
+                        echo "<pre alt='$alt_text' title='$alt_text'>\n";
+                    } else {
+                        echo "<pre>\n";
+                    }
+                }
                 $mode="pre";
-                echo "<pre>\n";
             } elseif (">" == $line1) {
                 $mode = "quote";
                 preg_match("/^>\s*(.*)$/", $line, $quoteParts);
@@ -228,6 +235,7 @@ echo <<<EOL
 <title>$page_title</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
+
 EOL;
 include("htmgem.css");
 echo <<<EOL
