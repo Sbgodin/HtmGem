@@ -55,6 +55,13 @@ function addTextAttributes(&$line) {
 }
 
 define("NARROW_NO_BREAK_SPACE", "&#8239;");
+define("DASHES"
+    ,"‒" # U+2012 Figure Dash
+    ."–" # U+2013 En Dash
+    ."—" # U+2014 Em Dash
+    ."⸺" # U+2E3A Two-Em Dash
+    ."⸻" # U+2E3B Three-Em Dash (Three times larger than a single char)
+);
 
 /**
  * Prepares the raw text to be displayed in HTML environment:
@@ -67,11 +74,9 @@ function htmlPrepare(&$text) {
     $text = mb_ereg_replace("\ ([?!:;»€$])", NARROW_NO_BREAK_SPACE."\\1", $text);
     $text = mb_ereg_replace("([«])\ ", "\\1".NARROW_NO_BREAK_SPACE, $text); # Espace fine insécable
 
-    # Below, "Em Dash" (U+2014, —) and "En Dash" (U+2013, –) make —–
-    #$text = mb_ereg_replace("([—–]) ([^—–.]+)( [—–]|\.)", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
-
+    # Warning: using a monospace font editor may not display dashes as they should be!
     # Adds no-break spaces to stick the (EM/EN dashes) to words : aaaaaa – bb – ccccc ==> aaaaaa –$bb$– ccccc
-    $text = mb_ereg_replace("([—–]) ([^—–.]+) ([—–])", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
+    $text = mb_ereg_replace("([".DASHES."]) ([^".DASHES.".]+) ([".DASHES."])", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
 
     # Adds no-break space to stick the (EM/EN dashes) to words : aaaaaa – bb. ==> aaaaaa –$bb.
     $text = mb_ereg_replace("([—–]) ([^.]+).", "\\1".NARROW_NO_BREAK_SPACE."\\2.", $text);
