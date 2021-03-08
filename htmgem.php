@@ -89,7 +89,12 @@ foreach ($fileLines as $line) {
     $reDoCount = 0;
     $mode_textAttributes_temp = false;
     while (true) {
-        if ($reDoCount>2) die("Too many loops: ".$mode);
+        if ($reDoCount>2) {
+            error_log("Too many loops, mode == '$mode'");
+            $mode = null;
+            $reDoCount = 0;
+            break;
+        }
         $reDoCount += 1;
         $line1 = substr($line, 0, 1); // $line can be modified
         $line2 = substr($line, 0, 2); // in the meantime.
