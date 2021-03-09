@@ -5,7 +5,6 @@
 * Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
 * Check unicode capability, UTF16 input, etc…
 * Manage different type of carriage return: CR CR/LF LF
-* Do not output an empty line for the last carriage return of the document
 * Text localisation
 * Manage logging (cache refresh, debug)
 * Split the main loop in two: one part to decode the text to internal language, the other to make the HTML

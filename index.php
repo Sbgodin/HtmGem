@@ -138,6 +138,7 @@ function htmlPrepare(&$text) {
 
 function translateGemToHtml($fileContents) {
     $fileLines = preg_split("/\n/", $fileContents);
+    if (empty($fileLines[-1])) array_pop($fileLines); # Don't output a last empty line
     ob_start();
     $mode = null;
     $mode_textAttributes = true;
