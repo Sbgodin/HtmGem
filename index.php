@@ -13,6 +13,9 @@ define("DASHES"
 );
 
 $url = @$_REQUEST["url"];
+
+
+######################################## Installation page
 if (empty($url)) {
 ?>
 
@@ -31,17 +34,41 @@ if (empty($url)) {
     echo "</body>\n</html>\n";
     die();
 }
+######################################## /Installation page
 
+# Removes the trailling slash, to be sure there's not any.
+$GMI_DIR = rtrim($_SERVER['DOCUMENT_ROOT'], "/");
+$filePath = $GMI_DIR."/".$url;
 
-$GMI_DIR = $_SERVER['DOCUMENT_ROOT'];
-
-
-$filePath = $GMI_DIR.$url;
 $fileContents = @file_get_contents($filePath);
-if (!$fileContents) {
-    http_response_code(404);
-    die("404: $url");
+
+
+######################################## 404 page
+if (empty($fileContents)) {
+    http_response_code(404); ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+<?php include("htmgem.css"); ?>
+</style>
+</head>
+<body>
+<?php
+    $text404 = <<<EOF
+# Page non trouvée
+
+**$url**
+
+=> $url rééssayer ?
+=> / index
+EOF;
+echo translateGemToHtml($text404);
+echo "</body>\n</html>";
+die();
 }
+######################################## /404 page
 
 # Removes the Byte Order Mark
 $fileContents = preg_replace("/\xEF\xBB\xBF/", "", $fileContents);
