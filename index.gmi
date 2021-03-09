@@ -1,6 +1,8 @@
 # HtmGem, voir Gemini à travers HTTP
 
-Il ne reste qu’à ajouter une règle de ré-écriture d’URL (//URL Rewriting//). Si vous pouvez lire ce texte en ayant demandé //htmgem.php// avec le navigateur, il ne reste que cette dernière étape à franchir 😄
+Ceci est la page d’installation et de présentation d’**HtmGem**.
+
+Pour faire fonctionner HtmGem, il ne reste qu’à ajouter une règle de ré-écriture d’URL (//URL Rewriting//). Si vous pouvez lire ce texte en ayant demandé //htmgem.php// avec le navigateur, il ne reste que cette dernière étape à franchir 😄
 
 ### Nginx
 ```
@@ -21,20 +23,25 @@ Par la suite,
 * Quand un fichier se terminant par //.gmi// sera demandé, HtmGem le traduira à la volée en HTML.
 * Quand seul le répertoire sera demandé (http:/​/site.tld/path) le fichier //index.gmi// sera automatiquement choisi.
 
+Le paramétrage d’Apache et de Nginx est similaire. Par la suite, la syntaxe Nginx sera utilisée.
+
 ## Tester HtmGem
+
 Il est supposé que HtmGem est installé à la racine du site dans un répertoire //HtmGem//. Sinon, il faudra simplement adapter les liens.
 
 🢂 Appeler cette présente page directement, en cliquant ci-après. Elle devrait être formatée exactement comme actuellement :
 => index.gmi
 
 🢂 Enfin, pour vérifier que le fichier //index.gmi// est automatiquement appelé quand le fichier //**.gmi**// n’est pas indiqué :
-=> / Lien vers la racine du site
+=> /htmgem Lien vers la racine du site
+
+L’installation est terminée 🥳 La suite du texte donne des informations complémentaires, et n’est pas nécessaire dans l’immédiat.
 
 ———————————————————— ————————————————————
 
-# Configuration avancée avec les styles
+# Configuration avancée
 
-Par défaut, le style est incorporé dans chaque page récupérée par le navigateur web. Le même style est utilisé pour toutes les pages, //htmgem/css/htmgem.css//, sauf lorsqu’un fichier ayant le même nom que la page mais avec l’extension **.css** existe. Dans ce cas, il est utilisé.
+Par défaut, le style est incorporé dans chaque page récupérée par le navigateur web. Le même style est utilisé pour toutes les pages, //htmgem/css/htmgem.css//, sauf lorsqu’un fichier ayant le même nom que la page mais avec l’extension **.css** existe dans le même répertoire. Dans ce cas, il est utilisé.
 
 Lorsque l’option css est activé dans la configuration (voir //rewrite// plus haut) d’autres comportements sont possibles :
 * &style=**htmgem** : Utilise le style par défaut, mais en tant que fichier externe.
@@ -44,27 +51,40 @@ Lorsque l’option css est activé dans la configuration (voir //rewrite// plus 
 * &style=**source** : Le code source de la page est envoyée au navigateur, voir ci-après…
 * &style=**pre** : Le code source de la page est envoyée au navigateur encadré par des //<pre>//, voir ci-après…
 
-## Réécriture d’URL pour afficher le code source
+## Réécriture d’URL pour préciser le style à utiliser
 
-Par défaut, le code source du fichier **.gmi** n’est pas accessible extérieurement puisqu’il est interprété à la volée par HtmGem. Il est possible cependant d’ajouter l’affichage
-
-Pour obtenir le source avec un lien du type
-=> index.gmi.source Envoie le code source, le navigateur l‘affichera comme une longue ligne. À utiliser en ligne commande avec **wget**!
-=> index.gmi.pre Affiche le code source dans le navigateur, l’ayant adapté avec la balise **<pre>**.
-Il faut ajouter les lignes suivantes dans la réécriture d’URL, ici pour Nginx :
-> rewrite ^(.+\.gmi)\.source$ /htmgem/?url=$1&style=source;
-> rewrite ^(.+\.gmi)\.pre$ /htmgem/?url=$1&style=pre;
-
-## Tester les styles
-
-Modifier la configuration du server web fonctionne mais est assez lourd. On peut tester un style en particulier de la façon suivante :
+Modifier la configuration du serveur web fonctionne mais est assez lourd. On peut tester un style en particulier de la façon suivante :
 > https://site.tld/htmgem/index.php?url=/url/page.gmi&style=<…>
-En accédant de cette façon à la page, on reproduit ce que fait le serveur web lors de la réécriture d’URL. On peut changer le style à la volée.
+
+Il est aussi possible de faire une réécriture d’URL qui intègre le style :
+> rewrite ^(.+\.gmi)$ /htmgem/?url=$1;
+> rewrite ^(.+\.gmi)\|([\w_]+)$ /htmgem/?url=$1&style=$2;
+
+Par exemple, lorsque ce sera activé :
+=> index.gmi|source Produit le code source, pas bien lisible à l’écran. À utiliser avec //wget//.
+=> index.gmi|pre Produit le code source de façon lisble à l’écran en utilisant la balise **<pre>**.
+
+=> index.gmi Ouvre la page avec le style par défaut, avec le style importé dans l’en-tête.
+
+### Avec les styles déjà fournis
+
+=> index.gmi|htmgem Ouvre la page avec le style par défaut (//htmgem.css//), mais le style est importé dans l’en-tête.
+=> index.gmi|none Ouvre la page courante avec le style //none//. Aucune CSS utilisée.
+
+=> index.gmi|terminal Style //terminal//
+=> index.gmi|black_wide Style //black wide//
+=> index.gmi|simple Style //simple//
+
+## Désactiver (ou non) la décoration du texte
+
+La décoration du texte, qui interprête la mise en forme **gras** par exemple, ne fait pas partie de la définition de GemText.
+> &textDecoration=0
 
 ———————————————————— ————————————————————
 
 # Quand tout marche…
+
 Parmi les fichiers et répertoires distribués, seuls sont utiles :
 * **htmgem/index.php** : Il se charge de traduire le gemtext en HTML
 * **htmgem/css/htmgem.css** : S’il manque, l’affichage sera dépourvu de style — littéralement.
-Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et sont disponibles sur le site de HtmGem.
+Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et sont disponibles sur le site de HtmGem. Les autres fichiers du répertoire //css// peuvent servir comme styles alternatifs.

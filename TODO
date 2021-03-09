@@ -1,6 +1,5 @@
 * manage url encoding: The filename fetched on disk may differ from that was asked by URL.
 * check /etc/passwd not accessible: Perform sanity checks against unauthorized access.
-* options to activate the text decoration
 * HTML caching: Nginx tries the html, if not found use this script to build it
 * Command line API for script and testing.
 * Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
