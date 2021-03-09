@@ -14,6 +14,8 @@ define("DASHES"
 
 $style = @$_REQUEST['style'];
 
+# to false only if textDecoration=0 in the URL
+$textDecoration = "0" != @$_REQUEST['textDecoration'];
 
 /* The url argument is always absolute compared to the document root
  * The leading slash is removed. so url=/foo/bar and url=foo/bar ar the same.
@@ -107,6 +109,8 @@ function markupPreg($instruction, $markup, &$text) {
  * @param $line the line to process
  */
 function addTextAttributes(&$line) {
+    global $textDecoration;
+    if (!$textDecoration) return;
     markupPreg("__",   "u",   $line);
     markupPreg("\*\*", "strong",   $line);
     markupPreg("//",   "em",   $line);
