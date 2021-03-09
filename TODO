@@ -1,11 +1,13 @@
+Security
 * manage url encoding: The filename fetched on disk may differ from that was asked by URL.
 * check /etc/passwd not accessible: Perform sanity checks against unauthorized access.
-* HTML caching: Nginx tries the html, if not found use this script to build it
-* Command line API for script and testing.
-* Page menu on upper and lower sides: [parent dir] [root dir] [inline images] [raw response] [view cert] 
 * Check unicode capability, UTF16 input, etc…
 * Manage different type of carriage return: CR CR/LF LF
+
+Development
+* Command line API for script and testing.
+
+User interface
+* Page menu on upper and lower sides: [parent dir] [root dir] [raw text]
+* Images
 * Text localisation
-* Manage logging (cache refresh, debug)
-* Split the main loop in two: one part to decode the text to internal language, the other to make the HTML
-* Something to build gmi files and connect it afterwards to generate HTML : Abstract --> gemtext --> HTML. This would allow to make services output on both Gemini and HTML.
