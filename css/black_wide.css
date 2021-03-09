@@ -1,0 +1,147 @@
+html {
+    font-family: sans-serif;
+    font-size:1rem;
+    background-color:#000;
+}
+
+body {
+    margin: 0.5em;
+}
+
+ul {
+    color: #ccc;
+    margin: 0.4rem 0;
+    padding: 0;
+}
+
+p, pre {
+    margin: 0 0 0.3rem;
+    padding: 0;
+}
+
+p {
+    color: #ccc;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+li {
+    margin-left: 1em;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #ddd;
+    margin: 0;
+    padding: 0;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.5rem; }
+
+blockquote {
+    background-color: #222;
+    border-left: 3px solid #444;
+    margin: 1rem -1rem 1rem calc(-1rem - 3px);
+    padding: 1rem;
+}
+
+a {
+    color:#ddd;
+    text-decoration: none;
+    text-justify: none;
+}
+
+a:before {
+    content: "🔗 ";
+}
+
+a:visited {
+    color: #888;
+}
+
+a.local:before {
+    content: "🛩️ ";
+    font-weight: bold;
+}
+
+a.gemini:before {
+    content: "🚀 ";
+}
+
+a.gopher:before {
+    content: "📜 ";
+}
+
+a.https:before {
+    content: "🕸️ ";
+    font-weight: bolder;
+}
+
+a.http:before {
+    content: "🕸️ ";
+    font-weight: lighter;
+}
+
+a.mumble:before {
+    content: "🎤 ";
+}
+
+a.mailto:before {
+    content: "✉️ ";
+}
+
+pre {
+    color: #ccc;
+    scrollbar-color: #222 #000;
+    background-color: #222;
+    margin: 0 -1rem;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+    a {
+        margin: -4rem;
+    }
+    body {
+        margin: 3rem;
+    }
+    h1 {
+        font-size: 4rem;
+    }
+    h2 {
+        font-size: 3.5rem;
+    }
+    h3 {
+        font-size: 3rem;
+    }
+    p, pre, ul {
+        font-size: 2.6rem;
+    }
+}
+
+@media(prefers-color-scheme:dark) {
+    html {
+        background-color: #111;
+        color: #eee;
+    }
+
+    blockquote {
+        background-color: #000;
+    }
+
+    pre {
+        background-color: #222;
+    }
+    
+    a {
+        color: #0087BD;
+    }
+
+    a:visited {
+        color: #802200;
+    }
+}
+
