@@ -31,7 +31,7 @@ Il est supposé que HtmGem est installé à la racine du site dans un répertoir
 => / Lien vers la racine du site
 
 # Quand tout marche…
-Parmi les fichiers distribués, seuls sont requis :
-* htmgem/**index.php**
-* htmgem/**index.css**
-Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger.
+Parmi les fichiers distribués, seuls sont utiles :
+* **htmgem/index.php** : Il se charge de traduire le gemtext en HTML
+* **htmgem/htmgem.css** : S’il manque, l’affichage sera dépourvu de style — littéralement.
+Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et son disponible sur le site de HtmGem.

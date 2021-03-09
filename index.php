@@ -17,8 +17,11 @@ $url = @$_REQUEST["url"];
 
 ######################################## Installation page
 if (empty($url)) {
+    if (!file_exists("index.gmi")) {
+        http_response_code(403);
+        die("<!-- index.gmi missing -->");
+    }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
