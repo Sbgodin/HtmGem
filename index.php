@@ -295,6 +295,19 @@ $page_title = @$matches[1];
 
 if ("source" == $style) {
     echo $fileContents;
+} elseif ("pre" == $style) {
+    $fileContents = htmlspecialchars($fileContents, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
+    echo <<<EOL
+<!DOCTYPE html>
+<html>
+<head>
+<title>$page_title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<pre>$fileContents</pre>
+</body>
+</html>
+EOL;
 } else {
     $parts = pathinfo($filePath);
     $localCss = $parts["filename"].".css";

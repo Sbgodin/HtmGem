@@ -37,21 +37,26 @@ Il est supposé que HtmGem est installé à la racine du site dans un répertoir
 Par défaut, le style est incorporé dans chaque page récupérée par le navigateur web. Le même style est utilisé pour toutes les pages, //htmgem/css/htmgem.css//, sauf lorsqu’un fichier ayant le même nom que la page mais avec l’extension **.css** existe. Dans ce cas, il est utilisé.
 
 Lorsque l’option css est activé dans la configuration (voir //rewrite// plus haut) d’autres comportements sont possibles :
-* &style=source : le code source de la page est envoyée au navigateur, voir ci-après…
-* &style=htmgem : utilise le style par défaut, mais en tant que fichier externe
-* &style=none : la page HTML est envoyée sans style
-* &style=<autre nom> : le fichier htmgem/css/<autre nom>.css est utilisé en tant que style externe
-* &style=/<path> : le fichier indiqué (chemin absolu) est utilisé en tant que style externe
+* &style=**htmgem** : Utilise le style par défaut, mais en tant que fichier externe.
+* &style=**none** : La page HTML est envoyée sans style.
+* &style=**<autre nom>** : Le fichier htmgem/css/<autre nom>.css est utilisé en tant que style externe.
+* &style=**/<path>** : Le fichier indiqué (chemin absolu) est utilisé en tant que style externe.
+* &style=**source** : Le code source de la page est envoyée au navigateur, voir ci-après…
+* &style=**pre** : Le code source de la page est envoyée au navigateur encadré par des //<pre>//, voir ci-après…
 
 ## Réécriture d’URL pour afficher le code source
 
+Par défaut, le code source du fichier **.gmi** n’est pas accessible extérieurement puisqu’il est interprété à la volée par HtmGem. Il est possible cependant d’ajouter l’affichage
+
 Pour obtenir le source avec un lien du type
-=> index.gmi.source
-Il faut ajouter la ligne suivante pour la réécriture d’URL :
+=> index.gmi.source Envoie le code source, le navigateur l‘affichera comme une longue ligne. À utiliser en ligne commande avec **wget**!
+=> index.gmi.pre Affiche le code source dans le navigateur, l’ayant adapté avec la balise **<pre>**.
+Il faut ajouter les lignes suivantes dans la réécriture d’URL, ici pour Nginx :
 > rewrite ^(.+\.gmi)\.source$ /htmgem/?url=$1&style=source;
+> rewrite ^(.+\.gmi)\.pre$ /htmgem/?url=$1&style=pre;
 
 # Quand tout marche…
 Parmi les fichiers et répertoires distribués, seuls sont utiles :
 * **htmgem/index.php** : Il se charge de traduire le gemtext en HTML
-* **htmgem/css/htmgem.css : S’il manque, l’affichage sera dépourvu de style — littéralement.
-Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et son disponible sur le site de HtmGem.
+* **htmgem/css/htmgem.css** : S’il manque, l’affichage sera dépourvu de style — littéralement.
+Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et sont disponibles sur le site de HtmGem.
