@@ -1,0 +1,89 @@
+Gemini se découpe en son protocole (comme HTTP) et son language, GemText. Ici, je vais approfondir ce qu’est le langage GemText. Son principe est que c’est le programme de l’utilisateur (le navigateur web, pour HTTP) qui décide de l‘affichage. La police de caractère, la taille, le fond d‘écran, tout. À l’exception du texte et de quelques autres détails qui suivent.
+
+Si vous utilisez un programme qui n’interprète pas tous les styles de lignes, certaines vous sembleront dupliquées…
+
+La ligne que vous venez de lire existe sur une ligne physique, que le programme que vous utilisez a dû découper en plusieurs lignes logiques afin que cela tienne sur votre écran. Entre cette présente ligne de texte et celle d’avant, il y a une ligne vide pour marquer le changement de paragraphe.
+Ici, j’ai simplement passé à la ligne. L’espacement devrait être moindre.
+
+Il y a tout de même quelques types spéciaux de ligne.
+
+On commence par le titre de niveau 1. Il est d’abord écrit ci-après tel que je le vois, puis sur la ligne d’après il est rendu normalement par votre programme :
+
+​# Comment fonctionne GemText ?
+# Comment fonctionne GemText ?
+
+Je viens d’écrire « # Comment fonctionne GemText » deux fois. Une fois sans qu’il soit interprété, où vous le voyez tel que je le vois. Et une deuxième fois où votre programme peut l’afficher différemment.
+
+​# Titre de niveau 1
+# Titre de niveau 1
+
+​## Titre de niveau 2
+## Titre de niveau 2
+
+​### Titre de niveau 3
+### Titre de niveau 3
+
+# Les citations
+
+Quand on veut citer un texte, on écrit avec le caractère > en début de ligne. D’abord affichée comme je l’ai écrit puis comme le programme l’affiche normalement :
+
+​> Citation de texte. La ligne peut être aussi longue que voulue, c’est votre programme qui doit découper la ligne pour l’afficher. Une seule ligne physique peut être longue, mais il n’y a pas besoin de placer de retour à la ligne.
+> Citation de texte. La ligne peut être aussi longue que voulue, c’est votre programme qui doit découper la ligne pour l’afficher. Une seule ligne physique peut être longue, mais il n’y a pas besoin de placer de retour à la ligne.
+
+# Les blocs préformatés
+
+Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc. Les lignes contenant ``` ne sont pas affichées :
+​```
+Ceci est une ligne préformatée. Quand la ligne est longue, elle n’est pas découpée. Le programme doit présenter un ascenseur horizontal pour permettre de tout voir.
+​```
+```
+Ceci est une ligne préformatée. Quand la ligne est longue, elle n’est pas découpée. Le programme doit présenter un ascenseur horizontal pour permettre de tout voir.
+```
+
+# Les listes non-ordonnées
+
+​* Les listes non-ordonnées sont des lignes commençant par * les unes après les autres.
+​* Elles servent à énumérer.
+​* Par contre, GemText ne reconnaît pas les listes numérotées.
+* Les listes non-ordonnées sont des lignes commençant par * les unes après les autres.
+* Elles servent à énumérer.
+* Par contre, GemText ne reconnaît pas les listes numérotées.
+
+# Les liens
+
+Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voici par exemple un lien vers le site centralisant pour le moment les informations sur Gemini :
+​=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+
+Voici un autre lien, directement visible parce qu’il n’a pas de description :
+​=> https://gemini.circumlunar.space/docs/specification.gmi
+=> https://gemini.circumlunar.space/docs/specification.gmi
+
+# Ce que j’ai mis en plus…
+
+HtmGem suit les préconisations de Gemini, sauf pour quelques ajouts… Attention, le texte formaté ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible.
+
+^ Quand on veut signifier que le texte est en **gras** on y met des astérisques autour. De même pour les mots __soulignés__, ceux écrits en //italique// ou même quand on les ~~barre~~.
+Mais j’estime que le format GemText est alors pas assez **expressif** et qu’il se prive de capacités utiles qui ne sont vraiment pas dures à //concevoir//. Idéalement, on tendrait vers l‘édition de livres électroniques.
+
+Alors voici ce que j’y ajoute :
+* Par défaut, le texte mis en forme s’applique – sur les lignes de texte, listes et citations.
+* Pour désactiver la mise en forme du texte, on peut soit commencer la ligne par ^, soit faire un bloc non formaté avec ^^^ :
+
+^ Avec un ^ au début de cette ligne le texte apparaît ~~sans~~ la mise en forme.
+
+# HtmGem
+
+HtmGem est un programme écrit en Php permettant d’accéder à un serveur web rendant les pages Gemini. Il traduit chaque page Gemini en Html.
+=> https://git.sr.ht/~sbgodin/htmgem Code source de HtmGem
+=> https://gmi.sbgodin.fr Ma page personnelle qui utilise HtmGem
+=> gemini://gmi.sbgodin.fr Ma page personnelle en passant nativement par un programme interprétant Gemini
+
+
+### License de cette page
+Cette page est sous licence libre **CC BY-SA 2.0 FR**.
+=> https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte de la licence CC BY-SA 2.0 FR
+=> gemini://gmi.sbgodin.fr/ gemini://gmi.sbgodin.fr/ ⸻ Christophe HENRY
+
+### Navigation
+=> ..

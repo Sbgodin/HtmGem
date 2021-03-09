@@ -12,8 +12,13 @@ define("DASHES"
     ."⸻" # U+2E3B Three-Em Dash (Three times larger than a single char)
 );
 
-$url = @$_REQUEST["url"];
+$style = @$_REQUEST['style'];
 
+
+/* The url argument is always absolute compared to the document root
+ * The leading slash is removed. so url=/foo/bar and url=foo/bar ar the same.
+ */
+$url = @$_REQUEST["url"];
 
 ######################################## Installation page
 if (empty($url)) {
@@ -28,7 +33,7 @@ if (empty($url)) {
 <title>Installation de HtmGem</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-<?php include("htmgem.css"); ?>
+<?php include("css/htmgem.css"); ?>
 </style>
 </head>
 <body>
@@ -39,33 +44,34 @@ if (empty($url)) {
 }
 ######################################## /Installation page
 
-# Removes the trailling slash, to be sure there's not any.
-$GMI_DIR = rtrim($_SERVER['DOCUMENT_ROOT'], "/");
-$filePath = $GMI_DIR."/".$url;
+# Removes the headling and trailling slashes, to be sure there's not any.
+$filePath = rtrim($_SERVER['DOCUMENT_ROOT'], "/")."/".ltrim($url, "/");
 
 $fileContents = @file_get_contents($filePath);
 
 
 ######################################## 404 page
 if (empty($fileContents)) {
+    error_log("HtmGem: 404 $url $filePath");
     http_response_code(404); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-<?php include("htmgem.css"); ?>
+<?php include("css/htmgem.css"); ?>
 </style>
 </head>
 <body>
 <?php
     $text404 = <<<EOF
-# Page non trouvée
+# ⚠ Page non trouvée
 
 **$url**
 
-=> $url rééssayer ?
-=> / index
+=> $url 🔄
+
+=> /
 EOF;
 echo translateGemToHtml($text404);
 echo "</body>\n</html>";
@@ -278,25 +284,59 @@ function translateGemToHtml($fileContents) {
 mb_ereg("#\s*([^\n]+)\n", $fileContents, $matches);
 $page_title = @$matches[1];
 
-# <!-- link type="text/css" rel="StyleSheet" href="/htmgem.css" -->
-echo <<<EOL
+###################################### CSS Management
+/**
+* if &style=source displays the source directly and stops.
+* if there's a filename.css besides filename.gmi, use the css and stops.
+* if &style=<NOTHING> then embbed the default style, and stops.
+* if &style=<word not beginngin by slash> then use htmgem/word.css
+* if &style=/… then use the … as as stylesheet.
+**/
+
+if ("source" == $style) {
+    echo $fileContents;
+} else {
+    $parts = pathinfo($filePath);
+    $localCss = $parts["filename"].".css";
+    $localCssFilePath = $parts["dirname"]."/".$localCss;
+    if (file_exists($localCssFilePath)) {
+        # Warning, using htmhem.php?url=… will make $localCss not found
+        # as the path is relative to htmgem.php and not / !
+        $cssContent = "<link type='text/css' rel='StyleSheet' href='$localCss'>";
+    } else {
+        if (empty($style)) {
+            $cssContent =
+                 "<style>\n"
+                .@file_get_contents("css/htmgem.css")
+                ."</style>\n";
+        } else {
+            if ("none" == $style) {
+                $cssContent = "";
+            } else {
+                if ("/" == $style[0])
+                    $href = $style;
+                else
+                    $href = "/htmgem/css/$style.css";
+                $cssContent = "<link type='text/css' rel='StyleSheet' href='$href'>";
+            }
+        }
+    }
+    echo <<<EOL
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <title>$page_title</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<style>
-
-EOL;
-include("htmgem.css");
-echo <<<EOL
-</style>
+$cssContent
 </head>
 <body>
 EOL;
 
-echo "\n".translateGemToHtml($fileContents);
-echo "</body>\n</html>\n";
+    echo "\n".translateGemToHtml($fileContents);
+    echo "</body>\n</html>\n";
+}
+
+
 ob_end_flush();
 
 ?>

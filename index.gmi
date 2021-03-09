@@ -30,8 +30,28 @@ Il est supposé que HtmGem est installé à la racine du site dans un répertoir
 🢂 Enfin, pour vérifier que le fichier //index.gmi// est automatiquement appelé quand le fichier //**.gmi**// n’est pas indiqué :
 => / Lien vers la racine du site
 
+———————————————————— ————————————————————
+
+# Configuration avancée avec les styles
+
+Par défaut, le style est incorporé dans chaque page récupérée par le navigateur web. Le même style est utilisé pour toutes les pages, //htmgem/css/htmgem.css//, sauf lorsqu’un fichier ayant le même nom que la page mais avec l’extension **.css** existe. Dans ce cas, il est utilisé.
+
+Lorsque l’option css est activé dans la configuration (voir //rewrite// plus haut) d’autres comportements sont possibles :
+* &style=source : le code source de la page est envoyée au navigateur, voir ci-après…
+* &style=htmgem : utilise le style par défaut, mais en tant que fichier externe
+* &style=none : la page HTML est envoyée sans style
+* &style=<autre nom> : le fichier htmgem/css/<autre nom>.css est utilisé en tant que style externe
+* &style=/<path> : le fichier indiqué (chemin absolu) est utilisé en tant que style externe
+
+## Réécriture d’URL pour afficher le code source
+
+Pour obtenir le source avec un lien du type
+=> index.gmi.source
+Il faut ajouter la ligne suivante pour la réécriture d’URL :
+> rewrite ^(.+\.gmi)\.source$ /htmgem/?url=$1&style=source;
+
 # Quand tout marche…
-Parmi les fichiers distribués, seuls sont utiles :
+Parmi les fichiers et répertoires distribués, seuls sont utiles :
 * **htmgem/index.php** : Il se charge de traduire le gemtext en HTML
-* **htmgem/htmgem.css** : S’il manque, l’affichage sera dépourvu de style — littéralement.
+* **htmgem/css/htmgem.css : S’il manque, l’affichage sera dépourvu de style — littéralement.
 Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et son disponible sur le site de HtmGem.
