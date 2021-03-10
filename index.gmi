@@ -1,9 +1,9 @@
-# HtmGem, voir Gemini à travers HTTP
+# HtmGem, voir Gemini via le web
 
 Ceci est la page d’installation et de présentation d’**HtmGem**.
-=> tests/tutogemtext.gmi Cliquez ici pour voir le tutoriel pour écrire des pages Gemini.
+=> tutogemtext.gmi Cliquez ici pour voir le tutoriel pour écrire des pages Gemini.
 
-HtmGem permet d’héberger des pages Gemini et de les publier sur le web. À l’ouverture d’une page ***.gmi**, il la traduit en HTML. Cette présente page est affichée de cette façon. Gemini utilise son propre protocole, format, clients et serveurs ; HtmGem permet d’en utiliser le format (Gemtext) via le web.
+HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur web muni de **Php**. À l’ouverture d’une page ***.gmi**, il la traduit pour le navigateur web. Cette présente page est affichée de cette façon. Gemini utilise son propre protocole, format, clients et serveurs ; HtmGem permet d’en utiliser le format (Gemtext) via le web.
 
 ```
 Gemini est un nouveau protocole internet qui :
@@ -15,7 +15,7 @@ Gemini est un nouveau protocole internet qui :
 ```
 => https://gemini.circumlunar.space/
 
-=> https://framagit.org/Sbgodin/htmgem Code source de HtmGem
+=> https://framagit.org/Sbgodin/htmgem Page du projet de HtmGem : code source, rapports de bug, commentaires…
 => https://gmi.sbgodin.fr/htmgem Page principale de HtmGem via le web
 => gemini://gmi.sbgodin.fr/htmgem Page principale de HtmGem via Gemini
 
@@ -24,6 +24,13 @@ Gemini est un nouveau protocole internet qui :
 # Installation
 
 Pour faire fonctionner HtmGem — après avoir copié les fichiers — il ne reste qu’à ajouter une règle de ré-écriture d’URL (//URL Rewriting//). Si vous pouvez lire ce texte en ayant demandé //htmgem.php// avec le navigateur, il ne reste que cette dernière étape à franchir 😄
+
+## Prérequis
+
+* Php v7.3 minimum
+* Module **Php-mbstring** pour gérer l’unicode
+* Un serveur web (Apache et Nginx testés)
+* Module **mod-rewrite** pour intercepter les pages Gemini
 
 ### Nginx
 ```
@@ -57,7 +64,7 @@ Il est supposé que HtmGem est installé à la racine du site dans un répertoir
 => /htmgem Lien vers la racine du site
 
 L’installation est terminée 🥳 La suite du texte donne des informations complémentaires, et n’est pas nécessaire dans l’immédiat. Les fichiers **.gmi** que vous créerez seront disponibles dès maintenant.
-=> tests/tutogemtext.gmi Inspirez-vous du tutoriel
+=> tutogemtext.gmi Inspirez-vous du tutoriel
 
 ———————————————————— ————————————————————
 
@@ -106,7 +113,8 @@ La décoration du texte, qui interprête la mise en forme **gras** par exemple, 
 
 # Quand tout marche…
 
-Parmi les fichiers et répertoires distribués, seuls sont utiles :
-* **htmgem/index.php** : Il se charge de traduire le gemtext en HTML
+Parmi les fichiers et répertoires distribués, seuls sont utiles pour le fonctionnement de HtmGem :
+* **htmgem/index.php** : Il se charge de traduire le gemtext en HTML.
 * **htmgem/css/htmgem.css** : S’il manque, l’affichage sera dépourvu de style — littéralement.
-Les autres peuvent être supprimés (y compris ce présent fichier) bien qu’ils ne présentent aucun danger. Ils restent nécessaires au développement du projet et sont disponibles sur le site de HtmGem. Les autres fichiers du répertoire //css// peuvent servir comme styles alternatifs.
+* **htmgem/css/… : Conservez les styles que vous utilisez.
+Les autres peuvent être supprimés (y compris ce présent fichier //index.gmi//) bien qu’ils ne présentent aucun danger.

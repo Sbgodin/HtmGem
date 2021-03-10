@@ -59,25 +59,20 @@ Voici un autre lien, directement visible parce qu’il n’a pas de description 
 ​=> https://gemini.circumlunar.space/docs/specification.gmi
 => https://gemini.circumlunar.space/docs/specification.gmi
 
-# Ce que j’ai mis en plus…
+# Ce qu’il y a en plus…
 
-HtmGem suit les préconisations de Gemini, sauf pour quelques ajouts… Attention, le texte formaté ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible.
+HtmGem suit les préconisations de Gemini, sauf pour le texte formaté. Il ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible via un client Gemini.
 
-^ Quand on veut signifier que le texte est en **gras** on y met des astérisques autour. De même pour les mots __soulignés__, ceux écrits en //italique// ou même quand on les ~~barre~~.
-Mais j’estime que le format GemText est alors pas assez **expressif** et qu’il se prive de capacités utiles qui ne sont vraiment pas dures à //concevoir//. Idéalement, on tendrait vers l‘édition de livres électroniques.
+^ Cette **ligne** n‘affiche ~~pas~~ la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
+Cette **ligne** affiche la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
 
-Alors voici ce que j’y ajoute :
-* Par défaut, le texte mis en forme s’applique – sur les lignes de texte, listes et citations.
-* Pour désactiver la mise en forme du texte, on peut soit commencer la ligne par ^, soit faire un bloc non formaté avec ^^^ :
+## Ajouts à la norme :
+* Par défaut, le texte mis en forme s’applique sur les lignes de texte, listes et citations.
+* Pour désactiver la mise en forme du texte, on peut soit commencer la ligne par ^, soit faire un bloc non décoré avec ^^^ :
 
-^ Avec un ^ au début de cette ligne le texte apparaît ~~sans~~ la mise en forme.
-
-# HtmGem
-
-HtmGem est un programme écrit en Php permettant d’accéder à un serveur web rendant les pages Gemini. Il traduit chaque page Gemini en Html.
-=> https://git.sr.ht/~sbgodin/htmgem Code source de HtmGem
-=> https://gmi.sbgodin.fr Ma page personnelle qui utilise HtmGem
-=> gemini://gmi.sbgodin.fr Ma page personnelle en passant nativement par un programme interprétant Gemini
+## HtmGem
+HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur web muni de **Php**. À l’ouverture d’une page ***.gmi**, il la traduit pour le navigateur web. Cette présente page est affichée de cette façon. Gemini utilise son propre protocole, format, clients et serveurs ; HtmGem permet d’en utiliser le format (Gemtext) via le web.
+=> https://gmi.sbgodin.fr/htmgem
 
 
 ### License de cette page
