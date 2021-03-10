@@ -57,11 +57,11 @@ Le paramétrage d’Apache et de Nginx est similaire. Par la suite, la syntaxe N
 
 Il est supposé que HtmGem est installé à la racine du site dans un répertoire //HtmGem//. Sinon, il faudra simplement adapter les liens.
 
-🢂 Appeler cette présente page directement, en cliquant ci-après. Elle devrait être formatée exactement comme actuellement :
+🢂 Chargez cette présente page directement, en cliquant ci-après. Elle devrait être formatée exactement comme actuellement :
 => index.gmi
 
 🢂 Enfin, pour vérifier que le fichier //index.gmi// est automatiquement appelé quand le fichier **.gmi** n’est pas indiqué :
-=> /htmgem Lien vers la racine du site
+=> /htmgem
 
 L’installation est terminée 🥳 La suite du texte donne des informations complémentaires, et n’est pas nécessaire dans l’immédiat. Les fichiers **.gmi** que vous créerez seront disponibles dès maintenant.
 => tutogemtext.gmi Inspirez-vous du tutoriel
