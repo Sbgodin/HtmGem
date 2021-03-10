@@ -95,6 +95,8 @@ Par exemple, lorsque ce sera activé :
 
 => index.gmi Ouvre la page avec le style par défaut, avec le style importé dans l’en-tête.
 
+=> css Sélecteur de style : une page de démo pour essayer chaque style 😎
+
 ### Avec les styles déjà fournis
 
 => index.gmi|htmgem Ouvre la page avec le style par défaut (//htmgem.css//), mais le style est importé dans l’en-tête.
