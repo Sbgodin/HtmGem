@@ -1,0 +1,76 @@
+body {
+    max-width: 1024px;
+    margin: auto;
+    margin-top: 0.5em;
+    xfont-family: mono;
+}
+
+p, h1, h2, h3, ul, li, pre, blockquote {
+    color: black;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+ul {
+    list-style: none;
+}
+
+li:before {
+    content: "* ";
+}
+
+h1:before {
+    content: "# ";
+}
+
+h2:before {
+    content: "## ";
+}
+
+h3:before {
+    content: "### ";
+}
+
+blockquote :before {
+    content: "> "; 
+}
+
+pre {
+    scrollbar-color: lightgrey white;
+    overflow-x: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a, a:visited {
+    color: black;
+}
+
+a:before {
+    content: "=> ";
+}
+
+@media only screen and (max-width: 1024px) {
+    a {
+        margin: -4rem;
+    }
+    body {
+        margin: 3rem;
+    }
+    h1 {
+        font-size: 4rem;
+    }
+    h2 {
+        font-size: 3.5rem;
+    }
+    h3 {
+        font-size: 3rem;
+    }
+    p, pre, ul {
+        font-size: 2.6rem;
+    }
+}
