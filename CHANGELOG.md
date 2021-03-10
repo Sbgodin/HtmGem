@@ -1,0 +1,32 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+Security
+- Check url encoding: The filename fetched on disk may differ from that was asked by URL.
+- Perform sanity checks against unauthorized access.
+- Check unicode capability, UTF16 input, etc…
+- Manage different type of carriage return: CR CR/LF LF
+
+Development
+- Command line API for script, testing, CI…
+
+User interface
+- Page menu on upper and lower sides: [parent dir] [root dir] [raw text]
+- Images
+- Text localisation
+
+## [1.0.0] - 2021-03-10
+- Improves presentation and installation page.
+- Adds stylesheets and download of pages source code.
+- Allows to change stylesheet in the URL.
+- Tested successfully on a shared host.
+
+## [0.2.0] - 2021-03-06 
+Beta version
+
+## [0.1.0] - 2021-03-01
+Alpha version

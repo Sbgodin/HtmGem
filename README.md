@@ -1,25 +1,19 @@
 # HtmGem
 
-This program aims to provide access to Gemini pages through a web server.
+HtmGem is Php program whose goal is to make Gemini files reachable through HTTP. It can be used on a shared host.
 
-It’s in alpha: advanced features available soon.
+You can see a demo on the main page of HtmGem:
+
+=> https://gmi.sbgodin.fr/htmgem
 
 ## Usage
 
-Place "htmgem.php" on the root of your webserver.
+* Copy the directory `htmgem` at the root of the website.
+* Access to the directory and follow the instructions.
 
-Your "page.gmi" is reachable using [http://thesite/htmgem.php?directory/page.gmi] with HTML markup:
+## Requirements
 
-## URL Rewriting
-
-With Nginx, you can use:
-
-```
-rewrite ^(.+\.gmi)$ /htmgem.php?url=$1 last;
-```
-
-## Install
-
-php-mbstring is required
-
-So the page is available at [http://thesite/htmgem.php/directory/page.gmi].
+* Php v7.3
+* `Php-mbstring` module to deal with unicode characters
+* A web server (well testing with Apache and Nginx)
+* `mod-rewrite` to intercept the Gemini files
