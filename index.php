@@ -133,7 +133,7 @@ function htmlPrepare(&$text) {
     $text = mb_ereg_replace("([".DASHES."]) ([^".DASHES.".]+) ([".DASHES."])", "\\1".NARROW_NO_BREAK_SPACE."\\2".NARROW_NO_BREAK_SPACE."\\3", $text);
 
     # Adds no-break space to stick the (EM/EN dashes) to words : aaaaaa – bb. ==> aaaaaa –$bb.
-    $text = mb_ereg_replace("([—–]) ([^.]+).", "\\1".NARROW_NO_BREAK_SPACE."\\2.", $text);
+    $text = mb_ereg_replace("([—–]) ([^.]+)\.", "\\1".NARROW_NO_BREAK_SPACE."\\2.", $text);
 }
 
 function translateGemToHtml($fileContents) {
