@@ -1,18 +1,11 @@
-Gemini se découpe en son protocole (comme HTTP) et son language, GemText. Ici, je vais approfondir ce qu’est le langage GemText. Son principe est que c’est le programme de l’utilisateur (le navigateur web, pour HTTP) qui décide de l‘affichage. La police de caractère, la taille, le fond d‘écran, tout. À l’exception du texte et de quelques autres détails qui suivent.
+# Tutorial GemText
 
-Si vous utilisez un programme qui n’interprète pas tous les styles de lignes, certaines vous sembleront dupliquées…
+Gemini est un protocole, une syntaxe, des serveurs et des clients. Sa syntaxe est le GemText. Son principe est que c’est le navigateur Gemeni de l’utilisateur qui décide de l‘affichage. La police de caractère, la taille, le fond d‘écran, tout. L’un des buts recherchés est de se concentrer sur le texte et quelques autres détails abordés ci-après.
 
-La ligne que vous venez de lire existe sur une ligne physique, que le programme que vous utilisez a dû découper en plusieurs lignes logiques afin que cela tienne sur votre écran. Entre cette présente ligne de texte et celle d’avant, il y a une ligne vide pour marquer le changement de paragraphe.
-Ici, j’ai simplement passé à la ligne. L’espacement devrait être moindre.
+Le paragraphe que vous venez de lire existe sur une seule ligne physique, que le programme que vous utilisez a dû découper en plusieurs lignes logiques afin que cela tienne sur votre écran. Entre cette présente ligne de texte et celle d’avant, il y a une ligne vide pour marquer le changement de paragraphe.
+Ici, j’ai simplement passé à la ligne. L’espacement devrait être moindre mais cela dépend du programme que vous utilisez.
 
-Il y a tout de même quelques types spéciaux de ligne.
-
-On commence par le titre de niveau 1. Il est d’abord écrit ci-après tel que je le vois, puis sur la ligne d’après il est rendu normalement par votre programme :
-
-​# Comment fonctionne GemText ?
-# Comment fonctionne GemText ?
-
-Je viens d’écrire « # Comment fonctionne GemText » deux fois. Une fois sans qu’il soit interprété, où vous le voyez tel que je le vois. Et une deuxième fois où votre programme peut l’afficher différemment.
+Les titres de niveau un, deux puis trois sont d’abord écrits ci-après tel qu’ils sont écrits physiquement dans cette page, puis sur la ligne d’après ils sont affichés normalement par le navigateur Gemini :
 
 ​# Titre de niveau 1
 # Titre de niveau 1
@@ -23,24 +16,21 @@ Je viens d’écrire « # Comment fonctionne GemText » deux fois. Une fois sans
 ​### Titre de niveau 3
 ### Titre de niveau 3
 
-# Les citations
-
-Quand on veut citer un texte, on écrit avec le caractère > en début de ligne. D’abord affichée comme je l’ai écrit puis comme le programme l’affiche normalement :
+# Citations
 
 ​> Citation de texte. La ligne peut être aussi longue que voulue, c’est votre programme qui doit découper la ligne pour l’afficher. Une seule ligne physique peut être longue, mais il n’y a pas besoin de placer de retour à la ligne.
 > Citation de texte. La ligne peut être aussi longue que voulue, c’est votre programme qui doit découper la ligne pour l’afficher. Une seule ligne physique peut être longue, mais il n’y a pas besoin de placer de retour à la ligne.
 
-# Les blocs préformatés
+# Blocs préformatés
 
+​```
 Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc. Les lignes contenant ``` ne sont pas affichées :
 ​```
-Ceci est une ligne préformatée. Quand la ligne est longue, elle n’est pas découpée. Le programme doit présenter un ascenseur horizontal pour permettre de tout voir.
-​```
 ```
-Ceci est une ligne préformatée. Quand la ligne est longue, elle n’est pas découpée. Le programme doit présenter un ascenseur horizontal pour permettre de tout voir.
+Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc. Les lignes contenant ``` ne sont pas affichées :
 ```
 
-# Les listes non-ordonnées
+# Listes non-ordonnées
 
 ​* Les listes non-ordonnées sont des lignes commençant par * les unes après les autres.
 ​* Elles servent à énumérer.
@@ -52,29 +42,35 @@ Ceci est une ligne préformatée. Quand la ligne est longue, elle n’est pas d�
 # Les liens
 
 Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voici par exemple un lien vers le site centralisant pour le moment les informations sur Gemini :
-​=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+
+^=​> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
 => gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
 
-Voici un autre lien, directement visible parce qu’il n’a pas de description :
-​=> https://gemini.circumlunar.space/docs/specification.gmi
+^=​> https://gemini.circumlunar.space/docs/specification.gmi
 => https://gemini.circumlunar.space/docs/specification.gmi
 
-# Ce qu’il y a en plus…
+# Décoration du texte
 
-HtmGem suit les préconisations de Gemini, sauf pour la décoration du texte. Il ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible via un client Gemini.
+La décoration du texte ne fait pas partie des spécifications de Gemini.
 
-^ Cette **ligne** n‘affiche ~~pas~~ la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
-Cette **ligne** affiche la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
+^ Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __souligner__ des mots.
+Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __souligner__ des mots.
+
+Et voilà ! Vous savez tout ce qui est à savoir 🥳 Les spécifications complètes sont sur le site de Gemini :
+=> https://gemini.circumlunar.space/docs/specification.gmi
+
+———————————————————— ————————————————————
 
 ## HtmGem
-HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur web muni de **Php**. À l’ouverture d’une page ***.gmi**, il la traduit pour le navigateur web. Cette présente page est affichée de cette façon. Gemini utilise son propre protocole, format, clients et serveurs ; HtmGem permet d’en utiliser le format (Gemtext) via le web.
+
+HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur web muni de **Php**. À l’ouverture d’une page ***.gmi**, il la traduit pour le navigateur web. Cette présente page est affichée de cette façon. Il permet d’utiliser la syntaxe Gemini (GemText) via le web.
 => https://gmi.sbgodin.fr/htmgem
 
 
 ### License de cette page
 Cette page est sous licence libre **CC BY-SA 2.0 FR**.
 => https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte de la licence CC BY-SA 2.0 FR
-=> gemini://gmi.sbgodin.fr/ gemini://gmi.sbgodin.fr/ ⸻ Christophe HENRY
+=> gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY
 
 ### Navigation
 => index.gmi
