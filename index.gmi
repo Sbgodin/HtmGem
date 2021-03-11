@@ -87,11 +87,11 @@ Modifier la configuration du serveur web fonctionne mais est assez lourd. On peu
 
 Il est aussi possible de faire une réécriture d’URL qui intègre le style :
 > rewrite ^(.+\.gmi)$ /htmgem/?url=$1;
-> rewrite ^(.+\.gmi)\|([\w_]+)$ /htmgem/?url=$1&style=$2;
+> rewrite ^(.+\.gmi)\ *\|\ *([\w_]+)$ /htmgem/?url=$1&style=$2;
 
 Par exemple, lorsque ce sera activé :
-=> index.gmi|source Produit le code source, pas bien lisible à l’écran. À utiliser avec //wget//.
-=> index.gmi|pre Produit le code source de façon lisble à l’écran en utilisant la balise **<pre>**.
+=> index.gmi%20|%20source Le lien index.gmi | source Produit le code source, pas bien lisible à l’écran. À utiliser avec //wget//.
+=> index.gmi%20|%20pre Produit le code source de façon lisble à l’écran en utilisant la balise **<pre>**.
 
 => index.gmi Ouvre la page avec le style par défaut, avec le style importé dans l’en-tête.
 
@@ -99,12 +99,12 @@ Par exemple, lorsque ce sera activé :
 
 ### Avec les styles déjà fournis
 
-=> index.gmi|htmgem Ouvre la page avec le style par défaut (//htmgem.css//), mais le style est importé dans l’en-tête.
-=> index.gmi|none Ouvre la page courante avec le style //none//. Aucune CSS utilisée.
+=> index.gmi%20|%20htmgem Ouvre la page avec le style par défaut (//htmgem.css//), mais le style est importé dans l’en-tête.
+=> index.gmi%20|%20none Ouvre la page courante avec le style //none//. Aucune CSS utilisée.
 
-=> index.gmi|terminal Style //terminal//
-=> index.gmi|black_wide Style //black wide//
-=> index.gmi|simple Style //simple//
+=> index.gmi%20|%20terminal Style //terminal//
+=> index.gmi%20|%20black_wide Style //black wide//
+=> index.gmi%20|%20simple Style //simple//
 
 ## Décoration du texte
 
