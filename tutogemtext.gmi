@@ -77,4 +77,4 @@ Cette page est sous licence libre **CC BY-SA 2.0 FR**.
 => gemini://gmi.sbgodin.fr/ gemini://gmi.sbgodin.fr/ ⸻ Christophe HENRY
 
 ### Navigation
-=> ..
+=> index.gmi
