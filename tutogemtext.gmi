@@ -61,14 +61,10 @@ Voici un autre lien, directement visible parce qu’il n’a pas de description 
 
 # Ce qu’il y a en plus…
 
-HtmGem suit les préconisations de Gemini, sauf pour le texte formaté. Il ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible via un client Gemini.
+HtmGem suit les préconisations de Gemini, sauf pour la décoration du texte. Il ne s’affiche — à cette heure — que via HtmGem. Vous n’en voyez que les caractères déclenchant le formatage. Mais le texte reste néanmoins lisible via un client Gemini.
 
 ^ Cette **ligne** n‘affiche ~~pas~~ la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
 Cette **ligne** affiche la décoration du //texte//. Elle reste lisible même en voyant les caractères de formatage.
-
-## Ajouts à la norme :
-* Par défaut, le texte mis en forme s’applique sur les lignes de texte, listes et citations.
-* Pour désactiver la mise en forme du texte, on peut soit commencer la ligne par ^, soit faire un bloc non décoré avec ^^^ :
 
 ## HtmGem
 HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur web muni de **Php**. À l’ouverture d’une page ***.gmi**, il la traduit pour le navigateur web. Cette présente page est affichée de cette façon. Gemini utilise son propre protocole, format, clients et serveurs ; HtmGem permet d’en utiliser le format (Gemtext) via le web.

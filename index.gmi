@@ -106,9 +106,16 @@ Par exemple, lorsque ce sera activé :
 => index.gmi|black_wide Style //black wide//
 => index.gmi|simple Style //simple//
 
-## Désactiver (ou non) la décoration du texte
+## Décoration du texte
 
-La décoration du texte, qui interprête la mise en forme **gras** par exemple, ne fait pas partie de la définition de GemText.
+La décoration du texte, qui interprête le **gras** par exemple, ne fait pas partie de la définition de GemText. La décoration du texte s’applique partout sauf sur les titres et blocs préformatés.
+
+### Désactiver la décoration du texte
+
+On peut :
+* commencer la ligne par **^**,
+* faire un bloc non décoré avec **^^^**,
+* ajouter ce qui suit à la **réécriture** d’URL :
 > &textDecoration=0
 
 ———————————————————— ————————————————————
