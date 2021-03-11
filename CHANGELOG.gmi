@@ -15,12 +15,14 @@ and this project adheres to [Semantic Versioning](https:/​/semver.org/spec/v2.
 ### Development
 * Command line API for script, testing, CI…
 * Split codebase: library to interpret GemText, command line interface (tests, …) and web interface 
+* Page caching: don’t generate twice an unmodified file.
 
 ### User interface
 * Page menu on upper and lower sides: [parent dir] [root dir] [raw text]
 * Images
 * Text localisation
 * Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
+* Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
 
 ## [1.0.0] - 2021-03-10
 * Improves presentation and installation page.
