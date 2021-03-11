@@ -160,26 +160,28 @@ function translateGemToHtml($fileContents) {
                 if (empty($line)) {
                     echo "<p>&nbsp;</p>\n";
                 } elseif ('^^^' == $line3) {
-                    if (preg_match("/^\^\^\^\s+(.*)$/", $line)) {
-                        $mode_textAttributes = !$mode_textAttributes;
+                    $mode_textAttributes = !$mode_textAttributes;
+                } elseif ('^' == $line1 and !$mode_textAttributes_temp) {
+                    if (preg_match("/^\^\s*(.+)$/", $line, $parts)) {
+                        $line = $parts[1];
+                        $mode_textAttributes_temp = true;
+                    } else {
+                        $mode = "raw";
+                    }
+                    continue;
+                } elseif ("#" == $line1) {
+                    if (preg_match("/^(#{1,3})\s*(.+)/", $line, $sharps)) {
+                        $h_level = strlen($sharps[1]);
+                        $text = $sharps[2];
+                        htmlPrepare($text);
+                        switch ($h_level) {
+                            case 1: echo "<h1>".$text."</h1>\n"; break;
+                            case 2: echo "<h2>".$text."</h2>\n"; break;
+                            case 3: echo "<h3>".$text."</h3>\n"; break;
+                        }
                     } else {
                         $mode = "raw";
                         continue;
-                    }
-                } elseif ('^' == $line1 and !$mode_textAttributes_temp) {
-                    preg_match("/^\^\s*(.*)$/", $line, $parts);
-                    $line = $parts[1];
-                    $mode_textAttributes_temp = true;
-                    continue;
-                } elseif ("#" == $line1) {
-                    preg_match("/^(#{1,3})\s*(.*)/", $line, $sharps);
-                    $h_level = strlen($sharps[1]);
-                    $text = $sharps[2];
-                    htmlPrepare($text);
-                    switch ($h_level) {
-                        case 1: echo "<h1>".$text."</h1>\n"; break;
-                        case 2: echo "<h2>".$text."</h2>\n"; break;
-                        case 3: echo "<h3>".$text."</h3>\n"; break;
                     }
                 } elseif ("=>" == $line2) {
                     if (preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $linkParts)) {
@@ -193,6 +195,7 @@ function translateGemToHtml($fileContents) {
                         } else {
                             // the label is humain-made, apply formatting
                             htmlPrepare($url_label);
+                            if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($url_label);
                         }
                         echo "<p><a class='$url_protocol' href='$url_link'>$url_label</a></p>\n";
                     } else {
@@ -200,27 +203,19 @@ function translateGemToHtml($fileContents) {
                         continue;
                     }
                 } elseif ("```" == $line3) {
-                    if (preg_match("/^```\s*(.*)$/", $line, $matches)) {
-                        $alt_text = trim(@$matches[1]);
-                        if (!(empty($alt_text))) {
-                            echo "<pre alt='$alt_text' title='$alt_text'>\n";
-                        } else {
-                            echo "<pre>\n";
-                        }
+                    preg_match("/^```\s*(.*)$/", $line, $matches);
+                    $alt_text = trim($matches[1]);
+                    if (empty($alt_text)) {
+                        echo "<pre>\n";
+                    } else {
+                        echo "<pre alt='$alt_text' title='$alt_text'>\n";
                     }
                     $mode="pre";
                 } elseif (">" == $line1) {
-                    $mode = "quote";
-                    preg_match("/^>\s*(.*)$/", $line, $quoteParts);
-                    $quote = $quoteParts[1];
                     echo "<blockquote>\n";
-                    if (empty($quote))
-                        echo "<p>&nbsp;</p>\n";
-                    else
-                        htmlPrepare($quote);
-                    if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
-                        echo "<p>".$quote."</p>\n";
-                } elseif ("* " == $line2) {
+                    $mode = "quote";
+                    continue;
+                } elseif ("*" == $line1) {
                     echo "<ul>\n";
                     $mode = "ul";
                     continue;
@@ -230,9 +225,13 @@ function translateGemToHtml($fileContents) {
                 }
             } else {
                 if ("raw"==$mode) {
-                    htmlPrepare($line);
-                    if ($mode_textAttributes xor $mode_textAttributes_temp) addTextAttributes($line);
-                    if (empty($line)) $line = "&nbsp;";
+                    if (empty($line)) {
+                        $line = "&nbsp;";
+                    } else {
+                        htmlPrepare($line);
+                        if ($mode_textAttributes xor $mode_textAttributes_temp)
+                            addTextAttributes($line);
+                    }
                     echo "<p>$line</p>\n";
                     $mode = null;
                 } elseif ("pre"==$mode) {
@@ -249,16 +248,19 @@ function translateGemToHtml($fileContents) {
                         $quote = $quoteParts[1];
                         if (empty($quote))
                             echo "<p>&nbsp;</p>\n";
-                        else
+                        else {
                             htmlPrepare($quote);
+                            if ($mode_textAttributes xor $mode_textAttributes_temp)
+                                addTextAttributes($line);
                             echo "<p>".$quote."</p>\n";
+                        }
                     } else {
                         echo "</blockquote>\n";
                         $mode = null;
                         continue;
                     }
                 } elseif ("ul"==$mode) {
-                    if ("* " == $line2) {
+                    if ("*" == $line1) {
                         preg_match("/^\*\s*(.*)$/", $line, $ulParts);
                         $li = $ulParts[1];
                         if (empty($li)) {
@@ -278,7 +280,7 @@ function translateGemToHtml($fileContents) {
                 }
             }
             break; // exits the while(true) as no continue occured
-        }
+        } // while(true)
     }
     $html = ob_get_contents();
     ob_clean();
