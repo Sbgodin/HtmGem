@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https:/​/semver.org/spec/v2.
 * Text localisation
 * Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
 * Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
+* Separate project? Blog infrastructure with templates, style and RSS generator.
 
 ## [1.0.0] - 2021-03-10
 * Improves presentation and installation page.
