@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https:/​/semver.org/spec/v2.
 * Page caching: don’t generate twice an unmodified file.
 * Properly close tags when the page exists in a non-null mode.
 * Be able to move /htmgem anywhere and (for the Php part) outside the webbrowser scope.
+* cgi-bin?
+* Chain CSS found from the root to the file.
 
 ### User interface
 * Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
