@@ -69,9 +69,9 @@ if (empty($fileContents)) {
     $text404 = <<<EOF
 # ⚠ Page non trouvée
 
-**$url**
+​**$url**
 
-=> $url 🔄
+=> $url Recharger 🔄
 
 => /
 EOF;
