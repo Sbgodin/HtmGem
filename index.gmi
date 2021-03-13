@@ -77,7 +77,7 @@ L’installation est terminée 🥳 La suite du texte donne des informations com
 
 Par défaut, le style est incorporé dans chaque page récupérée par le navigateur web. Le même style est utilisé pour toutes les pages, //htmgem/css/htmgem.css//, sauf lorsqu’un fichier ayant le même nom que la page mais avec l’extension **.css** existe dans le même répertoire. Dans ce cas, il est utilisé.
 
-Lorsque l’option css est activé dans la configuration (voir //rewrite// plus haut) d’autres comportements sont possibles :
+Lorsque l’option css est activé dans la configuration (voir //rewrite// plus haut) d’autres comportements sont possibles. **Attention**, cela ne fonctionnera pas avec un client Gemini puisque HtmGem n’est accessible que via un navigateur web.
 * &style=**htmgem** : Utilise le style par défaut, mais en tant que fichier externe.
 * &style=**none** : La page HTML est envoyée sans style.
 * &style=**<autre nom>** : Le fichier htmgem/css/<autre nom>.css est utilisé en tant que style externe.
