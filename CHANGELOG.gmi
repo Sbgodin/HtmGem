@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https:/​/keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https:/​/semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] v3
+* cgi-bin? Handle user input
+* Handle client certificates?
+* Page caching: don’t generate twice an unmodified file.
+* Separate project? Blog infrastructure with templates, style and RSS generator.
+* Proxy for remote and local servers.
+* Be able to move /htmgem anywhere and (for the Php part) outside the webbrowser scope.
+
+## [Unreleased] v2
 
 ### Security
 * Check url encoding: The filename fetched on disk may differ from that was asked by URL.
@@ -15,19 +23,14 @@ and this project adheres to [Semantic Versioning](https:/​/semver.org/spec/v2.
 ### Development
 * Command line API for script, testing, CI…
 * Split codebase: library to interpret GemText, command line interface (tests, …) and web interface.
-* Page caching: don’t generate twice an unmodified file.
 * Properly close tags when the page exists in a non-null mode.
-* Be able to move /htmgem anywhere and (for the Php part) outside the webbrowser scope.
-* cgi-bin?
-* Chain CSS found from the root to the file.
 
 ### User interface
 * Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
-* Images
+* Images: click to display
 * Text localisation
 * Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
 * Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
-* Separate project? Blog infrastructure with templates, style and RSS generator.
 
 ## [1.0.0] - 2021-03-10
 * Improves presentation and installation page.
