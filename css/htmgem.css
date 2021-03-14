@@ -38,7 +38,7 @@ h1, h2, h3 {
 }
 
 h1 { font-size: 2rem; }
-h2 { font-size: 1.8rem; }
+h2 { font-size: 1.6rem; }
 h3 { font-size: 1.2rem; }
 
 blockquote {
@@ -95,9 +95,7 @@ a.mailto:before {
 }
 
 pre {
-    background-color: #eee;
     margin: 0 -1rem;
-    padding: 1rem;
     overflow-x: auto;
 }
 

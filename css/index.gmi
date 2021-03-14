@@ -7,7 +7,7 @@
 => index.gmi|simple simple.css
 => index.gmi|htmgem htmgem.css
 => index.gmi|terminal terminal.css
-=> index.gmi|pre pre.css
+=> index.gmi|pre code source préformaté
 
 Simple ligne de texte
 

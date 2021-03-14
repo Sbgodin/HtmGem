@@ -43,10 +43,10 @@ Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avan
 
 Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voici par exemple un lien vers le site centralisant pour le moment les informations sur Gemini :
 
-^=​> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
-=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+​=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
 
-^=​> https://gemini.circumlunar.space/docs/specification.gmi
+​=> https:/​/gemini.circumlunar.space/docs/specification.gmi
 => https://gemini.circumlunar.space/docs/specification.gmi
 
 # Décoration du texte

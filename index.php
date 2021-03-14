@@ -69,9 +69,9 @@ if (empty($fileContents)) {
     $text404 = <<<EOF
 # ⚠ Page non trouvée
 
-**$url**
+​**$url**
 
-=> $url 🔄
+=> $url Recharger 🔄
 
 => /
 EOF;
@@ -301,7 +301,14 @@ $page_title = @$matches[1];
 **/
 
 if ("source" == $style) {
-    echo $fileContents;
+    $basename = basename($filePath);
+    header("Cache-Control: public");
+    header("Content-Disposition: attachment; filename=$basename");
+    header("Content-Type: text/plain");
+    header("Content-Transfer-Encoding: binary");
+    header('Content-Length: ' . filesize($filePath));
+    readfile($filePath);
+    exit();
 } elseif ("pre" == $style) {
     $fileContents = htmlspecialchars($fileContents, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
     echo <<<EOL
