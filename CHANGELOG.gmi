@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
+## [1.1.0] - 2021-03-14
+* File download when using "source" as a style.
+* Improves the regex.
+* Fixes 404 page text decoration, adds reload message.
+* Links to download htmgem-master.zip.
+* Links CHANGELOG and COPYING into index.gmi.
+* Styles improvement, creation of raw.css.
+* Rewording of texts.
+
 ## [1.0.0] - 2021-03-10
 * Improves presentation and installation page.
 * Adds stylesheets and download of pages source code.
