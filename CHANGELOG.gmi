@@ -17,8 +17,18 @@ All notable changes to this project will be documented in this file.
 ### Security
 * Check url encoding: The filename fetched on disk may differ from that was asked by URL.
 * Perform sanity checks against unauthorized access.
-* Check unicode capability, UTF16 input, etc…
+* Check unicode capability, UTF16 input, RTL/LTR, etc…
 * Manage different type of carriage return: CR CR/LF LF.
+
+### Development
+∅
+
+### User interface
+* Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
+* Images: click to display
+* Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
+
+## [Unreleased] v1
 
 ### Development
 * Command line API for script, testing, CI…
@@ -26,10 +36,7 @@ All notable changes to this project will be documented in this file.
 * Properly close tags when the page exists in a non-null mode.
 
 ### User interface
-* Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
-* Images: click to display
-* Text localisation
-* Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
+* Translate French texts to English.
 * Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
 
 ## [1.1.0] - 2021-03-14
