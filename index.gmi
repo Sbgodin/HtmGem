@@ -15,8 +15,8 @@ Gemini est un nouveau protocole internet qui :
 ```
 => https://gemini.circumlunar.space/
 
-=> https://framagit.org/Sbgodin/htmgem/-/archive/master/htmgem-master.zip Téléchargez htmgem-master.zip pour l’installer
-=> https://framagit.org/Sbgodin/htmgem Code source, rapports de bug, commentaires…
+=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip Téléchargez la branche courante pour l’installer
+=> https://tildegit.org/Sbgodin/htmgem Code source, rapports de bug, commentaires…
 
 => https://gmi.sbgodin.fr/htmgem Page principale de HtmGem via le web
 => gemini://gmi.sbgodin.fr/htmgem Page principale de HtmGem via Gemini
