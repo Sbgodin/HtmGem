@@ -38,8 +38,7 @@ if (!file_exists($filePath)) {
 
 ​**$url**
 
-=> $url Recharger 🔄
-=> /
+=> .. 🔄 🔄
 EOF;
     $t = new \htmgem\GemTextTranslate_html($page404);
     echo $t->getFullHtml();
