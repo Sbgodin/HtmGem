@@ -21,16 +21,26 @@ if (empty($url)) {
     exit();
 }
 
-
-# to false only if textDecoration=0 in the URL
-$textDecoration = "0" != @$_REQUEST['textDecoration'];
+$documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 # Removes the headling and trailling slashes, to be sure there's not any.
 $filePath = rtrim($_SERVER['DOCUMENT_ROOT'], "/")."/".ltrim($url, "/");
 
+switch(true) {
+    case false:
+    case !realPath($filePath):
+    case !preg_match("/\.gmi$/", $url): # not finishing by .gmi
+    case strpos($filePath, $documentRoot)!==0: # not in web directory
+        $go404 = true;
+        // Says 404 even if the file exists to not give any information.
+        break;
+    default:
+        $go404 = false;
+}
+
 /* 404 page
  */
-if (!file_exists($filePath)) {
+if ($go404) {
     error_log("HtmGem: 404 $url $filePath");
     http_response_code(404);
     $page404 = <<<EOF
@@ -45,6 +55,8 @@ EOF;
     exit();
 }
 
+# to false only if textDecoration=0 in the URL
+$textDecoration = "0" != @$_REQUEST['textDecoration'];
 
 $fileContents = @file_get_contents($filePath);
 # Removes the Byte Order Mark
