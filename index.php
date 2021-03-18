@@ -53,7 +53,7 @@ $fileContents = @file_get_contents($filePath);
 
 
 ######################################## 404 page
-if (empty($fileContents)) {
+if (!file_exists($filePath) || !preg_match("/\.gmi$/", $url)) {
     error_log("HtmGem: 404 $url $filePath");
     http_response_code(404); ?>
 <!DOCTYPE html>
