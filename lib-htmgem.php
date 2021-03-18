@@ -170,8 +170,7 @@ class GemtextTranslate_html {
 
     function __construct($parsedGemtext, $textDecorationEnabled=true) {
         if (empty($parsedGemtext))
-            // So translate() will do no loop.
-            $parsedGemtext = array();
+            $parsedGemtext = "";
         elseif (is_string($parsedGemtext))
             // to delete the last empty line, <p>&nbsp;</p> in HTML
             $parsedGemtext = rtrim($parsedGemtext);

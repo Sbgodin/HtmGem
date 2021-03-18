@@ -83,24 +83,24 @@ $fileContents</pre>
 </html>
 EOL;
     exit();
-} else {
-    $t = new \htmgem\GemTextTranslate_html($fileContents);
-    if ("none" == $style) {
-        $t->addCss("");
-    } elseif ("/" == @$style[0]) {
-        $t->addCss($style);
-    } elseif (empty($style)) {
-        $parts = pathinfo($filePath);
-        $localCss = $parts["filename"].".css";
-        $localCssFilePath = $parts["dirname"]."/".$localCss;
-        if (file_exists($localCssFilePath)) {
-            # Warning, using htmhem.php?url=… will make $localCss not found
-            # as the path is relative to htmgem.php and not / !
-            $t->addCss($localCss);
-        }
-    } else { #TODO: regex check for $style
-        $t->addCss("/htmgem/css/$style.css");
+}
+
+$t = new \htmgem\GemTextTranslate_html($fileContents, $textDecoration);
+if ("none" == $style) {
+    $t->addCss("");
+} elseif ("/" == @$style[0]) {
+    $t->addCss($style);
+} elseif (empty($style)) {
+    $parts = pathinfo($filePath);
+    $localCss = $parts["filename"].".css";
+    $localCssFilePath = $parts["dirname"]."/".$localCss;
+    if (file_exists($localCssFilePath)) {
+        # Warning, using htmhem.php?url=… will make $localCss not found
+        # as the path is relative to htmgem.php and not / !
+        $t->addCss($localCss);
     }
+} else { #TODO: regex check for $style
+    $t->addCss("/htmgem/css/$style.css");
 }
 
 echo $t->getFullHtml();
