@@ -168,7 +168,7 @@ class GemtextTranslate_html {
     protected $pageTitle = "";
     public $translatedGemtext;
 
-    function __construct($parsedGemtext, $textDecorationEnabled=true) {
+    function __construct($parsedGemtext, $textDecoration=true) {
         if (empty($parsedGemtext))
             $parsedGemtext = "";
         elseif (is_string($parsedGemtext))
@@ -177,7 +177,7 @@ class GemtextTranslate_html {
             // The text must be parsed
             $parsedGemtext = gemtextParser($parsedGemtext);
         $this->parsedGemtext = $parsedGemtext;
-        $this->translate($textDecorationEnabled);
+        $this->translate($textDecoration);
     }
 
     function addCss($css) {
@@ -308,7 +308,7 @@ class GemtextTranslate_html {
                     echo "<h3>$title</h3>\n";
                     break;
                 case "^^^":
-                    $this->textDecorationEnabled = !$this->textDecorationEnabled;
+                    $textDecoration = !$textDecoration;
                     break;
                 default:
                     die("Unknown mode: '{$node["mode"]}'\n");
