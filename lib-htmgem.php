@@ -107,50 +107,49 @@ class GemtextTranslate_gemtext {
     }
 
     protected function translate() {
-        ob_start();
+        $output = "";
         foreach ($this->parsedGemtext as $node) {
             $mode = $node["mode"];
             switch($mode) {
                 case "":
-                    echo $node["text"]."\n";
+                    $output .= $node["text"]."\n";
                     break;
                 case "*":
                     foreach ($node["texts"] as $text) {
-                        echo "* $text\n";
+                        $output .= "* $text\n";
                     }
                     break;
                 case "```":
-                    print("```\n");
+                    $output .= "```\n";
                     foreach ($node["texts"] as $text) {
-                        echo "$text\n";
+                        $output .= "$text\n";
                     }
-                    print("```\n");
+                    $output .= "```\n";
                     break;
                 case ">":
                     foreach ($node["texts"] as $text) {
-                        echo "> $text\n";
+                        $output .= "> $text\n";
                     }
                     break;
                 case "=>":
                     $linkText = $node["text"];
                     if (!empty($linkText)) $linkText = " $linkText";
-                    print("=> ".$node["link"].$linkText."\n");
+                    $output .= "=> ".$node["link"].$linkText."\n";
                     break;
                 case "#":
                 case "##":
                 case "###":
-                    print("$mode ".$node["title"]."\n");
+                    $output .= "$mode ".$node["title"]."\n";
                     break;
                 case "^^^":
-                    print("^^^\n");
+                    $output .= "^^^\n";
                     break;
                 default:
                     die("Unknown mode: '{$node["mode"]}'\n");
             }
         }
 
-        $this->translatedGemtext = ob_get_contents();
-        ob_end_clean();
+        $this->translatedGemtext = $output;
     }
 
     public function __toString() {
@@ -246,7 +245,7 @@ class GemtextTranslate_html {
     }
 
     public function translate($textDecoration=true) {
-        ob_start();
+        $output = "";
         foreach ($this->parsedGemtext as $node) {
             $mode = $node["mode"];
             switch($mode) {
@@ -254,27 +253,27 @@ class GemtextTranslate_html {
                     $text = $node["text"];
                     self::htmlPrepare($text);
                     if ($textDecoration) self::addTextDecoration($text);
-                    echo "<p>$text</p>\n";
+                    $output .= "<p>$text</p>\n";
                     break;
                 case "*":
-                    echo "<ul>\n";
+                    $output .= "<ul>\n";
                     foreach ($node["texts"] as $text) {
                         self::htmlPrepare($text);
                         if ($textDecoration) self::addTextDecoration($text);
-                        print("<li>$text\n");
+                        $output .= "<li>$text\n";
                     }
-                    echo "</ul>\n";
+                    $output .= "</ul>\n";
                     break;
                 case "```":
                     $text = implode("\n", $node["texts"]);
                     self::htmlPrepare($text);
-                    echo "<pre>\n$text\n</pre>\n";
+                    $output .= "<pre>\n$text\n</pre>\n";
                     break;
                 case ">":
                     $text = implode("\n", $node["texts"]);
                     self::htmlPrepare($text);
                     if ($textDecoration) self::addTextDecoration($text);
-                    echo "<blockquote>\n$text\n</blockquote>\n";
+                    $output .= "<blockquote>\n$text\n</blockquote>\n";
                     break;
                 case "=>":
                     $link = $node["link"];
@@ -289,23 +288,23 @@ class GemtextTranslate_html {
                     preg_match("/^([^:]+):/", $link, $matches);
                     $protocol = @$matches[1];
                     if (empty($protocol)) $protocol = "local";
-                    echo "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
+                    $output .= "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
                     break;
                 case "#":
                     $title = $node["title"];
                     self::htmlPrepare($title);
                     if (empty($this->pageTitle)) $this->pageTitle = $title;
-                    echo "<h1>$title</h1>\n";
+                    $output .= "<h1>$title</h1>\n";
                     break;
                 case "##":
                     $title = $node["title"];
                     self::htmlPrepare($title);
-                    echo "<h2>$title</h2>\n";
+                    $output .= "<h2>$title</h2>\n";
                     break;
                 case "###":
                     $title = $node["title"];
                     self::htmlPrepare($title);
-                    echo "<h3>$title</h3>\n";
+                    $output .= "<h3>$title</h3>\n";
                     break;
                 case "^^^":
                     $textDecoration = !$textDecoration;
@@ -315,8 +314,7 @@ class GemtextTranslate_html {
             }
         }
 
-        $this->translatedGemtext = ob_get_contents();
-        ob_end_clean();
+        $this->translatedGemtext = $output;
     }
 
     function getFullHtml() {
@@ -324,7 +322,7 @@ class GemtextTranslate_html {
             $css = array("/htmgem/css/htmgem.css");
         else
             $css = $this->cssList;
-        echo <<<EOL
+        $output = <<<EOL
 <!DOCTYPE html>
 <html>
 <head>
@@ -332,14 +330,16 @@ class GemtextTranslate_html {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 EOL;
         foreach ($css as $c) {
-            echo "<link type='text/css' rel='StyleSheet' href='$c'>\n";
+            $output .= "<link type='text/css' rel='StyleSheet' href='$c'>\n";
         }
-        echo <<<EOL
+        $output .= <<<EOL
 </head>
 <body>\n
 EOL;
-        echo $this->translatedGemtext;
-        echo "</body>\n</html>\n";
+        $output .= $this->translatedGemtext;
+        $output .= "</body>\n</html>\n";
+
+        echo $output;
     }
 
     public function __toString() {
