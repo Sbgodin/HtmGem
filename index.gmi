@@ -118,8 +118,7 @@ La décoration du texte, qui interprête le **gras** par exemple, ne fait pas pa
 ### Désactiver la décoration du texte
 
 On peut :
-* commencer la ligne par **^**,
-* faire un bloc non décoré avec **^^^**,
+* désactiver et activer la décoration du texte avec une ligne **^^^**,
 * ajouter ce qui suit à la **réécriture** d’URL :
 > &textDecoration=0
 

@@ -53,8 +53,10 @@ Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voi
 
 La décoration du texte ne fait pas partie des spécifications de Gemini.
 
-^ Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __souligner__ des mots.
+Cette *​*ligne*​* utilise la /​/décoration du texte/​/ qui peut ~​~barrer~​~ ou _​_souligner_​_ des mots.
 Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __souligner__ des mots.
+
+On peut désactiver et activer la décoration du texte avec **^^^** sur une ligne.
 
 Et voilà ! Vous savez tout ce qui est à savoir 🥳 Les spécifications complètes sont sur le site de Gemini :
 => https://gemini.circumlunar.space/docs/specification.gmi
