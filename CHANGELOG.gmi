@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
+## [Unreleased] v3
+* cgi-bin? Handle user input
+* Page caching: don’t generate twice an unmodified file.
+* Be able to move /htmgem anywhere and (for the Php part) outside the webbrowser scope.
+
+## [Unreleased] v2
+
+### Security
+* Check unicode capability, UTF16 input, RTL/LTR, etc…
+* Manage different type of carriage return: CR CR/LF LF.
+
+### Development
+∅
+
+### User interface
+* Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
+* Images: click to display
+* Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
+
+## [Unreleased] v1
+
+### Security
+* Check url encoding: The filename fetched on disk may differ from that was asked by URL.
+
+### Development
+* Automated tests like phpunit
+
+### User interface
+* Translate French texts to English.
+* Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
+
 ## [1.2.0] - 2021-03-19
 * Removes "^" to disable text decoration line-wise.
 * CSS is no longer incorporated in the HTML page.
