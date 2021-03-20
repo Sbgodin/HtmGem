@@ -80,7 +80,7 @@ if ("source" == $style) {
     # Gets the page title: the first occurrence with # at the line start
     mb_ereg("#\s*([^\n]+)\n", $fileContents, $matches);
     $page_title = @$matches[1];
-    $fileContents = htmlspecialchars($fileContents, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
+    $fileContents = htmlspecialchars($fileContents, ENT_HTML5|ENT_QUOTES, "UTF-8", true);
     echo <<<EOL
 <!DOCTYPE html>
 <html>

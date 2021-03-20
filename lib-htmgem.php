@@ -232,7 +232,7 @@ class GemtextTranslate_html {
         if (empty($text)) {
             $text = "&nbsp;";
         } else {
-            $text = htmlspecialchars($text, ENT_HTML5|ENT_NOQUOTES, "UTF-8", false);
+            $text = htmlspecialchars($text, ENT_HTML5|ENT_QUOTES, "UTF-8", true);
             $text = mb_ereg_replace("\ ([?!:;»€$])", self::NARROW_NO_BREAK_SPACE."\\1", $text);
             $text = mb_ereg_replace("([«])\ ", "\\1".self::NARROW_NO_BREAK_SPACE, $text); # Espace fine insécable
 
@@ -283,6 +283,9 @@ class GemtextTranslate_html {
                         $linkText = $link;
                         self::htmlPrepare($linkText);
                     } else {
+                        // Don't double encode, just escapes quotes, "<" and ">".
+                        // So "I'm&gt" becomes "I&apos;&gt". The & remains untouched.
+                        $link = htmlspecialchars($link, ENT_HTML5|ENT_QUOTES, "UTF-8", false);
                         self::htmlPrepare($linkText);
                         if ($textDecoration) self::addTextDecoration($linkText);
                     }
