@@ -114,7 +114,7 @@ pre {
     h3 {
         font-size: 3rem;
     }
-    p, pre, ul {
+    p, pre, ul, blockquote {
         font-size: 2.6rem;
     }
 }
