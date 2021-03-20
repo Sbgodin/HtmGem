@@ -88,7 +88,7 @@ Lorsque l’option css est activé dans la configuration (voir //rewrite// plus 
 ## Réécriture d’URL pour préciser le style à utiliser
 
 Modifier la configuration du serveur web fonctionne mais est assez lourd. On peut tester un style en particulier de la façon suivante :
-> https://site.tld/htmgem/index.php?url=/url/page.gmi&style=<…>
+> https:/​/site.tld/htmgem/index.php?url=/url/page.gmi&style=<…>
 
 Il est aussi possible de faire une réécriture d’URL qui intègre le style :
 > rewrite ^(.+\.gmi)$ /htmgem/?url=$1;
