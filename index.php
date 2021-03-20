@@ -27,7 +27,6 @@ $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 $filePath = rtrim($_SERVER['DOCUMENT_ROOT'], "/")."/".ltrim($url, "/");
 
 switch(true) {
-    case false:
     case !realPath($filePath):
     case !preg_match("/\.gmi$/", $url): # not finishing by .gmi
     case strpos($filePath, $documentRoot)!==0: # not in web directory
