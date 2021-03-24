@@ -29,7 +29,7 @@ All notable changes to this project will be documented in this file.
 * Check url encoding: The filename fetched on disk may differ from that was asked by URL.
 
 ### Development
-* Automated tests like phpunit
+∅
 
 ### User interface
 * Translate French texts to English.
