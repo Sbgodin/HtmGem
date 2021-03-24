@@ -1,0 +1,19 @@
+# Tests
+
+This test suite aims to check the quality of the translation of the fulltext source pages to HTML pages. As usual, its purpose is to protect the project against regression. So these tests should be run before commits (see **./cli/precommit.git**).
+
+### parserTest.php
+The parser takes the gemtext contained in the **.gmi** file and returns the internal format.
+
+### translateToHtmlTest.php
+The translator takes the gemtext, parse it and returns an HTML representation.
+
+### translateToGemtextTest.php
+This translator takes the gemtext, parse it and rebuild the gemtext. The output must be identical of the input. When there are optional spaces, they are trimmed. In such cases, the translation will return a kind of normalised gemtext — that is, without the spaces.
+
+### ./cli
+It contains files to play around with the API:
+* parse_gemtext: outputs a //print_r()// of the internal representation
+* translate_to_gemtext: outputs the regenerated gemtext
+* translate_to_html: outputs the html-ified gemtext
+//pre-commit.git// is to be moved to //./.git/hooks/pre-commit//, be //chmod x//-ed to run this test suit before committing.

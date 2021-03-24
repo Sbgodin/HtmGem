@@ -1,0 +1,17 @@
+This text is made of empty quotes :
+>
+
+Quotes with one word:
+> one
+Quotes with two words:
+> A B
+
+Several quotes :
+> 1
+> 2
+> 3
+
+Quotes with an empty one in between:
+> 1
+>
+> 3

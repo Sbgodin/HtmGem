@@ -1,0 +1,17 @@
+``` Text to not display but keep in memory
+Bellow here, an empty line
+
+```
+
+``` X
+```
+
+```
+No
+alt
+text
+provided
+
+```
+
+The following line is the last one and opens a ``` section without closing it
