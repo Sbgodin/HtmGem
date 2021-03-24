@@ -43,4 +43,3 @@ Décoration de texte : **gras** //italique// __souligné__ ~~barré~~
 => mailto:adress@foo.invalid
 
 => mumble:adress.mumble.invalid
-

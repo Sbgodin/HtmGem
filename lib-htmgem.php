@@ -10,6 +10,8 @@ mb_regex_encoding("UTF-8");
  * @param str $fileContents the gemtext to parse
  */
 function gemtextParser($fileContents) {
+    if (empty($fileContents)) return array();
+    $fileContents = rtrim($fileContents); // removes last empty line
     $fileLines = explode("\n", $fileContents);
     $mode = null;
     $current = array();
@@ -30,11 +32,11 @@ function gemtextParser($fileContents) {
                 if ('^^^' == $line3) {
                     yield array("mode" => "^^^");
                 } elseif ("#" == $line1) {
-                    preg_match("/^(#{1,3})\s*(.+)/", $line, $matches);
-                    yield array("mode" => $matches[1], "title" => trim($matches[2]));
+                    preg_match("/^(#{1,3})\s*(.+)?/", $line, $matches);
+                    yield array("mode" => $matches[1], "title" => trim(@$matches[2]));
                 } elseif ("=>" == $line2) {
                     preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $matches);
-                    yield array("mode" => "=>", "link" => trim($matches[1]), "text" => trim(@$matches[2]));
+                    yield array("mode" => "=>", "link" => trim(@$matches[1]), "text" => trim(@$matches[2]));
                 } elseif ("```" == $line3) {
                     preg_match("/^```\s*(.*)$/", $line, $matches);
                     $current = array("mode" => "```", "alt" => trim($matches[1]), "texts" => array());
@@ -49,7 +51,7 @@ function gemtextParser($fileContents) {
                     $mode = "*";
                 } else {
                     // text_line
-                    yield array("mode"=>"", "text" => trim($line));
+                    yield array("mode"=>"", "text" => rtrim($line));
                 }
             } else {
                 if ("```"==$mode) {
@@ -58,7 +60,7 @@ function gemtextParser($fileContents) {
                         $current = array();
                         $mode = null;
                     } else {
-                        $current["texts"] []= $line; // No trim() as it’s a preformated text!
+                        $current["texts"] []= rtrim($line); // No ltrim() as it’s a preformated text!
                     }
                 } elseif (">"==$mode) {
                     if (">" == $line1) {
@@ -102,7 +104,11 @@ function gemtextParser($fileContents) {
 class GemtextTranslate_gemtext {
 
     function __construct($parsedGemtext) {
-        $this->parsedGemtext = $parsedGemtext;
+        if (empty($parsedGemtext)) $parsedGemtext = "";
+        // to delete the last empty lines
+        $parsedGemtext = rtrim($parsedGemtext);
+        // The text must be parsed
+        $this->parsedGemtext = gemtextParser($parsedGemtext);
         $this->translate();
     }
 
@@ -120,7 +126,11 @@ class GemtextTranslate_gemtext {
                     }
                     break;
                 case "```":
-                    $output .= "```\n";
+                    $alt = $node["alt"];
+                    if (empty($alt))
+                        $output .= "```\n";
+                    else
+                        $output .= "``` $alt\n";
                     foreach ($node["texts"] as $text) {
                         $output .= "$text\n";
                     }
@@ -128,13 +138,18 @@ class GemtextTranslate_gemtext {
                     break;
                 case ">":
                     foreach ($node["texts"] as $text) {
-                        $output .= "> $text\n";
+                        if (empty($text))
+                            $output .= ">\n";
+                        else
+                            $output .= "> $text\n";
                     }
                     break;
                 case "=>":
                     $linkText = $node["text"];
+                    $link = $node["link"];
                     if (!empty($linkText)) $linkText = " $linkText";
-                    $output .= "=> ".$node["link"].$linkText."\n";
+                    if (!empty($link)) $link = " $link";
+                    $output .= "=>".$link.$linkText."\n";
                     break;
                 case "#":
                 case "##":
@@ -168,13 +183,11 @@ class GemtextTranslate_html {
     public $translatedGemtext;
 
     function __construct($parsedGemtext, $textDecoration=true) {
-        if (empty($parsedGemtext))
-            $parsedGemtext = "";
-        elseif (is_string($parsedGemtext))
-            // to delete the last empty line, <p>&nbsp;</p> in HTML
-            $parsedGemtext = rtrim($parsedGemtext);
-            // The text must be parsed
-            $parsedGemtext = gemtextParser($parsedGemtext);
+        if (empty($parsedGemtext)) $parsedGemtext = "";
+        // to delete the last empty lines
+        $parsedGemtext = rtrim($parsedGemtext);
+        // The text must be parsed
+        $parsedGemtext = gemtextParser($parsedGemtext);
         $this->parsedGemtext = $parsedGemtext;
         $this->translate($textDecoration);
     }
