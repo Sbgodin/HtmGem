@@ -44,7 +44,7 @@ Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avan
 Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voici par exemple un lien vers le site centralisant pour le moment les informations sur Gemini :
 
 ​=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
-=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
 
 ​=> https:/​/gemini.circumlunar.space/docs/specification.gmi
 => https://gemini.circumlunar.space/docs/specification.gmi
@@ -58,8 +58,7 @@ Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __sou
 
 On peut désactiver et activer la décoration du texte avec **^^^** sur une ligne.
 
-Et voilà ! Vous savez tout ce qui est à savoir 🥳 Les spécifications complètes sont sur le site de Gemini :
-=> https://gemini.circumlunar.space/docs/specification.gmi
+Et voilà ! Vous savez tout ce qui est à savoir 🥳
 
 ———————————————————— ————————————————————
 
@@ -71,8 +70,5 @@ HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur we
 
 ### License de cette page
 Cette page est sous licence libre **CC BY-SA 2.0 FR**.
-=> https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte de la licence CC BY-SA 2.0 FR
+=> https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte sous licence CC BY-SA 2.0 FR
 => gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY
-
-### Navigation
-=> index.gmi

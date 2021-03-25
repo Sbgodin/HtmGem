@@ -1,0 +1,22 @@
+# HtmGem, voir Gemini via le web
+
+HtmGem rend vos pages **Gemini** accessibles sur le web. Il fonctionne aussi sur un hébergement mutualisé.
+
+# Installation
+* Copier les fichiers.
+* Configurer la réécriture d’url.
+
+=> docs/index-fr.gmi Installer HtmGem
+
+# Gemini…
+Gemini est un protocole, une syntaxe, des serveurs et des clients. C’est le même principe que le web, en plus rudimentaire et stable. Sa syntaxe est le **GemText**. Son principe est que c’est le navigateur Gemini de l’utilisateur qui décide de l‘affichage. La police de caractère, la taille, le fond d‘écran, tout.
+
+=> docs/tutogemtext-fr.gmi Tutoriel **Gemtext** et exemples
+
+
+———————————————————— ————————————————————
+=> https://gmi.sbgodin.fr/htmgem Page principale du projet
+=> https://tildegit.org/Sbgodin/htmgem Code source, commentaires
+=> https://gemini.circumlunar.space Capsule principale Gemini
+=> CHANGELOG.gmi Journal des modifications
+=> COPYING.gmi Licence Gnu Affero General Public License v3 — 19 november 2007

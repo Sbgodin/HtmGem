@@ -1,6 +1,6 @@
 # HtmGem
 
-HtmGem is Php program whose goal is to make Gemini files reachable through HTTP. It can be used on a shared host.
+HtmGem makes your **Gemini** pages reachable on the web. It can be used on a shared host.
 
 You can see a demo on the main page of HtmGem:
 

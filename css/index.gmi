@@ -1,17 +1,14 @@
-# Changer le style d’affichage
-😎 Il faut avoir configuré le changement de style !
-=> .. Page d’installation
+# Styles
 
-=> index.gmi|black_wide black_wide.css
-=> index.gmi|raw raw.css
-=> index.gmi|simple simple.css
-=> index.gmi|htmgem htmgem.css
-=> index.gmi|terminal terminal.css
-=> index.gmi|pre code source préformaté
+=> index-fr.gmi|black_wide black_wide.css
+=> index-fr.gmi|raw raw.css
+=> index-fr.gmi|simple simple.css
+=> index-fr.gmi|htmgem htmgem.css
+=> index-fr.gmi|terminal terminal.css
+=> index-fr.gmi|pre code source préformaté
 
-Simple ligne de texte
-
-Décoration de texte : **gras** //italique// __souligné__ ~~barré~~
+Lorem ipsum dolor sit amet.
+//Lorem// **ipsum** __dolor__ ~~sit amet~~.
 
 * ligne un de liste non ordonnée
 * ligne deux de liste non ordonnée
@@ -19,8 +16,9 @@ Décoration de texte : **gras** //italique// __souligné__ ~~barré~~
 > Citation : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 ```
-< Texte préformaté >
- ------------------
+ ---------------------------
+< Lorem ipsum dolor sit amet >
+ ---------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
