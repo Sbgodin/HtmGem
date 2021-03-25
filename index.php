@@ -8,7 +8,7 @@ $url = @$_REQUEST["url"];
 /* Installation page
  *
  * Accessing directly /htmgem will make display the self-hosted documentation
- * contained in "index.gmi". If it's removed, diplay an empty page with a
+ * contained in "index.gmi". If it's removed, display an empty page with a
  * comment
  */
 if (empty($url)) {
