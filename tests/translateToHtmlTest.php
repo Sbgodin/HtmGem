@@ -11,11 +11,16 @@ function translateHtml($text): string {
 
 final class translateToHtmlTest extends TestCase {
 
+    protected static function noSeveralSpaces($text): string {
+        # Replaces several spaces (0x20) by only one
+        return preg_replace("/  +/", " ", $text);
+    }
+
     public function test_translate_gemtext_smallTextSets(): void {
         $line1 = "  Hello, how are you? ";
         $line2 = " Nice to meet you!    ";
-        $rline1 = rtrim($line1);
-        $rline2 = rtrim($line2);
+        $rline1 = self::noSeveralSpaces(rtrim($line1));
+        $rline2 = self::noSeveralSpaces(rtrim($line2));
         $this->assertSame(
             "",
             translateHtml(null),

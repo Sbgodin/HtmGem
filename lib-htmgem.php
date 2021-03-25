@@ -254,6 +254,9 @@ class GemtextTranslate_html {
 
             # Adds no-break space to stick the (EM/EN dashes) to words : aaaaaa – bb. ==> aaaaaa –$bb.
             $text = mb_ereg_replace("([—–]) ([^.]+)\.", "\\1".self::NARROW_NO_BREAK_SPACE."\\2.", $text);
+
+            # Replaces several spaces (0x20) by only one
+            $text = preg_replace("/  +/", " ", $text);
         }
     }
 
