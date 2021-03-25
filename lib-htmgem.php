@@ -254,10 +254,12 @@ class GemtextTranslate_html {
 
             # Adds no-break space to stick the (EM/EN dashes) to words : aaaaaa – bb. ==> aaaaaa –$bb.
             $text = mb_ereg_replace("([—–]) ([^.]+)\.", "\\1".self::NARROW_NO_BREAK_SPACE."\\2.", $text);
-
-            # Replaces several spaces (0x20) by only one
-            $text = preg_replace("/  +/", " ", $text);
         }
+    }
+
+    protected static function spacesCompress(&$text) {
+        # Replaces several spaces (0x20) by only one
+        $text = preg_replace("/  +/", " ", $text);
     }
 
     public function translate($textDecoration=true) {
@@ -267,6 +269,7 @@ class GemtextTranslate_html {
             switch($mode) {
                 case "":
                     $text = $node["text"];
+                    self::spacesCompress($text);
                     self::htmlPrepare($text);
                     if ($textDecoration) self::addTextDecoration($text);
                     $output .= "<p>$text</p>\n";
@@ -274,6 +277,7 @@ class GemtextTranslate_html {
                 case "*":
                     $output .= "<ul>\n";
                     foreach ($node["texts"] as $text) {
+                        self::spacesCompress($text);
                         self::htmlPrepare($text);
                         if ($textDecoration) self::addTextDecoration($text);
                         $output .= "<li>$text\n";
@@ -288,6 +292,7 @@ class GemtextTranslate_html {
                 case ">":
                     $output .= "<blockquote>\n";
                     foreach ($node["texts"] as $text) {
+                        self::spacesCompress($text);
                         self::htmlPrepare($text);
                         if ($textDecoration) self::addTextDecoration($text);
                         $output .= "<p>$text</p>\n";
@@ -299,8 +304,10 @@ class GemtextTranslate_html {
                     $linkText = $node["text"];
                     if (empty($linkText)) {
                         $linkText = $link;
+                        self::spacesCompress($linkText);
                         self::htmlPrepare($linkText);
                     } else {
+                        self::spacesCompress($linkText);
                         // Don't double encode, just escapes quotes, "<" and ">".
                         // So "I'm&gt" becomes "I&apos;&gt". The & remains untouched.
                         $link = htmlspecialchars($link, ENT_HTML5|ENT_QUOTES, "UTF-8", false);
@@ -314,17 +321,20 @@ class GemtextTranslate_html {
                     break;
                 case "#":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
                     if (empty($this->pageTitle)) $this->pageTitle = $title;
                     $output .= "<h1>$title</h1>\n";
                     break;
                 case "##":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
                     $output .= "<h2>$title</h2>\n";
                     break;
                 case "###":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
                     $output .= "<h3>$title</h3>\n";
                     break;
