@@ -283,10 +283,13 @@ class GemtextTranslate_html {
                     $output .= "<pre>\n$text\n</pre>\n";
                     break;
                 case ">":
-                    $text = implode("\n", $node["texts"]);
-                    self::htmlPrepare($text);
-                    if ($textDecoration) self::addTextDecoration($text);
-                    $output .= "<blockquote>\n$text\n</blockquote>\n";
+                    $output .= "<blockquote>\n";
+                    foreach ($node["texts"] as $text) {
+                        self::htmlPrepare($text);
+                        if ($textDecoration) self::addTextDecoration($text);
+                        $output .= "<p>$text</p>\n";
+                    }
+                    $output .= "</blockquote>\n";
                     break;
                 case "=>":
                     $link = $node["link"];
