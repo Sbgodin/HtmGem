@@ -362,7 +362,7 @@ class GemtextTranslate_html {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 EOL;
         foreach ($css as $c) {
-            $output .= "<link type='text/css' rel='StyleSheet' href='$c'>\n";
+            $output .= "\n<link type='text/css' rel='StyleSheet' href='$c'>\n";
         }
         $output .= <<<EOL
 </head>

@@ -1,0 +1,56 @@
+html {
+    font-family: sans-serif;
+}
+
+body {
+    max-width: 1024px;
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+}
+
+h1, h2, h3, blockquote, p, pre, li, ul {
+    margin: 0 0 0.3rem;
+    padding: 0;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.2rem; }
+
+blockquote {
+    margin-left: 3rem;
+    padding-left: 3px;
+    margin-right: 3rem;
+}
+
+pre {
+    overflow-x: auto;
+    font-size: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 1024px) {
+    body {
+        margin: 3rem;
+    }
+    h1 {
+        font-size: 4rem;
+    }
+    h2 {
+        font-size: 3.5rem;
+    }
+    h3 {
+        font-size: 3rem;
+    }
+    p, pre, ul, blockquote {
+        font-size: 2.6rem;
+    }
+}

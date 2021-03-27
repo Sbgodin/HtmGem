@@ -1,11 +1,14 @@
 # Styles
 
-=> index-fr.gmi|black_wide black_wide.css
-=> index-fr.gmi|raw raw.css
-=> index-fr.gmi|simple simple.css
-=> index-fr.gmi|htmgem htmgem.css
-=> index-fr.gmi|terminal terminal.css
-=> index-fr.gmi|pre code source préformaté
+=> index.gmi|htmgem htmgem.css
+=> index.gmi|none None
+=> index.gmi|terminal terminal.css
+=> index.gmi|black_wide black_wide.css
+=> index.gmi|simple simple.css
+=> index.gmi|raw raw.css
+=> index.gmi|debug debug.css
+=> index.gmi|pre Source code
+=> index.gmi|source Download source code
 
 Lorem ipsum dolor sit amet.
 //Lorem// **ipsum** __dolor__ ~~sit amet~~.
