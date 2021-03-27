@@ -1,13 +1,13 @@
 # HtmGem, installation
 
-Pour faire fonctionner HtmGem — après avoir copié les fichiers — il ne reste qu’à ajouter une règle de ré-écriture d’URL (//URL Rewriting//).
+Pour faire fonctionner HtmGem — après avoir copié les fichiers — il ne reste qu’à ajouter les règles de réécriture d’URL (//URL Rewriting//).
 
 ## Prérequis
 
 * Php v7.3 minimum
 * Module **Php-mbstring** pour gérer l’unicode
 * Un serveur web (Apache et Nginx testés)
-* Module **mod-rewrite** pour lire les pages Gemini
+* Module **mod-rewrite** pour prendre en charge les pages Gemini
 
 ## Installation
 

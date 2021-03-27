@@ -1,0 +1,62 @@
+# Advanced configuration
+
+By default, the same style is used for all the pages, //htmgem/css/htmgem.css//, except when a file having the same name as the page but with the extension **.css** exists in the same directory. In such as case, it's used.
+
+When the CSS option is activated in the configuration (see /rewrite// below) other behaviors are possible. **Beware**, it won't work with a Gemini client as HtmGem is only reachable with a web browser.
+* &style=**htmgem** : Uses the default style.
+* &style=**none** : The page HTML is sent without style.
+* &style=**<autre nom>** : The file htmgem/css/<autre nom>.css is used as a style.
+* &style=**/<path>** : The provided file (absolute path) is used as a style.
+* &style=**source** : The source code of the page is sent to the browser, see below…
+* &style=**pre** : The source code of the page is sent to the browser enclosed in //<pre>//, see below…
+
+## URL rewriting to set the style to use
+
+Modifying the web server configuration works but it's rather heavy. It's possible to test a particular style this way:
+> https:/​/site.tld/htmgem/index.php?url=/url/page.gmi&style=<…>
+
+It's also possible to make a URL rewriting which incorporate the style:
+> rewrite ^(.+\.gmi)$ /htmgem/?url=$1;
+> rewrite ^(.+\.gmi)\ *\|\ *([\w_]+)$ /htmgem/?url=$1&style=$2;
+
+For instance, when it's activated:
+=> configuration-en.gmi%20|%20pre Shows the readable source code on the screen, using the markup **<pre>**.
+=> configuration-en.gmi%20|%20source configuration-en.gmi | source : Downloads the source code.
+
+=> ../css Sélecteur de style : the page containing the style allows to test them 😎
+
+### With style already included…
+
+=> configuration-en.gmi%20|%20htmgem Style //HtmGem//, the default style
+=> configuration-en.gmi%20|%20none Style //none//
+=> configuration-en.gmi%20|%20terminal Style //terminal//
+=> configuration-en.gmi%20|%20black_wide Style //black wide//
+=> configuration-en.gmi%20|%20simple Style //simple//
+=> configuration-en.gmi%20|%20raw Style //raw//
+=> configuration-en.gmi%20|%20debug Style //debug//
+
+## Text decoration
+
+The text decoration, which interprets the **bold** for instance, is not part of GemText definition. The text decoration applies everywhere except on the titles and preformated texts.
+
+### Disable the text decoration
+
+It's possible to:
+* disable and enable the text decoration with a line **^^^**,
+* add what follows to the URL **rewriting**:
+> &textDecoration=0
+
+## BNF / Syntax
+
+HtmGem uses a precise implementation of the GemText BNF. It indicates exactly what text portions are to be used.
+=> BNF-en.gmi BNF
+
+=> tutogemtext-en.gmi How to build GemText pages?
+
+———————————————————— ————————————————————
+
+Amongst the distributed files and directories, only the ones below are useful for HtmGem:
+* **htmgem/*.php** : These files translate the GemText to HTML.
+* **htmgem/css/htmgem.css** : If it's missing, the display will be without style — literally.
+* **htmgem/css/…** : Keep the styles you use.
+The others can be deleted (included this present file //configuration-en.gmi//) although they are not harmful.

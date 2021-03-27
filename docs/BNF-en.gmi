@@ -1,9 +1,8 @@
 # BNF
-### Backus-Naur Form
-=> https://fr.wikipedia.org/wiki/Forme_de_Backus-Naur Wikipedia / BNF
+### aka Backus-Naur Form
+=> https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form Wikipedia / BNF
 
-(EN) The purpose of this document is to show the BNF that HtmGem uses and the way it determines the line type and what information it fetches from. For this, it uses **curly brackets** to explicitely show what information it takes. In addition to this, the **canonical form** shows how it should be displayed.
-(FR) Le but de ce document est de montrer la BNF que HtmGem utilise et la façon dont il détermine le type de ligne et quelles informations il en tire. Pour cela, il utilise des **accolades** pour montrer explicitement quelles informations il prend. De plus, la **forme canonique** montre comment ça devrait être affiché.
+The purpose of this document is to show the BNF that HtmGem uses and the way it determines the line type and what information it fetches from. For this, it uses **curly brackets** to explicitely show what information it takes. In addition to this, the **canonical form** shows how it should be displayed.
 
 ———————————————————— ✀ ————————————————————
 
@@ -59,27 +58,21 @@ UTF8-2v = %xC2 %xA0-BF UTF8-tail ; no C1 control set
 
 ———————————————————— ✀ ————————————————————
 
-(EN) This BNF was taken from the working group and adapted to HtmGem's implementation.
-(FR) Cette BNF a été adaptée à l’implémentation de HtmGem depuis la version du groupe de travail.
+This BNF was taken from the working group and adapted to HtmGem's implementation.
 => https://gitlab.com/gemini-specification/gemini-text/-/issues/7 Gitlab / Original ticket
 
-(EN) Changes:
+Changes:
 * white space management
 * capture of text {}
 * canonical form
-(FR) Changements :
-* gestion des espaces blancs
-* capture du texte {}
-* forme canonique
 
-(EN) The white spaces that end a line are never used. See the definition of //text// in the BNF, which no longer contains //SP//.
-(FR) Les espaces blancs terminant une ligne ne sont jamais utilisés. Voir la définition de //text// dans la BNF, qui ne contient plus //SP//.
+The white spaces that end a line are never used. See the definition of //text// in the BNF, which no longer contains //SP//.
 
-# Exemples
+# Examples
 
-## => liens
+## => links
 
-### Lien normal
+### Normal link
 > link = '=>' [WSP] [{URI-reference}] [[WSP] {text}] end-of-line
 > ; canonical form = '=>' SP {uri-reference} [SP {text}]
 
@@ -103,7 +96,7 @@ Data: '=>' {''} {''}
 Canonical: =>
 Html: <a href="">&nbsp;</a>
 
-## # En-têtes
+## # Headings
 > heading = '#' **[WSP]** [{text}] **[WSP]** end-of-line
 > (…)
 > ; canonical form = ('#' / '##' / '###') [SP {text}]

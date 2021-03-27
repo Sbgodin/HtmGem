@@ -1,0 +1,42 @@
+# HtmGem, installation
+
+To run HtmGem — after having copied the files — there is nothing to do but to add the URL rewriting rules.
+
+## Prerequisites
+
+* Php v7.3 minimum
+* Module **php-mbstring** to manage unicode
+* A web server (Apache and Nginx tested)
+* Module **mod-rewrite** to handle the Gemini pages
+
+## Installation
+
+### Download
+=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip Stable version
+=> https://tildegit.org/Sbgodin/htmgem Project repository
+
+### Nginx
+```
+# This text must be placed in the server's configuration
+index index.php index.gmi index.html
+rewrite ^(.+\.gmi)$ htmgem/?url=$1;
+```
+
+### Apache
+```
+# This text can be placed at the root of the web site in a file ".htaccess".
+DirectoryIndex index.php index.gmi index.html
+RewriteEngine on
+RewriteRule ^(.+\.gmi)$ htmgem/?url=$1
+```
+
+Afterwards,
+* When a file ends by **.gmi.** is asked, HtmGem will display it in the browser.
+* When only the directory is asked (http:/​/site.tld/path) the file //index.gmi// will be automatically choosen.
+
+=> tutogemtext-en.gmi How to build GemText pages?
+
+## Advanced configuration
+
+Add additional styles as a link parameter or adapt the text decoration:
+=> configuration-en.gmi Advanced configuration
