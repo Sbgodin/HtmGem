@@ -1,5 +1,7 @@
 # Developers' documentation
 
+=> BNF-en.gmi BNF / Backus-Naur Form
+
 => https://gmi.sbgodin.fr/htmgem Project main page
 => https://tildegit.org/Sbgodin/htmgem Source code, comments
 => https://gemini.circumlunar.space Main Gemini capsule
