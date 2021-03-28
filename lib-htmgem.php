@@ -182,7 +182,8 @@ class GemtextTranslate_html {
     protected $pageTitle = "";
     public $translatedGemtext;
 
-    function __construct($parsedGemtext, $textDecoration=true) {
+    function __construct($parsedGemtext, $textDecoration=true, $baseUrl=Null) {
+        $this->baseUrl = $baseUrl;
         if (empty($parsedGemtext)) $parsedGemtext = "";
         // to delete the last empty lines
         $parsedGemtext = rtrim($parsedGemtext);
@@ -262,6 +263,23 @@ class GemtextTranslate_html {
         $text = preg_replace("/  +/", " ", $text);
     }
 
+    protected static function resolve_path($path) {
+        $absolute = "/"==$path[0];
+        $parts = array_filter(explode("/", $path), 'strlen');
+        $chuncks = array();
+        foreach ($parts as $part) {
+            if ('.' == $part) continue;
+            if ('..' == $part) {
+                array_pop($chuncks);
+            } else {
+                $chuncks[] = $part;
+            }
+        }
+        $output = implode("/", $chuncks);
+        if ($absolute) $output = "/".$output;
+        return $output;
+    }
+
     public function translate($textDecoration=true) {
         $output = "";
         foreach ($this->parsedGemtext as $node) {
@@ -316,7 +334,14 @@ class GemtextTranslate_html {
                     }
                     preg_match("/^([^:]+):/", $link, $matches);
                     $protocol = @$matches[1];
-                    if (empty($protocol)) $protocol = "local";
+                    if (empty($protocol)) {
+                        $protocol = "local";
+                        if (!is_null($this->baseUrl)) { // No URL rewriting
+                            if ($link[0]!="/") $link = "{$this->baseUrl}/$link";
+                            $link = self::resolve_path($link);
+                            $link = "/htmgem/index.php?url=$link";
+                        }
+                    }
                     $output .= "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
                     break;
                 case "#":

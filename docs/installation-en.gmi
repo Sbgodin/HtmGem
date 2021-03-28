@@ -18,16 +18,16 @@ To run HtmGem — after having copied the files — there is nothing to do but t
 ### Nginx
 ```
 # This text must be placed in the server's configuration
-index index.php index.gmi index.html
-rewrite ^(.+\.gmi)$ htmgem/?url=$1;
+index index.gmi index.php index.html
+rewrite ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1;
 ```
 
 ### Apache
 ```
 # This text can be placed at the root of the web site in a file ".htaccess".
-DirectoryIndex index.php index.gmi index.html
+DirectoryIndex index.gmi index.php index.html
 RewriteEngine on
-RewriteRule ^(.+\.gmi)$ htmgem/?url=$1
+RewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1
 ```
 
 Afterwards,

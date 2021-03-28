@@ -1,4 +1,5 @@
 # Advanced configuration
+❗️ This page works with URL rewriting enabled ❗️
 
 By default, the same style is used for all the pages, //htmgem/css/htmgem.css//, except when a file having the same name as the page but with the extension **.css** exists in the same directory. In such as case, it's used.
 
@@ -16,14 +17,12 @@ Modifying the web server configuration works but it's rather heavy. It's possibl
 > https:/​/site.tld/htmgem/index.php?url=/url/page.gmi&style=<…>
 
 It's also possible to make a URL rewriting which incorporate the style:
-> rewrite ^(.+\.gmi)$ /htmgem/?url=$1;
-> rewrite ^(.+\.gmi)\ *\|\ *([\w_]+)$ /htmgem/?url=$1&style=$2;
+> rewrite ^(.+\.gmi)$ /htmgem/index.php?rw=1&url=$1;
+> rewrite ^(.+\.gmi)\ *\|\ *([\w_]+)$ /htmgem/index.php?rw=1&url=$1&style=$2;
 
 For instance, when it's activated:
 => configuration-en.gmi%20|%20pre Shows the readable source code on the screen, using the markup **<pre>**.
 => configuration-en.gmi%20|%20source configuration-en.gmi | source : Downloads the source code.
-
-=> ../css Sélecteur de style : the page containing the style allows to test them 😎
 
 ### With style already included…
 
@@ -34,6 +33,8 @@ For instance, when it's activated:
 => configuration-en.gmi%20|%20simple Style //simple//
 => configuration-en.gmi%20|%20raw Style //raw//
 => configuration-en.gmi%20|%20debug Style //debug//
+
+=> ../css Style selector: the page containing the style allows to test them 😎
 
 ## Text decoration
 
