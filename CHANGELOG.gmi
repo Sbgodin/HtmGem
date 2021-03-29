@@ -23,18 +23,6 @@ All notable changes to this project will be documented in this file.
 * Images: click to display
 * Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
 
-## [Unreleased] v1
-
-### Security
-* Check url encoding: The filename fetched on disk may differ from that was asked by URL.
-
-### Development
-∅
-
-### User interface
-* Translate French texts to English.
-* Search for {pages}.css from the current directory to the root. Empty css file means don’t search and go to default.
-
 ## [1.2.0] - 2021-03-19
 * Removes "^" to disable text decoration line-wise.
 * CSS is no longer incorporated in the HTML page.
