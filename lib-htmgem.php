@@ -10,6 +10,8 @@ mb_regex_encoding("UTF-8");
  * @param str $fileContents the gemtext to parse
  */
 function gemtextParser($fileContents) {
+    if (empty($fileContents)) return array();
+    $fileContents = rtrim($fileContents); // removes last empty line
     $fileLines = explode("\n", $fileContents);
     $mode = null;
     $current = array();
@@ -30,11 +32,11 @@ function gemtextParser($fileContents) {
                 if ('^^^' == $line3) {
                     yield array("mode" => "^^^");
                 } elseif ("#" == $line1) {
-                    preg_match("/^(#{1,3})\s*(.+)/", $line, $matches);
-                    yield array("mode" => $matches[1], "title" => trim($matches[2]));
+                    preg_match("/^(#{1,3})\s*(.+)?/", $line, $matches);
+                    yield array("mode" => $matches[1], "title" => trim(@$matches[2]));
                 } elseif ("=>" == $line2) {
                     preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $matches);
-                    yield array("mode" => "=>", "link" => trim($matches[1]), "text" => trim(@$matches[2]));
+                    yield array("mode" => "=>", "link" => trim(@$matches[1]), "text" => trim(@$matches[2]));
                 } elseif ("```" == $line3) {
                     preg_match("/^```\s*(.*)$/", $line, $matches);
                     $current = array("mode" => "```", "alt" => trim($matches[1]), "texts" => array());
@@ -49,7 +51,7 @@ function gemtextParser($fileContents) {
                     $mode = "*";
                 } else {
                     // text_line
-                    yield array("mode"=>"", "text" => trim($line));
+                    yield array("mode"=>"", "text" => rtrim($line));
                 }
             } else {
                 if ("```"==$mode) {
@@ -58,7 +60,7 @@ function gemtextParser($fileContents) {
                         $current = array();
                         $mode = null;
                     } else {
-                        $current["texts"] []= $line; // No trim() as it’s a preformated text!
+                        $current["texts"] []= rtrim($line); // No ltrim() as it’s a preformated text!
                     }
                 } elseif (">"==$mode) {
                     if (">" == $line1) {
@@ -102,55 +104,67 @@ function gemtextParser($fileContents) {
 class GemtextTranslate_gemtext {
 
     function __construct($parsedGemtext) {
-        $this->parsedGemtext = $parsedGemtext;
+        if (empty($parsedGemtext)) $parsedGemtext = "";
+        // to delete the last empty lines
+        $parsedGemtext = rtrim($parsedGemtext);
+        // The text must be parsed
+        $this->parsedGemtext = gemtextParser($parsedGemtext);
         $this->translate();
     }
 
     protected function translate() {
-        ob_start();
+        $output = "";
         foreach ($this->parsedGemtext as $node) {
             $mode = $node["mode"];
             switch($mode) {
                 case "":
-                    echo $node["text"]."\n";
+                    $output .= $node["text"]."\n";
                     break;
                 case "*":
                     foreach ($node["texts"] as $text) {
-                        echo "* $text\n";
+                        $output .= "* $text\n";
                     }
                     break;
                 case "```":
-                    print("```\n");
+                    $alt = $node["alt"];
+                    if (empty($alt))
+                        $output .= "```\n";
+                    else
+                        $output .= "``` $alt\n";
                     foreach ($node["texts"] as $text) {
-                        echo "$text\n";
+                        $output .= "$text\n";
                     }
-                    print("```\n");
+                    $output .= "```\n";
                     break;
                 case ">":
                     foreach ($node["texts"] as $text) {
-                        echo "> $text\n";
+                        if (empty($text))
+                            $output .= ">\n";
+                        else
+                            $output .= "> $text\n";
                     }
                     break;
                 case "=>":
                     $linkText = $node["text"];
+                    $link = $node["link"];
                     if (!empty($linkText)) $linkText = " $linkText";
-                    print("=> ".$node["link"].$linkText."\n");
+                    if (!empty($link)) $link = " $link";
+                    $output .= "=>".$link.$linkText."\n";
                     break;
                 case "#":
                 case "##":
                 case "###":
-                    print("$mode ".$node["title"]."\n");
+                    $output .= "$mode ".$node["title"]."\n";
                     break;
                 case "^^^":
-                    print("^^^\n");
+                    $output .= "^^^\n";
                     break;
                 default:
                     die("Unknown mode: '{$node["mode"]}'\n");
             }
         }
 
-        $this->translatedGemtext = ob_get_contents();
-        ob_end_clean();
+        $this->translatedGemtext = $output;
     }
 
     public function __toString() {
@@ -168,14 +182,13 @@ class GemtextTranslate_html {
     protected $pageTitle = "";
     public $translatedGemtext;
 
-    function __construct($parsedGemtext, $textDecoration=true) {
-        if (empty($parsedGemtext))
-            $parsedGemtext = "";
-        elseif (is_string($parsedGemtext))
-            // to delete the last empty line, <p>&nbsp;</p> in HTML
-            $parsedGemtext = rtrim($parsedGemtext);
-            // The text must be parsed
-            $parsedGemtext = gemtextParser($parsedGemtext);
+    function __construct($parsedGemtext, $textDecoration=true, $baseUrl=Null) {
+        $this->baseUrl = $baseUrl;
+        if (empty($parsedGemtext)) $parsedGemtext = "";
+        // to delete the last empty lines
+        $parsedGemtext = rtrim($parsedGemtext);
+        // The text must be parsed
+        $parsedGemtext = gemtextParser($parsedGemtext);
         $this->parsedGemtext = $parsedGemtext;
         $this->translate($textDecoration);
     }
@@ -245,46 +258,74 @@ class GemtextTranslate_html {
         }
     }
 
+    protected static function spacesCompress(&$text) {
+        # Replaces several spaces (0x20) by only one
+        $text = preg_replace("/  +/", " ", $text);
+    }
+
+    protected static function resolve_path($path) {
+        $absolute = "/"==$path[0];
+        $parts = array_filter(explode("/", $path), 'strlen');
+        $chuncks = array();
+        foreach ($parts as $part) {
+            if ('.' == $part) continue;
+            if ('..' == $part) {
+                array_pop($chuncks);
+            } else {
+                $chuncks[] = $part;
+            }
+        }
+        $output = implode("/", $chuncks);
+        if ($absolute) $output = "/".$output;
+        return $output;
+    }
+
     public function translate($textDecoration=true) {
-        ob_start();
+        $output = "";
         foreach ($this->parsedGemtext as $node) {
             $mode = $node["mode"];
             switch($mode) {
                 case "":
                     $text = $node["text"];
+                    self::spacesCompress($text);
                     self::htmlPrepare($text);
                     if ($textDecoration) self::addTextDecoration($text);
-                    echo "<p>$text</p>\n";
+                    $output .= "<p>$text</p>\n";
                     break;
                 case "*":
-                    echo "<ul>\n";
+                    $output .= "<ul>\n";
                     foreach ($node["texts"] as $text) {
+                        self::spacesCompress($text);
                         self::htmlPrepare($text);
                         if ($textDecoration) self::addTextDecoration($text);
-                        print("<li>$text\n");
+                        $output .= "<li>$text\n";
                     }
-                    echo "</ul>\n";
+                    $output .= "</ul>\n";
                     break;
                 case "```":
                     $text = implode("\n", $node["texts"]);
                     self::htmlPrepare($text);
-                    echo "<pre>\n$text\n</pre>\n";
+                    $output .= "<pre>\n$text\n</pre>\n";
                     break;
                 case ">":
-                    foreach ($node["texts"] as &$text) {
+                    $output .= "<blockquote>\n";
+                    foreach ($node["texts"] as $text) {
+                        self::spacesCompress($text);
                         self::htmlPrepare($text);
                         if ($textDecoration) self::addTextDecoration($text);
+                        $output .= "<p>$text</p>\n";
                     }
-                    $text = implode("<br>\n", $node["texts"]);
-                    echo "<blockquote>\n$text\n</blockquote>\n";
+                    $output .= "</blockquote>\n";
                     break;
                 case "=>":
                     $link = $node["link"];
                     $linkText = $node["text"];
                     if (empty($linkText)) {
                         $linkText = $link;
+                        self::spacesCompress($linkText);
                         self::htmlPrepare($linkText);
                     } else {
+                        self::spacesCompress($linkText);
                         // Don't double encode, just escapes quotes, "<" and ">".
                         // So "I'm&gt" becomes "I&apos;&gt". The & remains untouched.
                         $link = htmlspecialchars($link, ENT_HTML5|ENT_QUOTES, "UTF-8", false);
@@ -293,24 +334,34 @@ class GemtextTranslate_html {
                     }
                     preg_match("/^([^:]+):/", $link, $matches);
                     $protocol = @$matches[1];
-                    if (empty($protocol)) $protocol = "local";
-                    echo "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
+                    if (empty($protocol)) {
+                        $protocol = "local";
+                        if (!is_null($this->baseUrl)) { // No URL rewriting
+                            if ($link[0]!="/") $link = "{$this->baseUrl}/$link";
+                            $link = self::resolve_path($link);
+                            $link = "/htmgem/index.php?url=$link";
+                        }
+                    }
+                    $output .= "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
                     break;
                 case "#":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
                     if (empty($this->pageTitle)) $this->pageTitle = $title;
-                    echo "<h1>$title</h1>\n";
+                    $output .= "<h1>$title</h1>\n";
                     break;
                 case "##":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
-                    echo "<h2>$title</h2>\n";
+                    $output .= "<h2>$title</h2>\n";
                     break;
                 case "###":
                     $title = $node["title"];
+                    self::spacesCompress($linkText);
                     self::htmlPrepare($title);
-                    echo "<h3>$title</h3>\n";
+                    $output .= "<h3>$title</h3>\n";
                     break;
                 case "^^^":
                     $textDecoration = !$textDecoration;
@@ -320,8 +371,7 @@ class GemtextTranslate_html {
             }
         }
 
-        $this->translatedGemtext = ob_get_contents();
-        ob_end_clean();
+        $this->translatedGemtext = $output;
     }
 
     function getFullHtml() {
@@ -329,7 +379,7 @@ class GemtextTranslate_html {
             $css = array("/htmgem/css/htmgem.css");
         else
             $css = $this->cssList;
-        echo <<<EOL
+        $output = <<<EOL
 <!DOCTYPE html>
 <html>
 <head>
@@ -337,14 +387,16 @@ class GemtextTranslate_html {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 EOL;
         foreach ($css as $c) {
-            echo "<link type='text/css' rel='StyleSheet' href='$c'>\n";
+            $output .= "\n<link type='text/css' rel='StyleSheet' href='$c'>\n";
         }
-        echo <<<EOL
+        $output .= <<<EOL
 </head>
 <body>\n
 EOL;
-        echo $this->translatedGemtext;
-        echo "</body>\n</html>\n";
+        $output .= $this->translatedGemtext;
+        $output .= "</body>\n</html>\n";
+
+        echo $output;
     }
 
     public function __toString() {

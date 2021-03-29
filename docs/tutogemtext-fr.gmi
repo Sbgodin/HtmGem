@@ -1,4 +1,4 @@
-# Tutorial GemText
+# Tutoriel GemText
 
 Gemini est un protocole, une syntaxe, des serveurs et des clients. Sa syntaxe est le GemText. Son principe est que c’est le navigateur Gemeni de l’utilisateur qui décide de l‘affichage. La police de caractère, la taille, le fond d‘écran, tout. L’un des buts recherchés est de se concentrer sur le texte et quelques autres détails abordés ci-après.
 
@@ -24,10 +24,10 @@ Les titres de niveau un, deux puis trois sont d’abord écrits ci-après tel qu
 # Blocs préformatés
 
 ​```
-Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc. Les lignes contenant ``` ne sont pas affichées :
+Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc.
 ​```
 ```
-Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc. Les lignes contenant ``` ne sont pas affichées :
+Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avant le bloc et un ``` après le bloc.
 ```
 
 # Listes non-ordonnées
@@ -44,7 +44,7 @@ Les blocs préformatés sont des lignes encadrées par un ``` sur une ligne avan
 Il ne peut exister qu’un lien par ligne. Et la ligne est dédiée à ça ! Voici par exemple un lien vers le site centralisant pour le moment les informations sur Gemini :
 
 ​=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
-=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
+=> gemini://gemini.circumlunar.space/docs/specification.gmi Spécifications de Gemini
 
 ​=> https:/​/gemini.circumlunar.space/docs/specification.gmi
 => https://gemini.circumlunar.space/docs/specification.gmi
@@ -58,8 +58,7 @@ Cette **ligne** utilise la //décoration du texte// qui peut ~~barrer~~ ou __sou
 
 On peut désactiver et activer la décoration du texte avec **^^^** sur une ligne.
 
-Et voilà ! Vous savez tout ce qui est à savoir 🥳 Les spécifications complètes sont sur le site de Gemini :
-=> https://gemini.circumlunar.space/docs/specification.gmi
+Et voilà ! Vous savez tout 🥳
 
 ———————————————————— ————————————————————
 
@@ -70,9 +69,6 @@ HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur we
 
 
 ### License de cette page
-Cette page est sous licence libre **CC BY-SA 2.0 FR**.
-=> https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte de la licence CC BY-SA 2.0 FR
+Cette page est sous licence libre **CC BY-SA 2.0**.
+=> https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte sous licence CC BY-SA 2.0
 => gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY
-
-### Navigation
-=> index.gmi

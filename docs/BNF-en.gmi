@@ -1,0 +1,110 @@
+# BNF
+### aka Backus-Naur Form
+=> https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form Wikipedia / BNF
+
+The purpose of this document is to show the BNF that HtmGem uses and the way it determines the line type and what information it fetches from. For this, it uses **curly brackets** to explicitely show what information it takes. In addition to this, the **canonical form** shows how it should be displayed.
+
+———————————————————— ✀ ————————————————————
+
+textgemini = *(link / preformat / heading / ulist / quoted / plain)
+; Preformat toggle starts as 'false'.
+
+plain = **{[WSP] text} [WSP]** end-of-line
+; If preformat toggle is false, wrap text to the
+; width of the display. Otherwise, do no wrapping.
+; canonical form = {[WSP] text}
+
+preformat = "```" **[WSP]** [{alt-text}] **[WSP]** end-of-line
+; Preformat toggle set to opposite state:
+; false goes to true
+; true goes to false
+; While in preformat toggle is true, link, heading,
+; ulist and quoted lines are NOT interpreted, but
+; displayed as is to the user.
+; canonical form = ``` [SP {alt-text}]
+
+link = '=>' **[WSP]** [{URI-reference}] [**[WSP]** {text}] end-of-line
+; canonical form = '=>' SP {uri-reference} [SP {text}]
+
+heading = '#' **[WSP]** [{text}] **[WSP]** end-of-line
+/ '##' **[WSP]** {text} **[WSP]** end-of-line
+/ '###' **[WSP]** {text} **[WSP]** end-of-line
+; canonical form = ('#' / '##' / '###') [SP {text}]
+
+ulist = '*' **[WSP]** {text} **[WSP]** end-of-line
+; canonical form = '*' SP {text}
+
+quoted = '>' **[WSP]** {text} **[WSP]** end-of-line
+; canonical form = '>' SP {text}
+
+alt-text = text
+text = ***UVCHAR**
+end-of-line = [CR] LF
+
+UVCHAR = VCHAR / UTF8-2v / UTF8-3 / UTF8-4
+UTF8-2v = %xC2 %xA0-BF UTF8-tail ; no C1 control set
+/ %xC3-DF UTF8-tail
+
+; CRLF from RFC-5234
+; DIGIT from RFC-5234
+; SP from RFC-5234
+; VCHAR from RFC-5234
+; OCTET from RFC-5234
+; WSP from RFC-5234
+;
+; UTF8-3 from RFC-3629
+; UTF8-4 from RFC-3629
+; UTF8-tail from RFC-3629
+
+———————————————————— ✀ ————————————————————
+
+This BNF was taken from the working group and adapted to HtmGem's implementation.
+=> https://gitlab.com/gemini-specification/gemini-text/-/issues/7 Gitlab / Original ticket
+
+Changes:
+* white space management
+* capture of text {}
+* canonical form
+
+The white spaces that end a line are never used. See the definition of //text// in the BNF, which no longer contains //SP//.
+
+# Examples
+
+## => links
+
+### Normal link
+> link = '=>' [WSP] [{URI-reference}] [[WSP] {text}] end-of-line
+> ; canonical form = '=>' SP {uri-reference} [SP {text}]
+
+Source: => foo.invalid text of the link
+Data: '=>' {'foo.invalid'} {'text of the link'}
+Canonical: => foo.invalid text of the link
+Html: <a href="foo.invalid">text of the link</a>
+
+Source: =>foo.invalid           text of the link
+Data: '=>' {'foo.invalid'} {'text of the link'}
+Canonical: => foo.invalid text of the link
+Html: <a href="foo.invalid">text of the link</a>
+
+Source: => just_a_page
+Data: '=>' {'just_a_page'} {}
+Canonical: => just_a_page
+Html: <a href="just_a_page">just_a_page</a>
+
+Source: =>
+Data: '=>' {''} {''}
+Canonical: =>
+Html: <a href="">&nbsp;</a>
+
+## # Headings
+> heading = '#' **[WSP]** [{text}] **[WSP]** end-of-line
+> (…)
+> ; canonical form = ('#' / '##' / '###') [SP {text}]
+
+Source: #title
+Data: '#' {"title"}
+Canonical: # title
+
+Source: # title with two spaces between title and with
+Data: '#' {"title  with spaces"}
+Canonical: # title with two spaces between title and with

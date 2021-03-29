@@ -1,0 +1,74 @@
+# GemText tutorial
+
+Gemini is a protocol, a syntax, servers and clients. Its syntax is the GemText. Its principle is that it's the Gemini browser of the user which decides about the display. The font, the size, the page background, everything. One of the goal is to focus on the text and some other details explained below.
+
+The paragraph you just read is on one physical line, cut by the program you use in several logical lines to fit your screen. Between this text line and the preceding one, there's an empty line to mark the paragraph change.
+Here, I just did a line wrap. The margin should be lower, but it depends upon the program you are using.
+
+The titles of level one, two and three are first written as they are physically on this page, then on the line after they are displayed normally by the Gemini browser:
+
+​# Title level 1
+# Title level 1
+
+​## Title level 2
+## Title level 2
+
+​### Title level 3
+### Title level 3
+
+# Citations
+
+​> Text citation. The line can be as long as needed, it's your program that must cut the line to display it. One physical line can be long, but there's no need to wrap the line.
+> Text citation. The line can be as long as needed, it's your program that must cut the line to display it. One physical line can be long, but there's no need to wrap the line.
+
+# Preformated blocks
+
+​```
+The preformated blocks are lines enclosed by ``` on one line before the block and a ``` after the block.
+​```
+```
+The preformated blocks are lines enclosed by ``` on one line before the block and a ``` after the block.
+```
+
+# Unordered lists
+
+​* The unordered lists are lines beginning by * one after the others.
+​* They can be used to enumerate.
+​* However, GemText doesn't recognize the ordered lists.
+* The unordered lists are lines beginning by * one after the others.
+* They can be used to enumerate.
+* However, GemText doesn't recognize the ordered lists.
+
+# The links
+
+There can be only one link on a line. And the line is dedicated to! Here's for instance a link to the site centralizing at the moment the information about Gemini:
+
+​=> gemini:/​/gemini.circumlunar.space/docs/specification.gmi Gemini specifications
+=> gemini://gemini.circumlunar.space/docs/specification.gmi Gemini specifications
+
+​=> https:/​/gemini.circumlunar.space/docs/specification.gmi
+=> https://gemini.circumlunar.space/docs/specification.gmi
+
+# Text decoration
+
+The text decoration is not part of Gemini's specifications.
+
+This *​*line*​* uses the /​/text decoration/​/ which can ~​~strike through~​~ or _​_underline_​_ words.
+This **line** uses the //text decoration// which can ~~strike through~~ or __underline__ words.
+
+It's possible to disable and enable the text decoration with **^^^** on a line.
+
+And voilà! You know everything 🥳
+
+———————————————————— ————————————————————
+
+## HtmGem
+
+HtmGem allows to host Gemini pages and publish them on a web server with **Php**. When opening a page ***.gmi**, it translates it for the web browser. This page is displayed this way. It allows to use the Gemini syntax (GemText) on the web.
+=> https://gmi.sbgodin.fr/htmgem
+
+
+### License of this page
+This page is under the free licence **CC BY-SA 2.0**.
+=> https://creativecommons.org/licenses/by-sa/2.0/en/ Text under license CC BY-SA 2.0
+=> gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY

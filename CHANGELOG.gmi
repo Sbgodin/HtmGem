@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
+## [1.3.0] - 2021-03-29
+* Enables browsing without URL Rewriting
+* Unit testing
+* Adds the BNF definition
+* Rewriting of the French documentation
+* Translation to English
+* Adds debug.css
+* Adds index.htm in case of Php not activated
+
 ## [1.2.0] - 2021-03-19
 * Removes "^" to disable text decoration line-wise.
 * CSS is no longer incorporated in the HTML page.

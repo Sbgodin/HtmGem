@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This file is to be placed in ./.git/hooks
+ * and set as executable.
+ *
+ * It will perform tests before any commit.
+ * To override: git commit -n
+ */
+
+echo "Running tests…";
+exec('phpunit tests', $output, $returnCode);
+
+// Removes the first line
+array_shift($output);
+
+if ($returnCode !== 0) {
+  echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+  echo "Tests failed…" . PHP_EOL;
+  exit(1);
+}
+
+// Show summary (last line)
+echo array_pop($output) . PHP_EOL;
+
+exit(0);

@@ -4,11 +4,12 @@ require_once "lib-htmgem.php";
 
 # The url argument is always absolute compared to the document root.
 $url = @$_REQUEST["url"];
+$urlRewriting = @$_REQUEST["rw"]=="1";
 
 /* Installation page
  *
  * Accessing directly /htmgem will make display the self-hosted documentation
- * contained in "index.gmi". If it's removed, diplay an empty page with a
+ * contained in "index.gmi". If it's removed, display an empty page with a
  * comment
  */
 if (empty($url)) {
@@ -16,20 +17,25 @@ if (empty($url)) {
         http_response_code(403);
         die("<!-- index.gmi missing -->");
     }
-    $t = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"));
+    $t = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"), true, "/htmgem");
     echo $t->getFullHtml();
     exit();
 }
 
 $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+if (!preg_match("/\.gmi$/", $url)) {
+    if ($url[-1] == "/")
+        $url = $url."index.gmi";
+    else
+        $url = $url."/index.gmi";
+}
+
 # Removes the headling and trailling slashes, to be sure there's not any.
 $filePath = rtrim($_SERVER['DOCUMENT_ROOT'], "/")."/".ltrim($url, "/");
 
 switch(true) {
-    case false:
     case !realPath($filePath):
-    case !preg_match("/\.gmi$/", $url): # not finishing by .gmi
     case strpos($filePath, $documentRoot)!==0: # not in web directory
         $go404 = true;
         // Says 404 even if the file exists to not give any information.
@@ -96,7 +102,11 @@ EOL;
     exit();
 }
 
-$t = new \htmgem\GemTextTranslate_html($fileContents, $textDecoration);
+if ($urlRewriting)
+    $baseUrl = null;
+else
+    $baseUrl = dirname($url);
+$t = new \htmgem\GemTextTranslate_html($fileContents, $textDecoration, $baseUrl);
 if ("none" == $style) {
     $t->addCss("");
 } elseif ("/" == @$style[0]) {

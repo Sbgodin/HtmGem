@@ -1,40 +1,18 @@
+@import "base.css";
+
 html {
     font-family: mono;
-    font-size: 1rem;
     color: #080;
     background-color: #000;
 }
 
 body {
     max-width: 76em;
-    margin: auto;
-    margin-top: 0.5em;
-}
-
-ul {
-    margin: 0.4rem 0;
-    padding: 0;
-}
-
-p, pre {
-    margin: 0 0 0.3rem;
-    padding: 0;
-}
-
-li {
-    margin: 0;
-    padding: 0;
 }
 
 h1, h2, h3 {
     color: #0b0;
-    margin: 0;
-    padding: 0;
 }
-
-h1 { font-size: 2rem; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.2rem; }
 
 blockquote {
     background-color: #010;
@@ -44,12 +22,17 @@ blockquote {
     padding: 1rem;
 }
 
+pre {
+    scrollbar-color: #030 #010;
+    background-color: #010;
+    margin: 0 -1rem;
+    padding: 1rem;
+}
+
 a {
     margin: -1.35rem;
     color: #090;
     font-weight: bold;
-    text-decoration: none;
-    text-justify: none;
 }
 
 a:before {
@@ -90,33 +73,3 @@ a.mumble:before {
 a.mailto:before {
     content: "M ";
 }
-
-pre {
-    scrollbar-color: #030 #010;
-    background-color: #010;
-    margin: 0 -1rem;
-    padding: 1rem;
-    overflow-x: auto;
-}
-
-@media only screen and (max-width: 1024px) {
-    a {
-        margin: -3rem;
-    }
-    body {
-        margin: 3rem;
-    }
-    h1 {
-        font-size: 4rem;
-    }
-    h2 {
-        font-size: 3.5rem;
-    }
-    h3 {
-        font-size: 3rem;
-    }
-    p, pre, ul {
-        font-size: 2.6rem;
-    }
-}
-
