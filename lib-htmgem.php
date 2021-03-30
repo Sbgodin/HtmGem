@@ -381,7 +381,7 @@ class GemtextTranslate_html {
             $css = $this->cssList;
         $output = <<<EOL
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
 <title>{$this->pageTitle}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
