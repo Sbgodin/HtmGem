@@ -197,6 +197,9 @@ class GemtextTranslate_html {
         $this->cssList []= $css;
     }
 
+    function getCss() { return $this->cssList; }
+    function getTitle() { return $this->pageTitle; }
+
     const NARROW_NO_BREAK_SPACE = "&#8239;";
     const DASHES
         ="‒" # U+2012 Figure Dash
@@ -263,14 +266,20 @@ class GemtextTranslate_html {
         $text = preg_replace("/  +/", " ", $text);
     }
 
-    protected static function resolve_path($path) {
+    /**
+     * Resolve $path interpretating / . and ..
+     * @param $path str
+     * @returns "/" if .. goes above the limit
+     */
+    public static function resolve_path($path) {
+        if (empty($path)) return "";
         $absolute = "/"==$path[0];
         $parts = array_filter(explode("/", $path), 'strlen');
         $chuncks = array();
         foreach ($parts as $part) {
             if ('.' == $part) continue;
             if ('..' == $part) {
-                array_pop($chuncks);
+                if (is_null(array_pop($chuncks))) return "/";
             } else {
                 $chuncks[] = $part;
             }
@@ -374,34 +383,6 @@ class GemtextTranslate_html {
         $this->translatedGemtext = $output;
     }
 
-    function getFullHtml() {
-        if (!$this->cssList)
-            $css = array("/htmgem/css/htmgem.css");
-        else
-            $css = $this->cssList;
-        $output = <<<EOL
-<!DOCTYPE html>
-<html lang="">
-<head>
-<title>{$this->pageTitle}</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-EOL;
-        foreach ($css as $c) {
-            $output .= "\n<link type='text/css' rel='StyleSheet' href='$c'>\n";
-        }
-        $output .= <<<EOL
-</head>
-<body>\n
-EOL;
-        $output .= $this->translatedGemtext;
-        $output .= "</body>\n</html>\n";
-
-        echo $output;
-    }
-
-    public function __toString() {
-        return $this->translatedGemtext;
-    }
 } // GemTextTranslate_html
 
 ?>

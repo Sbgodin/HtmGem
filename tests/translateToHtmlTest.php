@@ -2,11 +2,12 @@
 use PHPUnit\Framework\TestCase;
 
 $dirname_file = dirname(__FILE__);
-require_once "$dirname_file/../lib-htmgem.php";
+require_once "$dirname_file/../lib-htmgem.inc.php";
 require_once "$dirname_file/utils.inc.php";
 
 function translateHtml($text): string {
-    return strval(new htmgem\GemtextTranslate_html($text));
+    $gt_html = new htmgem\GemtextTranslate_html($text);
+    return strval($gt_html->translatedGemtext);
 }
 
 final class translateToHtmlTest extends TestCase {

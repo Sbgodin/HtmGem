@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
-require_once dirname(__FILE__)."/../lib-htmgem.php";
+require_once dirname(__FILE__)."/../lib-htmgem.inc.php";
 
 function parse($text): array {
     return iterator_to_array(\htmgem\gemtextParser($text));

@@ -2,7 +2,7 @@
 use PHPUnit\Framework\TestCase;
 
 $dirname_file = dirname(__FILE__);
-require_once "$dirname_file/../lib-htmgem.php";
+require_once "$dirname_file/../lib-htmgem.inc.php";
 require_once "$dirname_file/utils.inc.php";
 
 function translate($text): string {

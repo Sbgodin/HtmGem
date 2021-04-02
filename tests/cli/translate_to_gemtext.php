@@ -2,7 +2,7 @@
 
 $fileName = $argv[1];
 
-require_once dirname(__FILE__)."/../../lib-htmgem.php";
+require_once dirname(__FILE__)."/../../lib-htmgem.inc.php";
 
 $text = file_get_contents($fileName);
 $gt_gemtext = new \htmgem\GemtextTranslate_gemtext($text);

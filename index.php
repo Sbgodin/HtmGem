@@ -1,12 +1,14 @@
 <?php
 
-require_once "lib-htmgem.php";
+require_once "lib-htmgem.inc.php";
+require_once "lib-html.inc.php";
 
 # The url argument is always absolute compared to the document root.
 $url = @$_REQUEST["url"];
 $urlRewriting = @$_REQUEST["rw"]=="1";
 
-/* Installation page
+/**
+ * Installation page
  *
  * Accessing directly /htmgem will make display the self-hosted documentation
  * contained in "index.gmi". If it's removed, display an empty page with a
@@ -17,13 +19,16 @@ if (empty($url)) {
         http_response_code(403);
         die("<!-- index.gmi missing -->");
     }
-    $t = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"), true, "/htmgem");
-    echo $t->getFullHtml();
+    $gt_html = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"), true, "/htmgem");
+    echo \htmgem\html\getFullHtml($gt_html);
     exit();
 }
 
 $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
+/**
+ * Provides index.gmi if no page given
+ */
 if (!preg_match("/\.gmi$/", $url)) {
     if ($url[-1] == "/")
         $url = $url."index.gmi";
@@ -49,20 +54,14 @@ switch(true) {
 if ($go404) {
     error_log("HtmGem: 404 $url $filePath");
     http_response_code(404);
-    $page404 = <<<EOF
-# ⚠ Page non trouvée
-
-​**$url**
-
-=> .. 🔄 🔄
-EOF;
-    $t = new \htmgem\GemTextTranslate_html($page404);
-    echo $t->getFullHtml();
+    $page404 = \htmgem\html\get404GmiPage("Page not found", $url);
+    $gt_html = new \htmgem\GemTextTranslate_html($page404);
+    echo \htmgem\html\getFullHtml($gt_html);
     exit();
 }
 
 # to false only if textDecoration=0 in the URL
-$textDecoration = "0" != @$_REQUEST['textDecoration'];
+$gt_htmlextDecoration = "0" != @$_REQUEST['textDecoration'];
 
 $fileContents = @file_get_contents($filePath);
 # Removes the Byte Order Mark
@@ -106,11 +105,11 @@ if ($urlRewriting)
     $baseUrl = null;
 else
     $baseUrl = dirname($url);
-$t = new \htmgem\GemTextTranslate_html($fileContents, $textDecoration, $baseUrl);
+$gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, $baseUrl);
 if ("none" == $style) {
-    $t->addCss("");
+    $gt_html->addCss("");
 } elseif ("/" == @$style[0]) {
-    $t->addCss($style);
+    $gt_html->addCss($style);
 } elseif (empty($style)) {
     $parts = pathinfo($filePath);
     $localCss = $parts["filename"].".css";
@@ -118,12 +117,12 @@ if ("none" == $style) {
     if (file_exists($localCssFilePath)) {
         # Warning, using htmhem.php?url=… will make $localCss not found
         # as the path is relative to htmgem.php and not / !
-        $t->addCss($localCss);
+        $gt_html->addCss($localCss);
     }
 } else { #TODO: regex check for $style
-    $t->addCss("/htmgem/css/$style.css");
+    $gt_html->addCss("/htmgem/css/$style.css");
 }
 
-echo $t->getFullHtml();
+echo \htmgem\html\getFullHtml($gt_html);
 
 ?>
