@@ -331,7 +331,6 @@ class GemtextTranslate_html {
                     $linkText = $node["text"];
                     if (empty($linkText)) {
                         $linkText = $link;
-                        self::spacesCompress($linkText);
                         self::htmlPrepare($linkText);
                     } else {
                         self::spacesCompress($linkText);
