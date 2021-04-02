@@ -5,5 +5,5 @@ $fileName = $argv[1];
 require_once dirname(__FILE__)."/../../lib-htmgem.inc.php";
 
 $text = file_get_contents($fileName);
-$gt_gemtext = new \htmgem\GemtextTranslate_html($text);
-echo strval($gt_gemtext);
+$gt_html = new \htmgem\GemtextTranslate_html($text);
+echo $gt_html->translatedGemtext;

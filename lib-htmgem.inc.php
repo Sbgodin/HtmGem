@@ -341,16 +341,18 @@ class GemtextTranslate_html {
                         if ($textDecoration) self::addTextDecoration($linkText);
                     }
                     preg_match("/^([^:]+):/", $link, $matches);
-                    $protocol = @$matches[1];
-                    if (empty($protocol)) {
-                        $protocol = "local";
+                    $protocol = @$matches[1]??"local";
+                    if ("local"==$protocol) {
                         if (!is_null($this->baseUrl)) { // No URL rewriting
                             if ($link[0]!="/") $link = "{$this->baseUrl}/$link";
                             $link = self::resolve_path($link);
                             $link = "/htmgem/index.php?url=$link";
                         }
+                        $newWindow = "";
+                    } else {
+                        $newWindow = "target='_blank' ";
                     }
-                    $output .= "<p><a class='$protocol' href='$link'>$linkText</a></p>\n";
+                    $output .= "<p><a {$newWindow}class='$protocol' href='$link'>$linkText</a></p>\n";
                     break;
                 case "#":
                     $title = $node["title"];
