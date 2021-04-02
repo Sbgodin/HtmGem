@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace htmgem;
 
@@ -33,10 +33,10 @@ function gemtextParser($fileContents) {
                     yield array("mode" => "^^^");
                 } elseif ("#" == $line1) {
                     preg_match("/^(#{1,3})\s*(.+)?/", $line, $matches);
-                    yield array("mode" => $matches[1], "title" => trim(@$matches[2]));
+                    yield array("mode" => $matches[1], "title" => trim($matches[2]??""));
                 } elseif ("=>" == $line2) {
                     preg_match("/^=>\s*([^\s]+)(?:\s+(.*))?$/", $line, $matches);
-                    yield array("mode" => "=>", "link" => trim(@$matches[1]), "text" => trim(@$matches[2]));
+                    yield array("mode" => "=>", "link" => trim($matches[1]??""), "text" => trim($matches[2]??""));
                 } elseif ("```" == $line3) {
                     preg_match("/^```\s*(.*)$/", $line, $matches);
                     $current = array("mode" => "```", "alt" => trim($matches[1]), "texts" => array());

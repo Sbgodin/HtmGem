@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once "lib-htmgem.inc.php";
 require_once "lib-html.inc.php";
