@@ -94,7 +94,7 @@ final class translateToHtmlTest extends TestCase {
         /** NOTE: the UTF-16 files must result in the same content as UTF-8 ones.
          * command to convert from UTF-8 to UTF-16: iconv -f utf8 -r utf16 text.gmi
          */
-        foreach(getGmiFiles(dirname(__FILE__)."/files_with_html") as $filePathname) {
+        foreach(getFiles(dirname(__FILE__)."/files_with_html", "gmi") as $filePathname) {
             $fileContentGmi = file_get_contents($filePathname);
             \htmgem\io\convertToUTF8($fileContentGmi);
             $fileContentHtml = file_get_contents($filePathname.".html");
@@ -102,6 +102,22 @@ final class translateToHtmlTest extends TestCase {
                 $fileContentHtml,
                 translateHtml($fileContentGmi),
                 "Translation to HTML: $filePathname"
+            );
+        }
+    }
+
+    public function test_line_feeds(): void {
+        /** NOTE: the UTF-16 files must result in the same content as UTF-8 ones.
+         * command to convert from UTF-8 to UTF-16: iconv -f utf8 -r utf16 text.gmi
+         */
+        foreach(getFiles(dirname(__FILE__)."/files_with_html", "txt") as $filePathname) {
+            $fileContentGmi = file_get_contents($filePathname);
+            \htmgem\io\convertToUTF8($fileContentGmi);
+            $fileContentHtml = file_get_contents($filePathname.".html");
+            $this->assertSame(
+                $fileContentHtml,
+                translateHtml($fileContentGmi),
+                "Line feeds, translation to HTML: $filePathname"
             );
         }
     }

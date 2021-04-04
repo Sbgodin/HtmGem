@@ -51,7 +51,7 @@ final class translateToGemtextTest extends TestCase {
 
     #TODO: don't stop when problems are found, list all the faulty files
     public function test_translate_gemtext_files(): void {
-        foreach(getGmiFiles(dirname(__FILE__)."/..") as $filePathname) {
+        foreach(getFiles(dirname(__FILE__)."/..", "gmi") as $filePathname) {
             $fileContent = file_get_contents($filePathname);
             \htmgem\io\convertToUTF8($fileContent);
             $this->assertSame(

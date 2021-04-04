@@ -12,7 +12,7 @@ mb_regex_encoding("UTF-8");
 function gemtextParser($fileContents) {
     if (empty($fileContents)) return array();
     $fileContents = rtrim($fileContents); // removes last empty line
-    $fileLines = explode("\n", $fileContents);
+    $fileLines = mb_split("\R", $fileContents); // Unix, Mac, Windows line feeds
     $mode = null;
     $current = array();
     foreach ($fileLines as $line) {
