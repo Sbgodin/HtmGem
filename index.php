@@ -2,6 +2,7 @@
 
 require_once "lib-htmgem.inc.php";
 require_once "lib-html.inc.php";
+require_once "lib-io.inc.php";
 
 # The url argument is always absolute compared to the document root.
 $url = @$_REQUEST["url"];
@@ -64,9 +65,7 @@ if ($go404) {
 $gt_htmlextDecoration = "0" != @$_REQUEST['textDecoration'];
 
 $fileContents = @file_get_contents($filePath);
-# Removes the Byte Order Mark
-$fileContents = preg_replace("/\xEF\xBB\xBF/", "", $fileContents);
-
+\htmgem\io\convertToUTF8($fileContents);
 
 /* CSS and special style management
  */

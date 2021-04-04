@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 $dirname_file = dirname(__FILE__);
 require_once "$dirname_file/../lib-htmgem.inc.php";
 require_once "$dirname_file/utils.inc.php";
+require_once "$dirname_file/../lib-io.inc.php";
 
 function translateHtml($text): string {
     $gt_html = new htmgem\GemtextTranslate_html($text);
@@ -90,8 +91,12 @@ final class translateToHtmlTest extends TestCase {
 
     #TODO: don't stop when problems are found, list all the faulty files
     public function test_translate_html_files_with_html(): void {
+        /** NOTE: the UTF-16 files must result in the same content as UTF-8 ones.
+         * command to convert from UTF-8 to UTF-16: iconv -f utf8 -r utf16 text.gmi
+         */
         foreach(getGmiFiles(dirname(__FILE__)."/files_with_html") as $filePathname) {
             $fileContentGmi = file_get_contents($filePathname);
+            \htmgem\io\convertToUTF8($fileContentGmi);
             $fileContentHtml = file_get_contents($filePathname.".html");
             $this->assertSame(
                 $fileContentHtml,
