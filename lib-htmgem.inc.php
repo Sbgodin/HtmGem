@@ -314,7 +314,8 @@ class GemtextTranslate_html {
                 case "```":
                     $text = implode("\n", $node["texts"]);
                     self::htmlPrepare($text);
-                    $output .= "<pre>\n$text\n</pre>\n";
+                    $alt = $node["alt"];
+                    $output .= "<pre alt='$alt'>\n$text\n</pre>\n";
                     break;
                 case ">":
                     $output .= "<blockquote>\n";
