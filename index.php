@@ -4,7 +4,11 @@ require_once "lib-htmgem.inc.php";
 require_once "lib-html.inc.php";
 require_once "lib-io.inc.php";
 
-# The url argument is always absolute compared to the document root.
+$documentRoot = $_SERVER['DOCUMENT_ROOT'];
+$scheme = (@$_SERVER['REQUEST_SCHEME']??"http")."://";
+$domain = $_SERVER['HTTP_HOST'];
+$php_self = $_SERVER['PHP_SELF']; // by default: /htmgem/index.php
+$php_self_dir = dirname($php_self);
 $url = @$_REQUEST["url"];
 $urlRewriting = @$_REQUEST["rw"]=="1";
 
@@ -18,18 +22,21 @@ $urlRewriting = @$_REQUEST["rw"]=="1";
 if (empty($url)) {
     if (!file_exists("index.gmi")) {
         http_response_code(403);
-        die("<!-- index.gmi missing -->");
+    } else {
+        $gt_html = new \htmgem\GemTextTranslate_html(file_get_contents("index.gmi"), true, "$php_self?url=", $php_self_dir);
+        if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+
+        // No URL Rewritting assumed
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $php_self, "$php_self?url=");
     }
-    $gt_html = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"), true, "/htmgem");
-    echo \htmgem\html\getFullHtml($gt_html);
     exit();
 }
 
-$documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-/**
- * Provides index.gmi if no page given
- */
+$url = \htmgem\resolve_path(
+    // Some webservers (Apache) don't add the slash
+    // while others (Nginx) do…
+    ( $url[0] == "/" ? "" : "/" ) . $url
+);
 if (!preg_match("/\.gmi$/", $url)) {
     if ($url[-1] == "/")
         $url = $url."index.gmi";
@@ -55,9 +62,13 @@ switch(true) {
 if ($go404) {
     error_log("HtmGem: 404 $url $filePath");
     http_response_code(404);
-    $page404 = \htmgem\html\get404GmiPage("Page not found", $url);
+    $page404 = \htmgem\html\get404GmiPage($url);
     $gt_html = new \htmgem\GemTextTranslate_html($page404);
-    echo \htmgem\html\getFullHtml($gt_html);
+    if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+    if ($urlRewriting)
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
+    else
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url, "$php_self?url=");
     exit();
 }
 
@@ -101,12 +112,12 @@ EOL;
 }
 
 if ($urlRewriting)
-    $baseUrl = null;
+    $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration);
 else
-    $baseUrl = dirname($url);
-$gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, $baseUrl);
+    $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, "$php_self?url=", dirname($url));
+
 if ("none" == $style) {
-    $gt_html->addCss("");
+    #$gt_html->addCss("");
 } elseif ("/" == @$style[0]) {
     $gt_html->addCss($style);
 } elseif (empty($style)) {
@@ -119,9 +130,13 @@ if ("none" == $style) {
         $gt_html->addCss($localCss);
     }
 } else { #TODO: regex check for $style
-    $gt_html->addCss("/htmgem/css/$style.css");
+    $gt_html->addCss("$php_self_dir/css/$style.css");
 }
+if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
 
-echo \htmgem\html\getFullHtml($gt_html);
+if ($urlRewriting)
+    echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
+else
+    echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url, "$php_self?url=");
 
 ?>

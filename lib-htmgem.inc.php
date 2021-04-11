@@ -6,13 +6,62 @@ mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 
 /**
+ * Resolve $path interpretating / . and ..
+ * @param $path str
+ * @returns "/" if .. goes above the limit
+ */
+function resolve_path($path) {
+    if (empty($path)) return "";
+    $absolute = "/"==$path[0];
+    $parts = array_filter(explode("/", $path), 'strlen');
+    $chuncks = array();
+    foreach ($parts as $part) {
+        if ('.' == $part) continue;
+        if ('..' == $part) {
+            if (is_null(array_pop($chuncks))) return "/";
+        } else {
+            $chuncks[] = $part;
+        }
+    }
+    $output = implode("/", $chuncks);
+    if ($absolute) $output = "/".$output;
+    return $output;
+}
+
+/**
+ * Splits link (without .. or .) into parts along with direct url access.
+ * @param url
+ *
+ * Ex. /dir1/dir2/page.gmi
+ * --> "dir1" --> "/dir1"
+ * --> "dir2" --> "/dir1/dir2"
+ * --> "page.gmi" --> "/dir2/page.gmi"
+ */
+function split_path_links($path, $prefix="") {
+    $parts = array_filter(explode("/", $path), 'strlen');
+    if (empty($parts)) return array();
+    if ("/"==$path[0])
+        $stack = "/";
+    else
+        $stack = "";
+    $output = array();
+    $slash = "";
+    foreach ($parts as $part) {
+        $stack .= $slash.$part;
+        $output[$part] = $prefix.$stack;
+        $slash = "/";
+    }
+    return $output;
+}
+
+/**
  * Parses the gemtext and generates the internal format version
  * @param str $fileContents the gemtext to parse
  */
 function gemtextParser($fileContents) {
     if (empty($fileContents)) return array();
     $fileContents = rtrim($fileContents); // removes last empty line
-    $fileLines = mb_split("\R", $fileContents); // Unix, Mac, Windows line feeds
+    $fileLines = mb_split("\n|\r\n?", $fileContents); // Unix, Mac, Windows line feeds
     $mode = null;
     $current = array();
     foreach ($fileLines as $line) {
@@ -182,8 +231,15 @@ class GemtextTranslate_html {
     protected $pageTitle = "";
     public $translatedGemtext;
 
-    function __construct($parsedGemtext, $textDecoration=true, $baseUrl=Null) {
-        $this->baseUrl = $baseUrl;
+    /**
+     * @param $parsedGemtext the gemtext internal format
+     * @param $textDecoration bool to interpret or not the text decoration
+     * @param $urlPrefix the prefix to prepend if the URL rewriting is not on
+     * @param $currentPageDir the current directory, to be used without URL rewriting
+     */
+    function __construct($parsedGemtext, $textDecoration=true, $urlPrefix=null, $currentPageDir=null) {
+        $this->urlPrefix = $urlPrefix;
+        $this->currentPageDir = $currentPageDir;
         if (empty($parsedGemtext)) $parsedGemtext = "";
         // to delete the last empty lines
         $parsedGemtext = rtrim($parsedGemtext);
@@ -266,29 +322,6 @@ class GemtextTranslate_html {
         $text = preg_replace("/  +/", " ", $text);
     }
 
-    /**
-     * Resolve $path interpretating / . and ..
-     * @param $path str
-     * @returns "/" if .. goes above the limit
-     */
-    public static function resolve_path($path) {
-        if (empty($path)) return "";
-        $absolute = "/"==$path[0];
-        $parts = array_filter(explode("/", $path), 'strlen');
-        $chuncks = array();
-        foreach ($parts as $part) {
-            if ('.' == $part) continue;
-            if ('..' == $part) {
-                if (is_null(array_pop($chuncks))) return "/";
-            } else {
-                $chuncks[] = $part;
-            }
-        }
-        $output = implode("/", $chuncks);
-        if ($absolute) $output = "/".$output;
-        return $output;
-    }
-
     public function translate($textDecoration=true) {
         $output = "";
         foreach ($this->parsedGemtext as $node) {
@@ -344,10 +377,10 @@ class GemtextTranslate_html {
                     preg_match("/^([^:]+):/", $link, $matches);
                     $protocol = @$matches[1]??"local";
                     if ("local"==$protocol) {
-                        if (!is_null($this->baseUrl)) { // No URL rewriting
-                            if ($link[0]!="/") $link = "{$this->baseUrl}/$link";
-                            $link = self::resolve_path($link);
-                            $link = "/htmgem/index.php?url=$link";
+                        if (!is_null($this->urlPrefix)) { // No URL rewriting
+                            $link = $this->currentPageDir."/".$link;
+                            $link = resolve_path($link);
+                            $link = $this->urlPrefix.$link;
                         }
                         $newWindow = "";
                     } else {

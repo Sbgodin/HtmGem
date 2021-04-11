@@ -17,47 +17,66 @@ blockquote {
     padding: 1rem;
 }
 
-a {
-    margin: -1.35rem;
+.menu a, .menu a:visited {
+    color: #888;
+}
+
+.menu a:hover {
+    color: #000;
+}
+
+.menu hr {
+    color: white;
+}
+
+#gmi a {
+    margin: -0.7rem;
     color:#820;
 }
 
-a:before {
+#gmi a:before {
     content: "🔗 ";
 }
 
-a:visited {
+#gmi a:visited {
     color: #868;
 }
 
-a.local:before {
+#gmi a.local:before {
     content: "🛩️ ";
     font-weight: bold;
 }
 
-a.gemini:before {
+#gmi a.gemini:before {
     content: "🚀 ";
 }
 
-a.gopher:before {
+#gmi a.gopher:before {
     content: "📜 ";
 }
 
-a.https:before {
+#gmi a.https:before {
     content: "🕸️ ";
     font-weight: bolder;
 }
 
-a.http:before {
+#gmi a.http:before {
     content: "🕸️ ";
     font-weight: lighter;
 }
 
-a.mumble:before {
+#gmi a.mumble:before {
     content: "🎤 ";
 }
 
-a.mailto:before {
+#gmi a.mailto:before {
     content: "✉️ ";
+}
+
+@media only screen and (max-width: 1024px) {
+    
+    #gmi a {
+        margin: -2.9rem;
+    }
 }
 
