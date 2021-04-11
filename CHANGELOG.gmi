@@ -4,24 +4,42 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
-## [Unreleased] v3
+## [Unreleased] v2
 * cgi-bin? Handle user input
 * Page caching: don’t generate twice an unmodified file.
-* Be able to move /htmgem anywhere and (for the Php part) outside the webbrowser scope.
 
-## [Unreleased] v2
+## [Unreleased] v1
 
 ### Security
-* Check unicode capability, UTF16 input, RTL/LTR, etc…
-* Manage different type of carriage return: CR CR/LF LF.
-
-### Development
 ∅
 
-### User interface
-* Page menu on upper and lower sides: [parent dir] [root dir] [raw text].
-* Images: click to display
+### Development
 * Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
+
+### User interface
+* Images: click to load and display.
+* Be able to change the page style on the top bar.
+* Be able to change the font size.
+
+## [1.4.0] - 2021-04-11
+* Adds the breadcrumbs at the top and the bottom of the page.
+* Adds the text icon H͜͡m.
+* Opens the external addresses in a new window/tab.
+* Changes details in the 404 page.
+* Manages UTF-8, UTF-16 and UTF-32 entry format.
+* FIX: adds alt text of preformated texts.
+* Enables to move and rename /htmgem.
+* Allows to always run without the URL rewriting.
+* Many code refactorings.
+
+## [1.3.0] - 2021-03-29
+* Enables browsing without URL Rewriting
+* Unit testing
+* Adds the BNF definition
+* Rewriting of the French documentation
+* Translation to English
+* Adds debug.css
+* Adds index.htm in case of Php not activated
 
 ## [1.2.0] - 2021-03-19
 * Removes "^" to disable text decoration line-wise.
