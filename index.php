@@ -1,12 +1,19 @@
-<?php
+<?php declare(strict_types=1);
 
-require_once "lib-htmgem.php";
+require_once "lib-htmgem.inc.php";
+require_once "lib-html.inc.php";
+require_once "lib-io.inc.php";
 
-# The url argument is always absolute compared to the document root.
+$documentRoot = $_SERVER['DOCUMENT_ROOT'];
+$scheme = (@$_SERVER['REQUEST_SCHEME']??"http")."://";
+$domain = $_SERVER['HTTP_HOST'];
+$php_self = $_SERVER['PHP_SELF']; // by default: /htmgem/index.php
+$php_self_dir = dirname($php_self);
 $url = @$_REQUEST["url"];
 $urlRewriting = @$_REQUEST["rw"]=="1";
 
-/* Installation page
+/**
+ * Installation page
  *
  * Accessing directly /htmgem will make display the self-hosted documentation
  * contained in "index.gmi". If it's removed, display an empty page with a
@@ -15,15 +22,21 @@ $urlRewriting = @$_REQUEST["rw"]=="1";
 if (empty($url)) {
     if (!file_exists("index.gmi")) {
         http_response_code(403);
-        die("<!-- index.gmi missing -->");
+    } else {
+        $gt_html = new \htmgem\GemTextTranslate_html(file_get_contents("index.gmi"), true, "$php_self?url=", $php_self_dir);
+        if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+
+        // No URL Rewritting assumed
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $php_self, "$php_self?url=");
     }
-    $t = new \htmgem\GemTextTranslate_html(@file_get_contents("index.gmi"), true, "/htmgem");
-    echo $t->getFullHtml();
     exit();
 }
 
-$documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
+$url = \htmgem\resolve_path(
+    // Some webservers (Apache) don't add the slash
+    // while others (Nginx) do…
+    ( $url[0] == "/" ? "" : "/" ) . $url
+);
 if (!preg_match("/\.gmi$/", $url)) {
     if ($url[-1] == "/")
         $url = $url."index.gmi";
@@ -49,25 +62,21 @@ switch(true) {
 if ($go404) {
     error_log("HtmGem: 404 $url $filePath");
     http_response_code(404);
-    $page404 = <<<EOF
-# ⚠ Page non trouvée
-
-​**$url**
-
-=> .. 🔄 🔄
-EOF;
-    $t = new \htmgem\GemTextTranslate_html($page404);
-    echo $t->getFullHtml();
+    $page404 = \htmgem\html\get404GmiPage($url);
+    $gt_html = new \htmgem\GemTextTranslate_html($page404);
+    if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+    if ($urlRewriting)
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
+    else
+        echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url, "$php_self?url=");
     exit();
 }
 
 # to false only if textDecoration=0 in the URL
-$textDecoration = "0" != @$_REQUEST['textDecoration'];
+$gt_htmlextDecoration = "0" != @$_REQUEST['textDecoration'];
 
 $fileContents = @file_get_contents($filePath);
-# Removes the Byte Order Mark
-$fileContents = preg_replace("/\xEF\xBB\xBF/", "", $fileContents);
-
+\htmgem\io\convertToUTF8($fileContents);
 
 /* CSS and special style management
  */
@@ -103,14 +112,14 @@ EOL;
 }
 
 if ($urlRewriting)
-    $baseUrl = null;
+    $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration);
 else
-    $baseUrl = dirname($url);
-$t = new \htmgem\GemTextTranslate_html($fileContents, $textDecoration, $baseUrl);
+    $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, "$php_self?url=", dirname($url));
+
 if ("none" == $style) {
-    $t->addCss("");
+    #$gt_html->addCss("");
 } elseif ("/" == @$style[0]) {
-    $t->addCss($style);
+    $gt_html->addCss($style);
 } elseif (empty($style)) {
     $parts = pathinfo($filePath);
     $localCss = $parts["filename"].".css";
@@ -118,12 +127,16 @@ if ("none" == $style) {
     if (file_exists($localCssFilePath)) {
         # Warning, using htmhem.php?url=… will make $localCss not found
         # as the path is relative to htmgem.php and not / !
-        $t->addCss($localCss);
+        $gt_html->addCss($localCss);
     }
 } else { #TODO: regex check for $style
-    $t->addCss("/htmgem/css/$style.css");
+    $gt_html->addCss("$php_self_dir/css/$style.css");
 }
+if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
 
-echo $t->getFullHtml();
+if ($urlRewriting)
+    echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
+else
+    echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url, "$php_self?url=");
 
 ?>

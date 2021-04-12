@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-function getGmiFiles($directory): generator {
+function getFiles($directory, $targetExtension): generator {
     $flags =
         FilesystemIterator::KEY_AS_PATHNAME
       | FilesystemIterator::CURRENT_AS_FILEINFO
@@ -14,7 +14,7 @@ function getGmiFiles($directory): generator {
         $filename = $fileinfo->getFilename();
         $filePathname = $fileinfo->getPathname();
         $extension = $fileinfo->getExtension();
-        if ("gmi" == $extension) {
+        if ($targetExtension == $extension) {
             yield $filePathname;
         }
     }

@@ -2,8 +2,9 @@
 use PHPUnit\Framework\TestCase;
 
 $dirname_file = dirname(__FILE__);
-require_once "$dirname_file/../lib-htmgem.php";
+require_once "$dirname_file/../lib-htmgem.inc.php";
 require_once "$dirname_file/utils.inc.php";
+require_once "$dirname_file/../lib-io.inc.php";
 
 function translate($text): string {
     return strval(new htmgem\GemtextTranslate_gemtext($text));
@@ -50,8 +51,9 @@ final class translateToGemtextTest extends TestCase {
 
     #TODO: don't stop when problems are found, list all the faulty files
     public function test_translate_gemtext_files(): void {
-        foreach(getGmiFiles(dirname(__FILE__)."/..") as $filePathname) {
+        foreach(getFiles(dirname(__FILE__)."/..", "gmi") as $filePathname) {
             $fileContent = file_get_contents($filePathname);
+            \htmgem\io\convertToUTF8($fileContent);
             $this->assertSame(
                 $fileContent,
                 translate($fileContent),

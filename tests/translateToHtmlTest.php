@@ -2,11 +2,13 @@
 use PHPUnit\Framework\TestCase;
 
 $dirname_file = dirname(__FILE__);
-require_once "$dirname_file/../lib-htmgem.php";
+require_once "$dirname_file/../lib-htmgem.inc.php";
 require_once "$dirname_file/utils.inc.php";
+require_once "$dirname_file/../lib-io.inc.php";
 
 function translateHtml($text): string {
-    return strval(new htmgem\GemtextTranslate_html($text));
+    $gt_html = new htmgem\GemtextTranslate_html($text);
+    return strval($gt_html->translatedGemtext);
 }
 
 final class translateToHtmlTest extends TestCase {
@@ -89,13 +91,33 @@ final class translateToHtmlTest extends TestCase {
 
     #TODO: don't stop when problems are found, list all the faulty files
     public function test_translate_html_files_with_html(): void {
-        foreach(getGmiFiles(dirname(__FILE__)."/files_with_html") as $filePathname) {
+        /** NOTE: the UTF-16 files must result in the same content as UTF-8 ones.
+         * command to convert from UTF-8 to UTF-16: iconv -f utf8 -r utf16 text.gmi
+         */
+        foreach(getFiles(dirname(__FILE__)."/files_with_html", "gmi") as $filePathname) {
             $fileContentGmi = file_get_contents($filePathname);
+            \htmgem\io\convertToUTF8($fileContentGmi);
             $fileContentHtml = file_get_contents($filePathname.".html");
             $this->assertSame(
                 $fileContentHtml,
                 translateHtml($fileContentGmi),
                 "Translation to HTML: $filePathname"
+            );
+        }
+    }
+
+    public function test_line_feeds(): void {
+        /** NOTE: the UTF-16 files must result in the same content as UTF-8 ones.
+         * command to convert from UTF-8 to UTF-16: iconv -f utf8 -r utf16 text.gmi
+         */
+        foreach(getFiles(dirname(__FILE__)."/files_with_html", "txt") as $filePathname) {
+            $fileContentGmi = file_get_contents($filePathname);
+            \htmgem\io\convertToUTF8($fileContentGmi);
+            $fileContentHtml = file_get_contents($filePathname.".html");
+            $this->assertSame(
+                $fileContentHtml,
+                translateHtml($fileContentGmi),
+                "Line feeds, translation to HTML: $filePathname"
             );
         }
     }

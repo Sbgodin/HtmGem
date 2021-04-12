@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
+## [1.4.0] - 2021-04-11
+* Adds the breadcrumbs at the top and the bottom of the page.
+* Adds the text icon H͜͡m.
+* Opens the external addresses in a new window/tab.
+* Changes details in the 404 page.
+* Manages UTF-8, UTF-16 and UTF-32 entry format.
+* FIX: adds alt text of preformated texts.
+* Enables to move and rename /htmgem.
+* Allows to always run without the URL rewriting.
+* Many code refactorings.
+
 ## [1.3.0] - 2021-03-29
 * Enables browsing without URL Rewriting
 * Unit testing
