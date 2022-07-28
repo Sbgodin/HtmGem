@@ -55,7 +55,7 @@ function getMenu(string $scheme, string $domain, string $path, string $prefix=nu
     }
     $linkList [] = $lastLink."\n"; // The last part holds no link
     $output = "<div class='menu-line'>\n";
-    $output .= "<strong>$txt_icon</strong>$scheme\n";
+    $output .= "<strong><a class='logo' href='/htmgem'>$txt_icon</a></strong>$scheme\n";
     $output .= implode(" / ", $linkList);
     $output .= "</div>\n";
     return $output;

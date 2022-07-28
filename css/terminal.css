@@ -29,6 +29,14 @@ pre {
     padding: 1rem;
 }
 
+.menu a {
+    margin: 0;
+}
+
+.menu a:before {
+    content: "";
+}
+
 a {
     margin: -1.35rem;
     color: #090;
