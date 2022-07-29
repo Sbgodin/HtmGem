@@ -38,7 +38,7 @@ a {
     text-align: left;
 }
 .menu:nth-of-type(3) .menu-line {
-    text-align: right;
+    text-align: left;
 }
 
 .menu a, .menu a:visited {
@@ -48,7 +48,7 @@ a {
     #color: #000;
 }
 .menu hr {
-    border: 1px solid lightgrey;
+    border: 0;
 }
 
 /*
@@ -228,12 +228,12 @@ body {
   margin-right: 0em;
   padding-right: 0em;
 }
-#entete {
+.menu-line {
   font-size: 100%;
   /*color: darken(@bg,15%);*/
   padding: 2em;
 }
-#entete h1 a {
+.menu-line h1 a {
  /* color: #956a11;
   font-weight: 300;
   */
@@ -412,10 +412,10 @@ img {
 
 /*  Orange Colors (for lagrange.css) */
 
-#entete {
+.menu-line {
   background-color: #efd9b7;
 }
-#entete h1 a {
+.menu-line h1 a {
   color: #262626;
   font-weight: 300;
 }
