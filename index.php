@@ -128,11 +128,12 @@ if ("none" == $style) {
         # Warning, using htmhem.php?url=… will make $localCss not found
         # as the path is relative to htmgem.php and not / !
         $gt_html->addCss($localCss);
+    } else { // No local style
+        $gt_html->addCss($php_self_dir."/css/htmgem.css");
     }
 } else { #TODO: regex check for $style
     $gt_html->addCss("$php_self_dir/css/$style.css");
 }
-if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
 
 if ($urlRewriting)
     echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
