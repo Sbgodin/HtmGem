@@ -1,13 +1,12 @@
 # Styles
 
-=> index.gmi|htmgem htmgem.css
-=> index.gmi|none None
-=> index.gmi|terminal terminal.css
-=> index.gmi|black_wide black_wide.css
-=> index.gmi|simple simple.css
-=> index.gmi|raw raw.css
-=> index.gmi|debug debug.css
-=> index.gmi|pre Source code
+=> index.gmi|default,htmgem.css htmgem.css
+=> index.gmi|default,terminal.css terminal.css
+=> index.gmi|default,black_wide.css black_wide.css
+=> index.gmi|default,simple.css simple.css
+=> index.gmi|default,raw.css raw.css
+=> index.gmi|default,debug.css debug.css
+=> index.gmi|src Source code
 => index.gmi|source Download source code
 
 Lorem ipsum dolor sit amet.

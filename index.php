@@ -4,6 +4,8 @@ require_once "lib-htmgem.inc.php";
 require_once "lib-html.inc.php";
 require_once "lib-io.inc.php";
 
+define("DEFAULT_CSS", "/css/default/htmgem.css");
+
 $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 $scheme = (@$_SERVER['REQUEST_SCHEME']??"http")."://";
 $domain = $_SERVER['HTTP_HOST'];
@@ -24,7 +26,7 @@ if (empty($url)) {
         http_response_code(403);
     } else {
         $gt_html = new \htmgem\GemTextTranslate_html(file_get_contents("index.gmi"), true, "$php_self?url=", $php_self_dir);
-        if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+        if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir.DEFAULT_CSS);
 
         // No URL Rewritting assumed
         echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $php_self, "$php_self?url=");
@@ -91,7 +93,7 @@ if ("source" == $style) {
     header('Content-Length: ' . filesize($filePath));
     echo $fileContents;
     exit();
-} elseif ("pre" == $style) {
+} elseif ("src" == $style) {
     # Gets the page title: the first occurrence with # at the line start
     mb_ereg("#\s*([^\n]+)\n", $fileContents, $matches);
     $page_title = @$matches[1];
@@ -116,11 +118,7 @@ if ($urlRewriting)
 else
     $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, "$php_self?url=", dirname($url));
 
-if ("none" == $style) {
-    #$gt_html->addCss("");
-} elseif ("/" == @$style[0]) {
-    $gt_html->addCss($style);
-} elseif (empty($style)) {
+if (empty($style)) { // Searches for a stylesheet for the current page.
     $parts = pathinfo($filePath);
     $localCss = $parts["filename"].".css";
     $localCssFilePath = $parts["dirname"]."/".$localCss;
@@ -129,10 +127,11 @@ if ("none" == $style) {
         # as the path is relative to htmgem.php and not / !
         $gt_html->addCss($localCss);
     } else { // No local style
-        $gt_html->addCss($php_self_dir."/css/htmgem.css");
+        $gt_html->addCss($php_self_dir.DEFAULT_CSS);
     }
-} else { #TODO: regex check for $style
-    $gt_html->addCss("$php_self_dir/css/$style.css");
+} else {
+    $style = preg_replace("/,/", "/", $style);
+    $gt_html->addCss("$php_self_dir/css/$style");
 }
 
 if ($urlRewriting)
