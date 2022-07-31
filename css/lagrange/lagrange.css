@@ -1,0 +1,455 @@
+html {
+    font-family: sans-serif;
+}
+
+#gmi {
+    max-width: 1024px;
+    margin: auto;
+    margin-top: 0.5em;
+    margin-bottom: 2em;
+}
+
+h1, h2, h3, blockquote, p, pre, li, ul {
+    margin: 0 0 0.3em;
+    padding: 0;
+}
+
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.2em; }
+
+blockquote {
+    margin-left: 3em;
+    padding-left: 3px;
+    margin-right: 3em;
+}
+
+pre {
+    overflow-x: auto;
+    font-size: 1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.menu:nth-of-type(1) .menu-line {
+    text-align: left;
+}
+.menu:nth-of-type(3) .menu-line {
+    text-align: right;
+}
+
+.menu a, .menu a:visited {
+    #color: #888;
+}
+.menu a:hover {
+    #color: #000;
+}
+.menu hr {
+    border: 1px solid lightgrey;
+}
+
+/*
+@media only screen and (max-width: 1024px) {
+    body {
+        margin: 0.5em 3em;
+    }
+    h1 {
+        font-size: 4em;
+    }
+    h2 {
+        font-size: 3.5em;
+    }
+    h3 {
+        font-size: 3em;
+    }
+    p, pre, ul, blockquote {
+        font-size: 2.6em;
+    }
+    .menu {
+        font-size: 2em;
+    }
+    .menu hr {
+        border: 1px solid gray;
+    }
+}
+
+*/
+
+html {
+    color:#1E4147;
+    background-color:#fafafa;
+}
+
+
+h1, h2, h3 {
+    color: #66f;
+}
+
+blockquote {
+    background-color: #eee;
+    border-left: 3px solid #444;
+    margin: 1rem -1rem 1rem calc(-1rem - 3px);
+    padding: 1rem;
+}
+
+.menu a, .menu a:visited {
+  /*  color: #888;*/
+}
+
+.menu a:hover {
+   /* color: #000;*/
+}
+
+.menu hr {
+    color: white;
+}
+
+#gmi a {
+    margin: -0.1rem;
+    color:#820;
+}
+
+#gmi a:before {
+    content: "🔗 ";
+}
+
+#gmi a:visited {
+   /* color: #868;*/
+}
+
+#gmi a:hover {
+  color: #0a6e82;
+}
+
+#gmi a.local:before {
+    content: "➤️ ";
+    font-weight: bold;
+}
+
+#gmi a.gemini:before {
+    content: "🚀 ";
+}
+
+#gmi a.gopher:before {
+    content: "📜 ";
+}
+
+#gmi a.https:before {
+    content: "🕸️ ";
+    font-weight: bolder;
+}
+
+#gmi a.http:before {
+    content: "🕸️ ";
+    font-weight: lighter;
+}
+
+#gmi a.mumble:before {
+    content: "🎤 ";
+}
+
+#gmi a.mailto:before {
+    content: "✉️ ";
+}
+
+@media only screen and (max-width: 1024px) {
+
+    #gmi a {
+        margin: -1.9rem;
+    }
+}
+
+
+/* *************************************** */
+
+
+
+/*-----------------------
+
+----------------
+ -  Lagrange  -
+----------------
+
+a template for Lionwiki-t2t
+https://lionwiki-t2t.sourceforge.io/
+
+based on
+
+    https://github.com/skyjake/lagrange
+
+----------------------------*/
+/* theme 1 */
+/* gemini link */
+/* web link */
+/* normal or bold */
+@font-face {
+  font-family: nunito;
+  font-style: normal;
+  font-weight: 400;
+  src: local('Nunito Medium'), url(Nunito-Medium.ttf) format('truetype');
+}
+
+/* Source Sans Pro */
+@font-face {
+  font-family: Source Sans;
+  font-style: normal;
+  font-weight: normal;
+  src: url(SourceSansPro-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: Source Sans;
+  font-style: italic;
+  font-weight: normal;
+  src: url(SourceSansPro-Italic.ttf) format('truetype');
+}
+@font-face {
+  font-family: Source Sans;
+  font-weight: bold;
+  src: url(SourceSansPro-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: Source Sans;
+  font-style: italic;
+  font-weight: bold;
+  src: url(SourceSansPro-BoldItalic.ttf) format('truetype');
+
+}
+
+body {
+  font-family: "Source Sans", "Nunito", "Roboto", "Source Sans 3", sans-serif;
+  font-weight: 400;
+  /* font-size: 15pt;*/
+  font-size: 1.4em;
+  margin-top: 0em;
+  margin-left: 0em;
+  margin-right: 0em;
+  padding-right: 0em;
+}
+#entete {
+  font-size: 100%;
+  /*color: darken(@bg,15%);*/
+  padding: 2em;
+}
+#entete h1 a {
+ /* color: #956a11;
+  font-weight: 300;
+  */
+}
+#container {
+  margin: auto;
+  max-width: 37em;
+}
+.menu {
+ /* text-align: center;*/
+}
+.menu li {
+  display: inline-block;
+  list-style: none;
+  margin: 0 1rem;
+}
+.menu li::before {
+  content: "";
+}
+
+h1, h2, h3 {
+  font-family: "Nunito", "Roboto", "Source Sans 3", sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-left: 0.5em;
+}
+h2 span.par-edit {
+  visibility: hidden;
+  font-size: x-small;
+}
+h2:hover span.par-edit {
+  visibility: visible;
+}
+h3 {
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-left: 1em;
+}
+h4 {
+  margin-left: 2em;
+}
+.link-icon {
+  display: inline-block;
+  width: 1.5em;
+  font-family: Symbola;
+  text-indent: 0;
+}
+div.link {
+  text-indent: -1.5em;
+  padding-left: 1.5em;
+  margin-top: 0.15em;
+  margin-bottom: 0.15em;
+}
+
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #734c00;
+}
+
+a:hover {
+  color: #0a6e82;
+}
+p {
+  margin-left: 1.8em;
+  margin-right: 0.5em;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 0.15em;
+}
+p:empty {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+p.lede {
+  font-size: 120%;
+  margin-left: 1.25em;
+}
+ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 3em;
+}
+ol {
+  margin-left: 0;
+  padding-left: 3em;
+}
+ul li,
+ol li {
+  margin-top: 5pt;
+  margin-bottom: 5pt;
+}
+ul li::before {
+  content: "•";
+  color: #503909;
+  font-weight: bold;
+  display: inline-block;
+  width: 1.1em;
+  margin-left: -1.1em;
+}
+blockquote {
+  margin-left: 2.25em;
+  font-style: italic;
+  font-weight: 300;
+  padding-left: 0.75em;
+  border-left: 1px solid #c38b16;
+}
+pre {
+  font-family: monospace;
+  font-size: 100%;
+  margin-left: 2.5em;
+  max-width: 100%;
+  overflow: auto;
+}
+img {
+  max-width: 100%;
+}
+
+
+/* Responsivity */
+@media only screen and (max-width: 499px) and (orientation: portrait) {
+  body {
+    font-size: 1.0em;
+    -webkit-text-size-adjust: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+  }
+  p {
+    margin-right: 1em;
+    font-size: 1.2em;
+  }
+  h1
+  {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+    h2
+  {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+    h3
+  {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    filter: invert(100%) hue-rotate(180deg);
+  }
+  html {
+    background-color: #111;
+  }
+}
+
+
+/* doesn't work:
+@import "green.css";
+*/
+
+/*  Orange Colors (for lagrange.css) */
+
+#entete {
+  background-color: #efd9b7;
+}
+#entete h1 a {
+  color: #262626;
+  font-weight: 300;
+}
+
+html,
+body {
+  background: #f5ebd6;
+  color: #192715;
+}
+
+blockquote, pre {
+  background: #ede3d0;
+  color: #d2780a;
+}
+
+
+h1 a {
+  color: #eeeeee;
+  font-weight: 800;
+}
+h1 {
+  color: #d2780a;
+  font-weight: 800;
+}
+
+h2, h3 {
+  color: #693c05;
+}
+
+
+a:hover {
+  color: #0a6e82;
+}
+
+a {
+  color: #693c05;
+}

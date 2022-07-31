@@ -1,6 +1,7 @@
 # Styles
 
 => index.gmi|default,htmgem.css htmgem.css
+=> index.gmi|lagrange,lagrange.css lagrange.css
 => index.gmi|default,terminal.css terminal.css
 => index.gmi|default,black_wide.css black_wide.css
 => index.gmi|default,simple.css simple.css
