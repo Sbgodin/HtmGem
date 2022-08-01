@@ -118,17 +118,8 @@ if ($urlRewriting)
 else
     $gt_html = new \htmgem\GemTextTranslate_html($fileContents, $gt_htmlextDecoration, "$php_self?url=", dirname($url));
 
-if (empty($style)) { // Searches for a stylesheet for the current page.
-    $parts = pathinfo($filePath);
-    $localCss = $parts["filename"].".css";
-    $localCssFilePath = $parts["dirname"]."/".$localCss;
-    if (file_exists($localCssFilePath)) {
-        # Warning, using htmhem.php?url=… will make $localCss not found
-        # as the path is relative to htmgem.php and not / !
-        $gt_html->addCss($localCss);
-    } else { // No local style
-        $gt_html->addCss($php_self_dir.DEFAULT_CSS);
-    }
+if (empty($style)) {
+    $gt_html->addCss($php_self_dir.DEFAULT_CSS);
 } else {
     $style = preg_replace("/,/", "/", $style);
     $gt_html->addCss("$php_self_dir/css/$style");
