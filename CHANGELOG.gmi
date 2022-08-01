@@ -20,7 +20,6 @@ All notable changes to this project will be documented in this file.
 * Images: click to load and display.
 * Be able to change the page style on the top bar.
 * Be able to change the font size.
-* A way to add a link to the project page /htmgem (or something else) on the left right Icon H͜͡m or elsewhere.
 
 ## [1.4.0] - 2021-04-11
 * Adds the breadcrumbs at the top and the bottom of the page.
