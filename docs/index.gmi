@@ -7,6 +7,8 @@
 => ../CHANGELOG.gmi Change log
 => ../COPYING.gmi License Gnu Affero General Public License v3 — 19 november 2007
 => BNF.gmi BNF / Backus-Naur Form
+=> specification_Gemini_v0.16.1.gmi Specification Gemini v0.16.1 (no impact on HtmGem)
+=> specification_Gemini_v0.14.3.gmi Specification Gemini v0.14.3
 
 => ../css Styles 😎
 => ../tests Tests 😅
