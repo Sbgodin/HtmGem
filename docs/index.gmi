@@ -1,9 +1,12 @@
-# Developers' documentation
-
-=> BNF-en.gmi BNF / Backus-Naur Form
+# Documentation
 
 => https://gmi.sbgodin.fr/htmgem Project main page
 => https://tildegit.org/Sbgodin/htmgem Source code, comments
 => https://gemini.circumlunar.space Main Gemini capsule
+
 => ../CHANGELOG.gmi Change log
-=> ../COPYING.gmi Licence Gnu Affero General Public License v3 — 19 november 2007
+=> ../COPYING.gmi License Gnu Affero General Public License v3 — 19 november 2007
+=> BNF.gmi BNF / Backus-Naur Form
+
+=> ../css Styles 😎
+=> ../tests Tests 😅

@@ -1,13 +1,19 @@
-# HtmGem
+```
+ __    __   __                   ______
+|\ \  |\ \ |\ \                 /\     \        v1.5.0
+| ▓▓  | ▓▓_| ▓▓_   ______ ____ |  ▓▓▓▓▓▓\
+| ▓▓__| ▓▓   ▓▓ \ |\     \    \| ▓▓ __\▓▓/\     \|      \    \
+| ▓▓    ▓▓\▓▓▓▓▓▓ | ▓▓▓▓▓▓\▓▓▓▓\ ▓▓|    \  ▓▓▓▓▓▓\ ▓▓▓▓▓▓\▓▓▓▓\
+| ▓▓▓▓▓▓▓▓ | ▓▓ __| ▓▓ | ▓▓ | ▓▓ ▓▓ \▓▓▓▓ ▓▓    ▓▓ ▓▓ | ▓▓ | ▓▓
+| ▓▓  | ▓▓ | ▓▓|  \ ▓▓ | ▓▓ | ▓▓ ▓▓__| ▓▓ ▓▓▓▓▓▓▓▓ ▓▓ | ▓▓ | ▓▓
+| ▓▓  | ▓▓  \▓▓  ▓▓ ▓▓ | ▓▓ | ▓▓\▓▓    ▓▓\▓▓     \ ▓▓ | ▓▓ | ▓▓
+ \▓▓   \▓▓   \▓▓▓▓ \▓▓  \▓▓  \▓▓ \▓▓▓▓▓▓  \▓▓▓▓▓▓▓\▓▓  \▓▓  \▓▓
 
-=> docs/installation-fr.gmi Installation de HtmGem, en français
-HtmGem rend vos pages **Gemini** accessibles sur le web. Il fonctionne aussi en hébergement mutualisé.
-=> docs/tutogemtext-fr.gmi Tutoriel GemText
+```
 
-=> docs/installation-en.gmi HtmGem installation, in English
-HtmGem makes your **Gemini** pages reachable on the web. It can be used on a shared host.
-=> docs/tutogemtext-en.gmi GemText tutorial
+=> docs/installation-fr.gmi 🇫🇷 HtmGem rend vos pages **Gemini** accessibles sur le web.
+
+=> docs/installation-en.gmi 🇺🇸 HtmGem makes your **Gemini** pages reachable on the web.
 
 
-=> docs/index.gmi **Developers' documentation**
-The documentation (in English) for the developers's stands here. Please read them carefully before doing anything on the source code.
+=> docs/index.gmi 🇺🇸 **Documentation**

@@ -1,42 +1,44 @@
-# HtmGem, installation
+# To install HtmGem
 
-To run HtmGem — after having copied the files — there is nothing to do but to add the URL rewriting rules.
+* Download HtmGem
+=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip
+* Copy the files at the root of the website.
+* Configurer la réécriture d’URL (//URL Rewriting//).
+* Write some text in /index.gmi.
+* Just open your website!
 
-## Prerequisites
+* Go to /htmgem to get the documentation.
+
+### Prerequisites
 
 * Php v7.3 minimum
-* Module **php-mbstring** to manage unicode
-* A web server (Apache and Nginx tested)
-* Module **mod-rewrite** to handle the Gemini pages
-
-## Installation
-
-### Download
-=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip Stable version
-=> https://tildegit.org/Sbgodin/htmgem Project repository
+* Module **Php-mbstring** to handle l’unicode
+* A web server (Apache and Nginx supported)
+* Module **mod-rewrite** for the URL rewriting
 
 ### Nginx
 ```
-# This text must be placed in the server's configuration
 index index.gmi index.php index.html
-rewrite ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1;
+rewrite ^(.+\.gmi)$ /htmgem/index.php?rw=1&url=$1&style=default,htmgem.css;
+error_page 403 /htmgem;
+location = /favicon.ico { alias /var/www/dev/htmgem/favicon.ico; }
 ```
 
 ### Apache
 ```
-# This text can be placed at the root of the web site in a file ".htaccess".
 DirectoryIndex index.gmi index.php index.html
 RewriteEngine on
-RewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1
+rewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
 ```
 
-Afterwards,
-* When a file ends by **.gmi.** is asked, HtmGem will display it in the browser.
-* When only the directory is asked (http:/​/site.tld/path) the file //index.gmi// will be automatically choosen.
+## Text decoration
 
-=> tutogemtext-en.gmi How to build GemText pages?
+The text decoration, which interprets the bold for instance, is not part of GemText definition. The text decoration applies everywhere except on the titles and preformated texts.
 
-## Advanced configuration
+It's possible to disable the text decoration with a line **^^^** or add to the URL rewriting:
+> &textDecoration=0
 
-Add additional styles as a link parameter or adapt the text decoration:
-=> configuration-en.gmi Advanced configuration
+
+=> ../css Styles
+
+=> tutogemtext-en.gmi How to make GemText pages?
