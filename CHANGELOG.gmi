@@ -21,6 +21,11 @@ All notable changes to this project will be documented in this file.
 * Be able to change the page style on the top bar.
 * Be able to change the font size.
 
+## [1.4.1] - 2022-08-01
+* Fixes bug about CSS not applied correctly
+* Fixes a bug about null by ref variable
+* Adds link to /htmgem on the icon of the menu
+
 ## [1.4.0] - 2021-04-11
 * Adds the breadcrumbs at the top and the bottom of the page.
 * Adds the text icon H͜͡m.
