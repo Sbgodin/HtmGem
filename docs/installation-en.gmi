@@ -31,6 +31,12 @@ RewriteEngine on
 rewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
 ```
 
+Other available styles:
+* style=lagrange,lagrange.css
+* style=lagrange,lagrange_gray.css
+* style=default,circumlunar.css
+* etc…
+
 ## Text decoration
 
 The text decoration, which interprets the bold for instance, is not part of GemText definition. The text decoration applies everywhere except on the titles and preformated texts.

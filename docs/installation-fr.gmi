@@ -31,6 +31,12 @@ RewriteEngine on
 rewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
 ```
 
+Autres styles disponibles :
+* style=lagrange,lagrange.css
+* style=lagrange,lagrange_gray.css
+* style=default,circumlunar.css
+* etc…
+
 ## Décoration du texte
 
 La décoration du texte, qui interprête le **gras** par exemple, ne fait pas partie de la définition de GemText. La décoration du texte s’applique partout sauf sur les titres et blocs préformatés.
