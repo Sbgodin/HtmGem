@@ -351,34 +351,34 @@
 }
 
 
-/* Orange / sepia Colors (for lagrange.css) */
+/* Grey Colors (for lagrange.css) */
 
 
  html, body {
-     background: #f5ebd6;
-     color: #192715;
+     background: #cecece;
+     color: #343434;
 }
  blockquote, pre {
-    /*background: #ede3d0;
+    /*background: #ede8de;
     */
-     color: #d2780a;
+     color: #6e4900;
 }
  h1 a {
-     color: #eeeeee;
+     color: #009966;
      font-weight: 800;
 }
  h1 {
-     color: #d2780a;
+     color: #009966;
      font-weight: 800;
 }
  h2, h3 {
-     color: #693c05;
+     color: #005b3d;
 }
  a:hover {
      color: #0a6e82;
 }
  a {
-     color: #693c05;    
+     color: #000000;     
 }
 
  ul li::before {
@@ -387,14 +387,14 @@
  
  
  blockquote:before {
-     color: #e5b77a;
+     color: #a29271;
 }
 
  .menu-line {
-     background-color: #efd9b7;
+     background-color: #e0e0e0;
 }
  .menu-line h1 a {
-     color: #262626;
+     color: #005035;
      font-weight: 300;
 }
 
@@ -410,7 +410,7 @@
 }
 
  #gmi a:visited {
-     color: #a25707;
+     color: #565656;
 }
 
  #gmi a:hover {
