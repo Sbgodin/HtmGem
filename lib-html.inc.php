@@ -5,7 +5,7 @@ namespace htmgem\html;
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 
-$txt_icon = "H͜͡m ";
+define("TXT_ICON", "H͜͡m ");
 
 function getHeader(\htmgem\GemtextTranslate_html $gt_html) {
     $css = $gt_html->getCss();
@@ -36,7 +36,6 @@ function array_key_last_slice($array) {
  * @param $pageLink if not null, means no URL rewritting
  */
 function getMenu(string $scheme, string $domain, string $path, string $prefix=null) {
-    global $txt_icon;
     $links = \htmgem\split_path_links($path, $prefix);
 
     // Removes the last part, as it won't hold a link
