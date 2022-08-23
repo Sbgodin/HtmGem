@@ -4,22 +4,11 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
-## [Unreleased] v2
-* cgi-bin? Handle user input
-* Page caching: don’t generate twice an unmodified file.
-
-## [Unreleased] v1
-
-### Security
-∅
-
-### Development
-* Proxy: https:/​/thewebsite.tld/htmgem/proxy/[gemini:/​/]capsule.tld/path/file.gmi
-
-### User interface
-* Images: click to load and display.
-* Be able to change the page style on the top bar.
-* Be able to change the font size.
+## [1.5.0] - 2022-08-23
+* Adds the Lagrange style, thanks to Eric <ortie10 at gmx.fr>
+* Adds circumlunar css
+* Removes the page-specific CSS
+* Rewrites the documentation
 
 ## [1.4.1] - 2022-08-02
 * Adds link to /htmgem on the icon of the menu
