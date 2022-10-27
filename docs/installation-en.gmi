@@ -28,7 +28,7 @@ location = /favicon.ico { alias /var/www/dev/htmgem/favicon.ico; }
 ```
 DirectoryIndex index.gmi index.php index.html
 RewriteEngine on
-rewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
+RewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
 ```
 
 Other available styles:
