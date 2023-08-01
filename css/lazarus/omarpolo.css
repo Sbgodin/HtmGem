@@ -26,6 +26,10 @@ h3::before {
   content: "### ";
 }
 
+#gmi a::before {
+  content: "=> ";
+}
+
 blockquote {
   margin: 0;
   padding: 0;
