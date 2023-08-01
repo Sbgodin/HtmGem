@@ -4,6 +4,7 @@
 => index.gmi|default,base.css default/base.css
 => index.gmi|default,circumlunar.css default/circumlunar.css
 => index.gmi|lagrange,lagrange.css lagrange/lagrange.css
+=> index.gmi|lazarus,omarpolo.css lazarus/omarpolo.css
 => index.gmi|default,terminal.css default/terminal.css
 => index.gmi|default,black_wide.css default/black_wide.css
 => index.gmi|default,simple.css default/simple.css
