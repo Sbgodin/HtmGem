@@ -122,6 +122,7 @@ if (empty($style)) {
     $gt_html->addCss($php_self_dir.DEFAULT_CSS);
 } else {
     $style = preg_replace("/,/", "/", $style);
+    if ("/" == $php_self_dir) $php_self_dir = ""; # dirname() never use a final slash except for the root
     $gt_html->addCss("$php_self_dir/css/$style");
 }
 
