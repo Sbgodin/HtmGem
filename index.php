@@ -26,7 +26,7 @@ if (empty($url)) {
         http_response_code(403);
     } else {
         $gt_html = new \htmgem\GemTextTranslate_html(file_get_contents("index.gmi"), true, "$php_self?url=", $php_self_dir);
-        if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir.DEFAULT_CSS);
+        if (empty($gt_html->getCss())) $gt_html->addCss($php_self_dir.DEFAULT_CSS);
 
         // No URL Rewritting assumed
         echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $php_self, "$php_self?url=");
@@ -66,7 +66,7 @@ if ($go404) {
     http_response_code(404);
     $page404 = \htmgem\html\get404GmiPage($url);
     $gt_html = new \htmgem\GemTextTranslate_html($page404);
-    if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
+    if (empty($gt_html->getCss())) $gt_html->addCss($php_self_dir."/css/htmgem.css");
     if ($urlRewriting)
         echo \htmgem\html\getHtmlWithMenu($gt_html, $scheme, $domain, $url);
     else
