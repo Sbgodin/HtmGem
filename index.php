@@ -8,7 +8,7 @@ $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 $scheme = (@$_SERVER['REQUEST_SCHEME']??"http")."://";
 // Sanitize HTTP_HOST to prevent Host Header Injection attacks
 $domain = $_SERVER['HTTP_HOST'];
-if (!preg_match('/^[a-zA-Z0-9\-.:]+$/', $domain)) {
+if (!preg_match('/^[a-zA-Z0-9.\-:]+$/', $domain)) {
     http_response_code(400);
     die("Invalid host header");
 }
@@ -136,7 +136,7 @@ if ("none" == $style) {
     }
 } else {
     // Sanitize style parameter to prevent path traversal
-    if (preg_match('/^[a-zA-Z0-9_-]+$/', $style)) {
+    if (preg_match('/^[a-zA-Z0-9_\-]+$/', $style)) {
         $gt_html->addCss("$php_self_dir/css/$style.css");
     }
 }

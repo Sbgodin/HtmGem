@@ -18,7 +18,7 @@ function getHeader(\htmgem\GemtextTranslate_html $gt_html) {
 EOL;
     foreach ($css as $c) {
         $c = htmlspecialchars($c, ENT_QUOTES, 'UTF-8');
-        $output .= "\n<link type='text/css' rel='StyleSheet' href='$c'>\n";
+        $output .= "\n<link type='text/css' rel='StyleSheet' href=\"$c\">\n";
     }
     $output .= <<<EOL
 </head>
@@ -54,7 +54,7 @@ function getMenu(string $scheme, string $domain, string $path, string $prefix=nu
     foreach ($links as $label=>$link) {
         $label = htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
         $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
-        $linkList []= "<a href='$link'>$label</a>\n";
+        $linkList []= "<a href=\"$link\">$label</a>\n";
     }
     $lastLink = htmlspecialchars($lastLink, ENT_QUOTES, 'UTF-8');
     $linkList [] = $lastLink."\n"; // The last part holds no link
