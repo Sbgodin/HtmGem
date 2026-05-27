@@ -347,7 +347,7 @@ class GemtextTranslate_html {
                 case "```":
                     $text = implode("\n", $node["texts"]);
                     self::htmlPrepare($text);
-                    $alt = $node["alt"];
+                    $alt = htmlspecialchars($node["alt"], ENT_QUOTES, 'UTF-8');
                     $output .= "<pre alt='$alt'>\n$text\n</pre>\n";
                     break;
                 case ">":
@@ -390,20 +390,20 @@ class GemtextTranslate_html {
                     break;
                 case "#":
                     $title = $node["title"];
-                    self::spacesCompress($linkText);
+                    self::spacesCompress($title);
                     self::htmlPrepare($title);
                     if (empty($this->pageTitle)) $this->pageTitle = $title;
                     $output .= "<h1>$title</h1>\n";
                     break;
                 case "##":
                     $title = $node["title"];
-                    self::spacesCompress($linkText);
+                    self::spacesCompress($title);
                     self::htmlPrepare($title);
                     $output .= "<h2>$title</h2>\n";
                     break;
                 case "###":
                     $title = $node["title"];
-                    self::spacesCompress($linkText);
+                    self::spacesCompress($title);
                     self::htmlPrepare($title);
                     $output .= "<h3>$title</h3>\n";
                     break;

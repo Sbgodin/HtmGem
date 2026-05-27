@@ -6,7 +6,12 @@ require_once "lib-io.inc.php";
 
 $documentRoot = $_SERVER['DOCUMENT_ROOT'];
 $scheme = (@$_SERVER['REQUEST_SCHEME']??"http")."://";
+// Sanitize HTTP_HOST to prevent Host Header Injection attacks
 $domain = $_SERVER['HTTP_HOST'];
+if (!preg_match('/^[a-zA-Z0-9.\-:]+$/', $domain)) {
+    http_response_code(400);
+    die("Invalid host header");
+}
 $php_self = $_SERVER['PHP_SELF']; // by default: /htmgem/index.php
 $php_self_dir = dirname($php_self);
 $url = @$_REQUEST["url"];
@@ -129,8 +134,11 @@ if ("none" == $style) {
         # as the path is relative to htmgem.php and not / !
         $gt_html->addCss($localCss);
     }
-} else { #TODO: regex check for $style
-    $gt_html->addCss("$php_self_dir/css/$style.css");
+} else {
+    // Sanitize style parameter to prevent path traversal
+    if (preg_match('/^[a-zA-Z0-9_\-]+$/', $style)) {
+        $gt_html->addCss("$php_self_dir/css/$style.css");
+    }
 }
 if (empty($gt_html->getCss)) $gt_html->addCss($php_self_dir."/css/htmgem.css");
 

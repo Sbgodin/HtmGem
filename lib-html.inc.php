@@ -17,7 +17,8 @@ function getHeader(\htmgem\GemtextTranslate_html $gt_html) {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 EOL;
     foreach ($css as $c) {
-        $output .= "\n<link type='text/css' rel='StyleSheet' href='$c'>\n";
+        $c = htmlspecialchars($c, ENT_QUOTES, 'UTF-8');
+        $output .= "\n<link type='text/css' rel='StyleSheet' href=\"$c\">\n";
     }
     $output .= <<<EOL
 </head>
@@ -51,10 +52,14 @@ function getMenu(string $scheme, string $domain, string $path, string $prefix=nu
     $links = array($domain => "$prefix/") + $links;
     $linkList = array();
     foreach ($links as $label=>$link) {
-        $linkList []= "<a href='$link'>$label</a>\n";
+        $label = htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
+        $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
+        $linkList []= "<a href=\"$link\">$label</a>\n";
     }
+    $lastLink = htmlspecialchars($lastLink, ENT_QUOTES, 'UTF-8');
     $linkList [] = $lastLink."\n"; // The last part holds no link
     $output = "<div class='menu-line'>\n";
+    $scheme = htmlspecialchars($scheme, ENT_QUOTES, 'UTF-8');
     $output .= "<strong>$txt_icon</strong>$scheme\n";
     $output .= implode(" / ", $linkList);
     $output .= "</div>\n";
