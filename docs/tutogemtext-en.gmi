@@ -71,4 +71,4 @@ HtmGem allows to host Gemini pages and publish them on a web server with **Php**
 ### License of this page
 This page is under the free licence **CC BY-SA 2.0**.
 => https://creativecommons.org/licenses/by-sa/2.0/en/ Text under license CC BY-SA 2.0
-=> gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY
+=> https://gmi.sbgodin.fr/ https:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY

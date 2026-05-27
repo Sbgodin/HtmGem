@@ -1,0 +1,433 @@
+/*-----------------------
+
+	----------------
+	 -  Lagrange  -
+	----------------
+	
+	a template for htmGem
+	
+	based on 
+   
+    https://github.com/skyjake/lagrange
+	
+----------------------------*/
+
+
+
+ @font-face {
+     font-family: nunito;
+     font-style: normal;
+     font-weight: 400;
+     src: local('Nunito Bold'), url(Nunito-Bold.ttf) format('truetype');
+}
+ @font-face {
+     font-family: Mada;
+     font-style: normal;
+     font-weight: 400;
+     src: local('Mada'), url(Mada-Regular.ttf) format('truetype');
+}
+ @font-face {
+     font-family: Mada;
+     font-style: italic;
+     font-weight: normal;
+     src: url(SourceSansPro-Italic.ttf) format('truetype');
+}
+ @font-face {
+     font-family: Mada;
+     font-style: bold;
+     font-weight: 800;
+     src: local('Mada Bold'), url(Mada-Bold.ttf) format('truetype');
+}
+
+ @font-face {
+     font-family: mycourier;
+     font-style: normal;
+     font-weight: 400;
+     src: local('Courier'), url(courier.ttf) format('truetype');
+}
+
+
+ @font-face {
+     font-family: Roboto Mono;
+     font-style: normal;
+     font-weight: 400;
+     src: local('Roboto Mono'), url(RobotoMono.ttf) format('truetype');
+}
+
+
+
+ body {
+     font-family: "Mada", sans-serif;
+     font-weight: 400;
+     font-size: 1.5em;
+     margin-top: 0em;
+     margin-left: 0em;
+     margin-right: 0em;
+     padding-right: 0em;
+}
+ .menu-line {
+     font-size: 105%;
+     padding: 1.8em;
+}
+
+
+ #gmi {
+     max-width: 1024px;
+     margin: auto;
+     margin-top: 0.5em;
+     margin-bottom: 1.5em;
+}
+
+
+
+ .menu li {
+     display: inline-block;
+     list-style: none;
+     margin: 0 1rem;
+}
+ .menu li::before {
+     content: "";
+}
+
+ p {
+     margin-left: 2.5em;
+     margin-right: 0.5em;
+     margin-top: 0;
+     margin-bottom: 0.05em;
+}
+
+ p:empty {
+     margin-top: 0.3em;
+     margin-bottom: 0.3em;
+}
+
+
+ li, ul {
+     margin: 0 0 0.3em;
+     padding: 0;
+}
+
+ 
+ h1, h2, h3 {
+     font-family: "Nunito", sans-serif;
+     margin: 0 0 0.0em;
+     padding: 0;
+}
+
+
+
+ h1 {
+     font-size: 2.2em;
+     font-weight: 400;
+     margin-left: 0.5em;
+}
+ h2 {
+     font-size: 1.8em;
+     font-weight: 600;
+     margin-left: 0.5em;
+}
+ h2 span.par-edit {
+     visibility: hidden;
+     font-size: x-small;
+}
+ h2:hover span.par-edit {
+     visibility: visible;
+}
+ h3 {
+     font-size: 1.6em;
+     font-weight: 700;
+     margin-left: 1em;
+}
+ h4 {
+     margin-left: 2em;
+}
+ .link-icon {
+     display: inline-block;
+     width: 1.5em;
+     font-family: Symbola;
+     text-indent: 0;
+}
+ div.link {
+     text-indent: -1.5em;
+     padding-left: 1.5em;
+     margin-top: 0.15em;
+     margin-bottom: 0.15em;
+}
+ a {
+     text-decoration: none;
+     font-weight: 600;
+}
+
+ ul {
+     list-style: none;
+     margin-left: 0;
+     padding-left: 3em;
+}
+ ol {
+     margin-left: 0;
+     padding-left: 3em;
+}
+ ul li, ol li {
+     margin-top: 5pt;
+     margin-bottom: 5pt;
+}
+ ul li::before {
+     content: "•";
+     font-weight: bold;
+     display: inline-block;
+     width: 1.1em;
+     margin-left: -1.1em;
+}
+
+
+ blockquote {
+     font-style: italic;
+     font-weight: 300;
+     padding-left: 0.75em;
+     font-size: 100%;
+     font-size: 1em;
+    /*border-left: 1px solid #c38b16;
+    */
+     margin-left: 1em;
+    /* margin-right: 3em;*/
+    margin-top: -1em;
+    margin-bottom: 0em;
+}
+
+
+
+
+ blockquote:before {
+     content: '“';
+     font-weight: bold;
+     font-size: 2.6em;
+     line-height: 0.1em;
+     /*vertical-align: -0.4em;*/
+     margin-top: -2em;
+     position: relative;
+     top: 0.85em;
+     left: 0.2em;
+}
+
+ pre {
+     font-family: Roboto Mono, monospace;
+     font-size: 0.9em;
+     margin-left: 2.8em;
+     margin-bottom: 0.05em;
+     max-width: 100%;
+     overflow: auto;
+}
+
+ img {
+     max-width: 100%;
+}
+
+
+
+
+
+ .menu:nth-of-type(1) .menu-line {
+     text-align: left;
+}
+ .menu:nth-of-type(3) .menu-line {
+     text-align: left;
+}
+
+ .menu hr {
+     border: 0;
+}
+
+
+
+
+ #gmi a {
+     margin: -1.5em; 
+}
+ #gmi a:before {
+     content: "🔗 ";
+}
+ #gmi a:visited {
+     font-weight: normal;
+    /* doesn't work */
+}
+
+
+ #gmi a.local:before {
+     content: "➤️ ";
+     font-weight: bold;
+     font-size: 1.5em;
+}
+ #gmi a.local:visited {
+     font-weight: normal;
+}
+ #gmi a.gemini:before {
+     content: "➤️ ";
+     font-size: 1.5em;
+}
+
+ #gmi a.gopher:before {
+     content: "📜 ";
+     font-size: 1.5em;
+}
+
+
+
+ #gmi a.https:before {
+     content: "🌐 ";
+     font-weight: bolder;
+     font-size: 1.5em;
+}
+ #gmi a.http:before {
+     content: "🌐 ";
+     font-weight: lighter;
+     font-size: 1.5em;
+}
+ #gmi a.mumble:before {
+     content: "🎤 ";
+     font-size: 1.5em;
+}
+ #gmi a.mailto:before {
+     content: "✉️ ";
+     font-size: 1.5em;
+}
+
+
+/* Responsivity */
+ @media only screen and (max-width: 499px) and (orientation: portrait) {
+     body {
+         font-size: 1.2em;
+         -webkit-text-size-adjust: 100%;
+         padding-left: 0;
+         padding-right: 0;
+         margin-left: 0;
+         margin-right: 0;
+         margin-top: 0;
+    }
+     h1 {
+         font-size: 1.9em;
+         font-weight: bold;
+         -webkit-text-size-adjust: 200%;
+    }
+     h2 {
+         font-size: 1.5em;
+         font-weight: bold;
+         -webkit-text-size-adjust: 160%;
+    }
+     h3 {
+         font-size: 1.3em;
+         font-weight: bold;
+         -webkit-text-size-adjust: 140%;
+    }
+    
+     blockquote {
+      margin-left: 1.5em ;
+    }
+
+ blockquote:before {
+     position: relative;
+     top: 0.85em;
+     left: -0.3em;
+}
+
+    p {
+      margin-left: 0.7em ;
+    }
+
+     #gmi a {
+         margin: 0.3em;
+    }
+    
+}
+
+
+
+ @media (prefers-color-scheme: dark) {
+     body {
+         filter: invert(100%) hue-rotate(180deg);
+    }
+     html {
+         background-color: #111;
+    }
+}
+
+
+/* Grey Colors (for lagrange.css) */
+
+
+ html, body {
+     background: #cecece;
+     color: #343434;
+}
+ blockquote, pre {
+    /*background: #ede8de;
+    */
+     color: #6e4900;
+}
+ h1 a {
+     color: #009966;
+     font-weight: 800;
+}
+ h1 {
+     color: #009966;
+     font-weight: 800;
+}
+ h2, h3 {
+     color: #005b3d;
+}
+ a:hover {
+     color: #0a6e82;
+}
+ a {
+     color: #000000;     
+}
+
+ ul li::before {
+     color: #503909;
+}
+ 
+ 
+ blockquote:before {
+     color: #a29271;
+}
+
+ .menu-line {
+     background-color: #e0e0e0;
+}
+ .menu-line h1 a {
+     color: #005035;
+     font-weight: 300;
+}
+
+ .menu a, .menu a:visited {
+     #color: #888;
+}
+ .menu a:hover {
+     #color: #000;
+}
+
+ #gmi a:before {
+     color: #d2780a;
+}
+
+ #gmi a:visited {
+     color: #565656;
+}
+
+ #gmi a:hover {
+     color: #0a6e82;
+}
+
+ #gmi a.local:before {
+     color: #0a6e82;
+}
+
+ #gmi a.gemini:before {
+     color: #0a6e82;
+}
+
+ #gmi a.https:before {
+     color: #d2780a;
+}
+ #gmi a.http:before {
+     color: #d2780a;
+}

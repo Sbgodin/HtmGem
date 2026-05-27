@@ -1,20 +1,23 @@
 # Styles
 
-=> index.gmi|htmgem htmgem.css
-=> index.gmi|none None
-=> index.gmi|terminal terminal.css
-=> index.gmi|black_wide black_wide.css
-=> index.gmi|simple simple.css
-=> index.gmi|raw raw.css
-=> index.gmi|debug debug.css
-=> index.gmi|pre Source code
+=> index.gmi|default,htmgem.css default/htmgem.css
+=> index.gmi|default,base.css default/base.css
+=> index.gmi|default,circumlunar.css default/circumlunar.css
+=> index.gmi|lagrange,lagrange.css lagrange/lagrange.css
+=> index.gmi|lazarus,omarpolo.css lazarus/omarpolo.css
+=> index.gmi|default,terminal.css default/terminal.css
+=> index.gmi|default,black_wide.css default/black_wide.css
+=> index.gmi|default,simple.css default/simple.css
+=> index.gmi|default,raw.css default/raw.css
+=> index.gmi|default,debug.css default/debug.css
+=> index.gmi|src Source code
 => index.gmi|source Download source code
 
 Lorem ipsum dolor sit amet.
 //Lorem// **ipsum** __dolor__ ~~sit amet~~.
 
-* ligne un de liste non ordonnée
-* ligne deux de liste non ordonnée
+* 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+* 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 > Citation : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -29,11 +32,11 @@ Lorem ipsum dolor sit amet.
                 ||     ||
 ```
 
-# Titre 1
+# 1 1 1 1 1 1
 
-## Titre 2
+## 2 2 2 2 2 2
 
-### Titre 3
+### 3 3 3 3 3 3
 
 => https://gmi.sbgodin.fr
 

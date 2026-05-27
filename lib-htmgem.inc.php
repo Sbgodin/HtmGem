@@ -319,6 +319,7 @@ class GemtextTranslate_html {
 
     protected static function spacesCompress(&$text) {
         # Replaces several spaces (0x20) by only one
+        if (empty($text)) $text = "";
         $text = preg_replace("/  +/", " ", $text);
     }
 

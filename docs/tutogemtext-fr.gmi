@@ -68,7 +68,7 @@ HtmGem permet d’héberger des pages Gemini et de les publier sur un serveur we
 => https://gmi.sbgodin.fr/htmgem
 
 
-### License de cette page
+### Licence de cette page
 Cette page est sous licence libre **CC BY-SA 2.0**.
 => https://creativecommons.org/licenses/by-sa/2.0/fr/ Texte sous licence CC BY-SA 2.0
-=> gemini://gmi.sbgodin.fr/ gemini:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY
+=> https://gmi.sbgodin.fr/ https:/​/gmi.sbgodin.fr/ ⸻ Christophe HENRY

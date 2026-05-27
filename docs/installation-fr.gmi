@@ -1,42 +1,50 @@
-# HtmGem, installation
+# Pour installer HtmGem
 
-Pour faire fonctionner HtmGem — après avoir copié les fichiers — il ne reste qu’à ajouter les règles de réécriture d’URL (//URL Rewriting//).
+* Télécharger HtmGem
+=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip
+* Copier les fichiers à la racine du site.
+* Configurer la réécriture d’URL (//URL Rewriting//).
+* Écrire du texte dans /index.gmi.
+* Ouvrir la page du site!
+
+* Accéder à /htmgem pour la documentation.
 
 ## Prérequis
 
 * Php v7.3 minimum
 * Module **Php-mbstring** pour gérer l’unicode
-* Un serveur web (Apache et Nginx testés)
-* Module **mod-rewrite** pour prendre en charge les pages Gemini
-
-## Installation
-
-### Téléchargement
-=> https://tildegit.org/sbgodin/HtmGem/archive/master.zip Version stable
-=> https://tildegit.org/Sbgodin/htmgem Dépôt du projet
+* Un serveur web (Apache et Nginx supportés)
+* Module **mod-rewrite** pour la réécriture d’URL
 
 ### Nginx
 ```
-# Ce texte doit être placé dans la configuration du serveur.
 index index.gmi index.php index.html
-rewrite ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1;
+rewrite ^(.+\.gmi)$ /htmgem/index.php?rw=1&url=$1&style=default,htmgem.css;
+error_page 403 /htmgem;
+location = /favicon.ico { alias /var/www/dev/htmgem/favicon.ico; }
 ```
 
 ### Apache
 ```
-# Ce texte peut se placer à la racine du site dans un fichier ".htaccess".
 DirectoryIndex index.gmi index.php index.html
 RewriteEngine on
-RewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1
+rewriteRule ^(.+\.gmi)$ htmgem/index.php?rw=1&url=$1&style=default,htmgem.css
 ```
 
-Par la suite,
-* Quand un fichier se terminant par **.gmi** sera demandé, HtmGem l’affichera dans le navigateur.
-* Quand seul le répertoire sera demandé (http:/​/site.tld/path) le fichier //index.gmi// sera automatiquement choisi.
+Autres styles disponibles :
+* style=lagrange,lagrange.css
+* style=lagrange,lagrange_gray.css
+* style=default,circumlunar.css
+* etc…
+
+## Décoration du texte
+
+La décoration du texte, qui interprête le **gras** par exemple, ne fait pas partie de la définition de GemText. La décoration du texte s’applique partout sauf sur les titres et blocs préformatés.
+
+On peut désactiver la décoration du texte avec une ligne **^^^** ou ajouter à la **réécriture** d’URL :
+> &textDecoration=0
+
+
+=> ../css Styles
 
 => tutogemtext-fr.gmi Comment faire des pages GemText ?
-
-## Configuration avancée
-
-Ajoutez des styles supplémentaires en paramètre de lien ou adaptez la décoration du texte :
-=> configuration-fr.gmi Configuration avancée

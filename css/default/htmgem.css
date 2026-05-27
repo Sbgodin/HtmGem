@@ -25,6 +25,14 @@ blockquote {
     color: #000;
 }
 
+.menu a.logo {
+    color: #000;
+}
+
+.menu a.logo:hover {
+    color: blue;
+}
+
 .menu hr {
     color: white;
 }

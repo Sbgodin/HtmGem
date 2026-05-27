@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 => https://keepachangelog.com/en/1.0.0/ The format is based on keep a Changelog.
 => https://semver.org/spec/v2.0.0.html And this project adheres to Semantic Versioning.
 
+## [1.5.1] - 2023-08-01
+* Adds style from Omar Polo's site, thanks to <lazarus at sdfeu.org>
+* Fix getCss() calls, thanks to <lazarus at sdfeu.org>
+* Fixes a bug on CSS when hosted on filesystem root
+* Fix typo in the English documentation about Apache
+
+## [1.5.0] - 2022-08-23
+* Adds the Lagrange style, thanks to Eric <ortie10 at gmx.fr>
+* Adds circumlunar css
+* Removes the page-specific CSS
+* Rewrites the documentation
+
+## [1.4.1] - 2022-08-02
+* Adds link to /htmgem on the icon of the menu
+* Fixes bug about CSS not applied correctly
+* Fixes a bug about null by ref variable
+
 ## [1.4.0] - 2021-04-11
 * Adds the breadcrumbs at the top and the bottom of the page.
 * Adds the text icon H͜͡m.
