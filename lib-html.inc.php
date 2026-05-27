@@ -55,6 +55,9 @@ function getMenu(string $scheme, string $domain, string $path, string $prefix=nu
         $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
         $linkList []= "<a href=\"$link\">$label</a>\n";
     }
+    if (!$lastLink)
+        $lastLink = "";
+	    
     $lastLink = htmlspecialchars($lastLink, ENT_QUOTES, 'UTF-8');
     $linkList [] = $lastLink."\n"; // The last part holds no link
     $output = "<div class='menu-line'>\n";
